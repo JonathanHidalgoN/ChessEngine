@@ -1,7 +1,9 @@
-#include "include/chess_piece.h"
-#include <stdio.h>
+#include "include/board.h"
 
 int main() {
+  ChessBoard board;
+  cleanBoard(&board);
+  populateBoard(&board);
+  displayBoard(&board);
   return 0;
-  ChessPiece test = createPiece(PAWN, WHITE, 'g', 1);
 }
