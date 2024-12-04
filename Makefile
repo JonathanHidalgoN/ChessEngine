@@ -1,6 +1,6 @@
 CC = gcc
 CFLAGS = -Wall -Wextra -Iinclude
-SRC = src/chess_piece.c main.c
+SRC = src/chess_piece.c src/chessBoard.c main.c
 BUILD_DIR = build
 OBJ = $(patsubst %.c,$(BUILD_DIR)/%.o,$(SRC))
 TARGET = $(BUILD_DIR)/chess_game
