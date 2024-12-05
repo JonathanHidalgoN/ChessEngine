@@ -3,13 +3,12 @@
 #include <stdio.h>
 
 void cleanBitboard(bitboard *bb) { (*bb) = 0; }
-
 /*
  * This function will print the board
  */
 void printBitboard(bitboard bb) {
   int i, j;
-  const int LASTBIT = 63;
+  const int LASTBIT = (int)ROWS * COLS - 1;
   for (i = 0; i < ROWS; i++) {
     for (j = 0; j < COLS; j++) {
       uint64_t mask = (uint64_t)1 << (LASTBIT - (i * ROWS + j));
@@ -25,7 +24,7 @@ void printBitboard(bitboard bb) {
  *  will be 7 + 56 = 63, and at min will be 0 so we can move the 1
  *  from the 0 to the 63 bit
  */
-void placeBitValue(int col, int row, int val, bitboard *bb) {
+void placeBitValue(int row, int col, int val, bitboard *bb) {
   // COULD CHECK FOR VALID COORDS IN RANGE HERE
   uint64_t mask = (uint64_t)1 << (col + ROWS * row);
   if (!val) {
@@ -33,4 +32,40 @@ void placeBitValue(int col, int row, int val, bitboard *bb) {
   } else {
     *bb = *bb | mask;
   }
+}
+
+void cleanChessBoard(chessBoard *chessBoard) {
+  int i, j;
+  for (i = 0; i < NUMBEROFCOLORS; i++) {
+    for (j = 0; j < NUMBEROFDIFFERENTPIECES; j++) {
+      cleanBitboard(&chessBoard->pieces[i][j]);
+    }
+  }
+}
+
+void initChessBoard(chessBoard *chessBoard) {
+  int i;
+  cleanChessBoard(chessBoard);
+  bitboard whitePawns = chessBoard->pieces[WHITE][PAWN];
+  bitboard whiteKings = chessBoard->pieces[WHITE][KING];
+  bitboard whiteQueens = chessBoard->pieces[WHITE][QUEEN];
+  bitboard whiteBishops = chessBoard->pieces[WHITE][BISHOP];
+  bitboard whiteKnights = chessBoard->pieces[WHITE][KNIGHT];
+  bitboard whiteRooks = chessBoard->pieces[WHITE][ROOK];
+
+  bitboard blackPawns = chessBoard->pieces[BLACK][PAWN];
+  bitboard blackKings = chessBoard->pieces[BLACK][KING];
+  bitboard blackQueens = chessBoard->pieces[BLACK][QUEEN];
+  bitboard blackBishops = chessBoard->pieces[BLACK][BISHOP];
+  bitboard blackKnights = chessBoard->pieces[BLACK][KNIGHT];
+  bitboard blackRooks = chessBoard->pieces[BLACK][ROOK];
+
+  for (i = 0; i < COLS; i++) {
+    placeBitValue(1, i, 1, &whitePawns);
+    placeBitValue(6, i, 1, &blackPawns);
+  }
+  placeBitValue(0, 0, 1, &whiteRooks);
+  placeBitValue(0, 7, 1, &whiteRooks);
+  placeBitValue(7, 0, 1, &blackRooks);
+  placeBitValue(7, 7, 1, &blackRooks);
 }
