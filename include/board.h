@@ -1,21 +1,26 @@
 #ifndef BOARD_H
 #define BOARD_H
+#include <stdint.h>
 
-#include "chess_piece.h"
+// Some useful constants
+#define COLS 8
+#define ROWS 8
+#define NUMBEROFDIFFERENTPIECES 12
+#define WHITEKING 1
+#define WHITEPAWN 0
+#define WHITEQUEEN 2
+#define WHITEBISHOP 3
+#define WHITEKNIGHT 4
+#define WHITEROOK 5
+#define BLACKPAWN 6
+#define BLACKKING 7
+#define BLACKQUEEN 8
+#define BLACKBISHOP 9
+#define BLACKKNIGHT 10
+#define BLACKROOk 11
 
-#define BOARDHEIGHT 8
-#define BOARDWIDTH 8
-
-typedef struct {
-  ChessPiece piece;
-  int hasPiece;
-} BoardSquare;
-
-typedef struct {
-  BoardSquare squares[BOARDWIDTH][BOARDWIDTH];
-} ChessBoard;
-
-void cleanBoard(ChessBoard *board);
-void populateBoard(ChessBoard *board);
-void displayBoard(ChessBoard *board);
+// Will be using a bitboard representation
+typedef uint64_t bitboard;
+void cleanBitboard(bitboard *bb);
+void printBitboard(bitboard bb);
 #endif
