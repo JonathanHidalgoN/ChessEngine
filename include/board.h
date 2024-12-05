@@ -23,4 +23,5 @@
 typedef uint64_t bitboard;
 void cleanBitboard(bitboard *bb);
 void printBitboard(bitboard bb);
+void placeBitValue(int col, int row, int val, bitboard *bb);
 #endif

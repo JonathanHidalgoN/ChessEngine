@@ -1,4 +1,5 @@
 #include "../include/board.h"
+#include <stdint.h>
 #include <stdio.h>
 
 void cleanBitboard(bitboard *bb) { (*bb) = 0; }
@@ -16,5 +17,20 @@ void printBitboard(bitboard bb) {
       printf("%c ", val);
     }
     printf("\n");
+  }
+}
+
+/*
+ * -1 < col < 8, -1 < row < 8, so at max following col + (8) * row
+ *  will be 7 + 56 = 63, and at min will be 0 so we can move the 1
+ *  from the 0 to the 63 bit
+ */
+void placeBitValue(int col, int row, int val, bitboard *bb) {
+  // COULD CHECK FOR VALID COORDS IN RANGE HERE
+  uint64_t mask = (uint64_t)1 << (col + ROWS * row);
+  if (!val) {
+    *bb = *bb & ~mask;
+  } else {
+    *bb = *bb | mask;
   }
 }
