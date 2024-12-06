@@ -3,9 +3,6 @@
 #include <stdio.h>
 
 void setBitboard0(bitboard *bb) { (*bb) = 0; }
-/*
- * This function will print the board
- */
 void printBitboard(bitboard bb) {
   int i, j;
   const int LASTBIT = (int)ROWS * COLS - 1;
@@ -45,44 +42,86 @@ void cleanChessBoard(chessBoard *chessBoard) {
 
 void initChessBoard(chessBoard *chessBoard) {
   int i;
-  cleanChessBoard(chessBoard);
-  bitboard whitePawns = chessBoard->pieces[WHITE][PAWN];
-  bitboard whiteKings = chessBoard->pieces[WHITE][KING];
-  bitboard whiteQueens = chessBoard->pieces[WHITE][QUEEN];
-  bitboard whiteBishops = chessBoard->pieces[WHITE][BISHOP];
-  bitboard whiteKnights = chessBoard->pieces[WHITE][KNIGHT];
-  bitboard whiteRooks = chessBoard->pieces[WHITE][ROOK];
 
-  bitboard blackPawns = chessBoard->pieces[BLACK][PAWN];
-  bitboard blackKings = chessBoard->pieces[BLACK][KING];
-  bitboard blackQueens = chessBoard->pieces[BLACK][QUEEN];
-  bitboard blackBishops = chessBoard->pieces[BLACK][BISHOP];
-  bitboard blackKnights = chessBoard->pieces[BLACK][KNIGHT];
-  bitboard blackRooks = chessBoard->pieces[BLACK][ROOK];
+  cleanChessBoard(chessBoard);
 
   for (i = 0; i < COLS; i++) {
-    placeBitValue(1, i, 1, &whitePawns);
-    placeBitValue(6, i, 1, &blackPawns);
+    placeBitValue(1, i, 1, &chessBoard->pieces[WHITE][PAWN]); // Modify directly
+    placeBitValue(6, i, 1, &chessBoard->pieces[BLACK][PAWN]); // Modify directly
   }
 
-  placeBitValue(0, 0, 1, &whiteRooks);
-  placeBitValue(0, 7, 1, &whiteRooks);
-  placeBitValue(7, 0, 1, &blackRooks);
-  placeBitValue(7, 7, 1, &blackRooks);
+  placeBitValue(0, 0, 1, &chessBoard->pieces[WHITE][ROOK]);
+  placeBitValue(0, 7, 1, &chessBoard->pieces[WHITE][ROOK]);
+  placeBitValue(7, 0, 1, &chessBoard->pieces[BLACK][ROOK]);
+  placeBitValue(7, 7, 1, &chessBoard->pieces[BLACK][ROOK]);
 
-  placeBitValue(0, 1, 1, &whiteKnights);
-  placeBitValue(0, 6, 1, &whiteKnights);
-  placeBitValue(7, 1, 1, &blackKnights);
-  placeBitValue(7, 6, 1, &blackKnights);
+  placeBitValue(0, 1, 1, &chessBoard->pieces[WHITE][KNIGHT]);
+  placeBitValue(0, 6, 1, &chessBoard->pieces[WHITE][KNIGHT]);
+  placeBitValue(7, 1, 1, &chessBoard->pieces[BLACK][KNIGHT]);
+  placeBitValue(7, 6, 1, &chessBoard->pieces[BLACK][KNIGHT]);
 
-  placeBitValue(0, 2, 1, &whiteBishops);
-  placeBitValue(0, 5, 1, &whiteBishops);
-  placeBitValue(7, 2, 1, &blackBishops);
-  placeBitValue(7, 5, 1, &blackBishops);
+  placeBitValue(0, 2, 1, &chessBoard->pieces[WHITE][BISHOP]);
+  placeBitValue(0, 5, 1, &chessBoard->pieces[WHITE][BISHOP]);
+  placeBitValue(7, 2, 1, &chessBoard->pieces[BLACK][BISHOP]);
+  placeBitValue(7, 5, 1, &chessBoard->pieces[BLACK][BISHOP]);
 
-  placeBitValue(0, 3, 1, &whiteQueens);
-  placeBitValue(7, 3, 1, &blackQueens);
+  placeBitValue(0, 3, 1, &chessBoard->pieces[WHITE][QUEEN]);
+  placeBitValue(7, 3, 1, &chessBoard->pieces[BLACK][QUEEN]);
 
-  placeBitValue(0, 4, 1, &whiteKings);
-  placeBitValue(7, 4, 1, &blackKings);
+  placeBitValue(0, 4, 1, &chessBoard->pieces[WHITE][KING]);
+  placeBitValue(7, 4, 1, &chessBoard->pieces[BLACK][KING]);
+}
+
+void placePieceRepresentationIntoBoardString(bitboard bb, char *br,
+                                             char symbol) {
+  int i;
+  const int LASTBIT = (int)ROWS * COLS - 1;
+  for (i = 0; i < LASTBIT; i++) {
+    uint64_t mask = (uint64_t)1 << i;
+    if ((mask & bb) != 0) {
+      br[LASTBIT - i] = symbol;
+    }
+  }
+}
+
+void printChessBoard(chessBoard *chessBoard) {
+  // HERE I COULD CREATE TWO FUNCS ONE TO MAKE THE BOARD STRING AND OTHER
+  // TO PRINT IT THAT WAY I AVOID CREATING THE STRING EACH TIME
+  int numberOfCharsInBoard = (int)COLS * ROWS;
+  char boardRepresentation[numberOfCharsInBoard];
+  int i, j;
+  for (i = 0; i < numberOfCharsInBoard; i++) {
+    boardRepresentation[i] = '.';
+  }
+  placePieceRepresentationIntoBoardString(chessBoard->pieces[WHITE][PAWN],
+                                          boardRepresentation, 'P');
+  placePieceRepresentationIntoBoardString(chessBoard->pieces[WHITE][KNIGHT],
+                                          boardRepresentation, 'T');
+  placePieceRepresentationIntoBoardString(chessBoard->pieces[WHITE][QUEEN],
+                                          boardRepresentation, 'Q');
+  placePieceRepresentationIntoBoardString(chessBoard->pieces[WHITE][KING],
+                                          boardRepresentation, 'K');
+  placePieceRepresentationIntoBoardString(chessBoard->pieces[WHITE][ROOK],
+                                          boardRepresentation, 'R');
+  placePieceRepresentationIntoBoardString(chessBoard->pieces[WHITE][BISHOP],
+                                          boardRepresentation, 'B');
+  placePieceRepresentationIntoBoardString(chessBoard->pieces[BLACK][PAWN],
+                                          boardRepresentation, 'p');
+  placePieceRepresentationIntoBoardString(chessBoard->pieces[BLACK][KNIGHT],
+                                          boardRepresentation, 't');
+  placePieceRepresentationIntoBoardString(chessBoard->pieces[BLACK][QUEEN],
+                                          boardRepresentation, 'q');
+  placePieceRepresentationIntoBoardString(chessBoard->pieces[BLACK][KING],
+                                          boardRepresentation, 'k');
+  placePieceRepresentationIntoBoardString(chessBoard->pieces[BLACK][ROOK],
+                                          boardRepresentation, 'r');
+  placePieceRepresentationIntoBoardString(chessBoard->pieces[BLACK][BISHOP],
+                                          boardRepresentation, 'b');
+  for (i = 0; i < COLS; i++) {
+    for (j = 0; j < ROWS; j++) {
+      int idx = (int)i * COLS + j;
+      printf("%c ", boardRepresentation[idx]);
+    }
+    printf("\n");
+  }
 }
