@@ -2,7 +2,7 @@
 #include <stdint.h>
 #include <stdio.h>
 
-void cleanBitboard(bitboard *bb) { (*bb) = 0; }
+void setBitboard0(bitboard *bb) { (*bb) = 0; }
 /*
  * This function will print the board
  */
@@ -38,7 +38,7 @@ void cleanChessBoard(chessBoard *chessBoard) {
   int i, j;
   for (i = 0; i < NUMBEROFCOLORS; i++) {
     for (j = 0; j < NUMBEROFDIFFERENTPIECES; j++) {
-      cleanBitboard(&chessBoard->pieces[i][j]);
+      setBitboard0(&chessBoard->pieces[i][j]);
     }
   }
 }
@@ -64,8 +64,25 @@ void initChessBoard(chessBoard *chessBoard) {
     placeBitValue(1, i, 1, &whitePawns);
     placeBitValue(6, i, 1, &blackPawns);
   }
+
   placeBitValue(0, 0, 1, &whiteRooks);
   placeBitValue(0, 7, 1, &whiteRooks);
   placeBitValue(7, 0, 1, &blackRooks);
   placeBitValue(7, 7, 1, &blackRooks);
+
+  placeBitValue(0, 1, 1, &whiteKnights);
+  placeBitValue(0, 6, 1, &whiteKnights);
+  placeBitValue(7, 1, 1, &blackKnights);
+  placeBitValue(7, 6, 1, &blackKnights);
+
+  placeBitValue(0, 2, 1, &whiteBishops);
+  placeBitValue(0, 5, 1, &whiteBishops);
+  placeBitValue(7, 2, 1, &blackBishops);
+  placeBitValue(7, 5, 1, &blackBishops);
+
+  placeBitValue(0, 3, 1, &whiteQueens);
+  placeBitValue(7, 3, 1, &blackQueens);
+
+  placeBitValue(0, 4, 1, &whiteKings);
+  placeBitValue(7, 4, 1, &blackKings);
 }

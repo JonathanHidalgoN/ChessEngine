@@ -43,8 +43,8 @@ typedef uint64_t bitboard;
 typedef struct chessBoard {
   bitboard pieces[NUMBEROFCOLORS][NUMBEROFDIFFERENTPIECES];
 } chessBoard;
-void cleanBitboard(bitboard *bb);
+void setBitboard0(bitboard *bb);
 void printBitboard(bitboard bb);
 void placeBitValue(int col, int row, int val, bitboard *bb);
-void initBitboards(chessBoard *chessBoard);
+void initChessBoard(chessBoard *chessBoard);
 #endif
