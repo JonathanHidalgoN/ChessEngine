@@ -5,7 +5,6 @@
 void setBitboard0(bitboard *bb) { (*bb) = 0; }
 void printBitboard(bitboard bb) {
   int i, j;
-  const int LASTBIT = (int)ROWS * COLS - 1;
   for (i = 0; i < ROWS; i++) {
     for (j = 0; j < COLS; j++) {
       uint64_t mask = (uint64_t)1 << (LASTBIT - (i * ROWS + j));
@@ -75,7 +74,6 @@ void initChessBoard(chessBoard *chessBoard) {
 void placePieceRepresentationIntoBoardString(bitboard bb, char *br,
                                              char symbol) {
   int i;
-  const int LASTBIT = (int)ROWS * COLS - 1;
   for (i = 0; i < LASTBIT; i++) {
     uint64_t mask = (uint64_t)1 << i;
     if ((mask & bb) != 0) {

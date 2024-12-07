@@ -37,6 +37,7 @@
 #define BISHOP 3
 #define KNIGHT 4
 #define ROOK 5
+#define LASTBIT (ROWS * COLS - 1)
 
 // Will be using a bitboard representation
 typedef uint64_t bitboard;
