@@ -46,7 +46,7 @@ typedef struct chessBoard {
 } chessBoard;
 void setBitboard0(bitboard *bb);
 void printBitboard(bitboard bb);
-void placeBitValue(int col, int row, int val, bitboard *bb);
+void placeBitValue(int row, int col, int val, bitboard *bb);
 void initChessBoard(chessBoard *chessBoard);
 void placePieceRepresentationIntoBoardString(bitboard bb, char *br,
                                              char symbol);
