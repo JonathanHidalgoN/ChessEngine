@@ -5,7 +5,9 @@
 void setBitboard0(bitboard *bb) { (*bb) = 0; }
 void printBitboard(bitboard bb) {
   int i, j;
+  printf("\n");
   for (i = 0; i < ROWS; i++) {
+    printf("%d | ", ROWS - i - 1);
     for (j = 0; j < COLS; j++) {
       uint64_t mask = (uint64_t)1 << (LASTBIT - (i * ROWS + j));
       char val = (mask & bb) != 0 ? '1' : '0';
@@ -13,6 +15,9 @@ void printBitboard(bitboard bb) {
     }
     printf("\n");
   }
+  printf("\n");
+  printf("    7 6 5 4 3 2 1 0");
+  printf("\n");
 }
 
 /*
@@ -20,15 +25,17 @@ void printBitboard(bitboard bb) {
  *  will be 7 + 56 = 63, and at min will be 0 so we can move the 1
  *  from the 0 to the 63 bit
  */
-void placeBitValue(int row, int col, int val, bitboard *bb) {
-  // COULD CHECK FOR VALID COORDS IN RANGE HERE
-  uint64_t mask = (uint64_t)1 << (col + ROWS * row);
+void placeBitValue(int bitIndex, int val, bitboard *bb) {
+  // uint64_t mask = (uint64_t)1 << (col + ROWS * row);
+  uint64_t mask = (uint64_t)1 << bitIndex;
   if (!val) {
     *bb = *bb & ~mask;
   } else {
     *bb = *bb | mask;
   }
 }
+
+int fromBoardCordsToBitIndex(int row, int col) { return col + ROWS * row; }
 
 void cleanChessBoard(chessBoard *chessBoard) {
   int i, j;
@@ -41,34 +48,52 @@ void cleanChessBoard(chessBoard *chessBoard) {
 
 void initChessBoard(chessBoard *chessBoard) {
   int i;
-
+  // TODO : CHANGE COORDS TO USE BIT INDEX AND AVOID THE INIT
   cleanChessBoard(chessBoard);
 
   for (i = 0; i < COLS; i++) {
-    placeBitValue(1, i, 1, &chessBoard->pieces[WHITE][PAWN]); // Modify directly
-    placeBitValue(6, i, 1, &chessBoard->pieces[BLACK][PAWN]); // Modify directly
+    placeBitValue(fromBoardCordsToBitIndex(1, i), 1,
+                  &chessBoard->pieces[WHITE][PAWN]); // Modify directly
+    placeBitValue(fromBoardCordsToBitIndex(6, i), 1,
+                  &chessBoard->pieces[BLACK][PAWN]); // Modify directly
   }
 
-  placeBitValue(0, 0, 1, &chessBoard->pieces[WHITE][ROOK]);
-  placeBitValue(0, 7, 1, &chessBoard->pieces[WHITE][ROOK]);
-  placeBitValue(7, 0, 1, &chessBoard->pieces[BLACK][ROOK]);
-  placeBitValue(7, 7, 1, &chessBoard->pieces[BLACK][ROOK]);
+  placeBitValue(fromBoardCordsToBitIndex(0, 0), 1,
+                &chessBoard->pieces[WHITE][ROOK]);
+  placeBitValue(fromBoardCordsToBitIndex(0, 7), 1,
+                &chessBoard->pieces[WHITE][ROOK]);
+  placeBitValue(fromBoardCordsToBitIndex(7, 0), 1,
+                &chessBoard->pieces[BLACK][ROOK]);
+  placeBitValue(fromBoardCordsToBitIndex(7, 7), 1,
+                &chessBoard->pieces[BLACK][ROOK]);
 
-  placeBitValue(0, 1, 1, &chessBoard->pieces[WHITE][KNIGHT]);
-  placeBitValue(0, 6, 1, &chessBoard->pieces[WHITE][KNIGHT]);
-  placeBitValue(7, 1, 1, &chessBoard->pieces[BLACK][KNIGHT]);
-  placeBitValue(7, 6, 1, &chessBoard->pieces[BLACK][KNIGHT]);
+  placeBitValue(fromBoardCordsToBitIndex(0, 1), 1,
+                &chessBoard->pieces[WHITE][KNIGHT]);
+  placeBitValue(fromBoardCordsToBitIndex(0, 6), 1,
+                &chessBoard->pieces[WHITE][KNIGHT]);
+  placeBitValue(fromBoardCordsToBitIndex(7, 1), 1,
+                &chessBoard->pieces[BLACK][KNIGHT]);
+  placeBitValue(fromBoardCordsToBitIndex(7, 6), 1,
+                &chessBoard->pieces[BLACK][KNIGHT]);
 
-  placeBitValue(0, 2, 1, &chessBoard->pieces[WHITE][BISHOP]);
-  placeBitValue(0, 5, 1, &chessBoard->pieces[WHITE][BISHOP]);
-  placeBitValue(7, 2, 1, &chessBoard->pieces[BLACK][BISHOP]);
-  placeBitValue(7, 5, 1, &chessBoard->pieces[BLACK][BISHOP]);
+  placeBitValue(fromBoardCordsToBitIndex(0, 2), 1,
+                &chessBoard->pieces[WHITE][BISHOP]);
+  placeBitValue(fromBoardCordsToBitIndex(0, 5), 1,
+                &chessBoard->pieces[WHITE][BISHOP]);
+  placeBitValue(fromBoardCordsToBitIndex(7, 2), 1,
+                &chessBoard->pieces[BLACK][BISHOP]);
+  placeBitValue(fromBoardCordsToBitIndex(7, 5), 1,
+                &chessBoard->pieces[BLACK][BISHOP]);
 
-  placeBitValue(0, 3, 1, &chessBoard->pieces[WHITE][QUEEN]);
-  placeBitValue(7, 3, 1, &chessBoard->pieces[BLACK][QUEEN]);
+  placeBitValue(fromBoardCordsToBitIndex(0, 3), 1,
+                &chessBoard->pieces[WHITE][QUEEN]);
+  placeBitValue(fromBoardCordsToBitIndex(7, 3), 1,
+                &chessBoard->pieces[BLACK][QUEEN]);
 
-  placeBitValue(0, 4, 1, &chessBoard->pieces[WHITE][KING]);
-  placeBitValue(7, 4, 1, &chessBoard->pieces[BLACK][KING]);
+  placeBitValue(fromBoardCordsToBitIndex(0, 4), 1,
+                &chessBoard->pieces[WHITE][KING]);
+  placeBitValue(fromBoardCordsToBitIndex(7, 4), 1,
+                &chessBoard->pieces[BLACK][KING]);
 }
 
 void placePieceRepresentationIntoBoardString(bitboard bb, char *br,

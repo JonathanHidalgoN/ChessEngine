@@ -37,7 +37,8 @@
 #define BISHOP 3
 #define KNIGHT 4
 #define ROOK 5
-#define LASTBIT (ROWS * COLS - 1)
+#define NUMBEROFSQUARES (ROWS * COLS)
+#define LASTBIT (NUMBEROFSQUARES - 1)
 
 // Will be using a bitboard representation
 typedef uint64_t bitboard;
@@ -46,7 +47,7 @@ typedef struct chessBoard {
 } chessBoard;
 void setBitboard0(bitboard *bb);
 void printBitboard(bitboard bb);
-void placeBitValue(int row, int col, int val, bitboard *bb);
+void placeBitValue(int bitIndex, int val, bitboard *bb);
 void initChessBoard(chessBoard *chessBoard);
 void placePieceRepresentationIntoBoardString(bitboard bb, char *br,
                                              char symbol);
