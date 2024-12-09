@@ -6,4 +6,5 @@ bitboard computePawnAttack(int bitIndex, int side);
 bitboard computeKnightAttack(int bitIndex);
 void fillPawnAttackTable(
     bitboard pawnAttackTable[NUMBEROFCOLORS][NUMBEROFSQUARES]);
+void fillKnightAttackTable(bitboard knightAttackTable[NUMBEROFSQUARES]);
 #endif

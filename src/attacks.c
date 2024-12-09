@@ -35,8 +35,8 @@ bitboard computePawnAttack(int bitIndex, int side) {
   uint64_t mask = (uint64_t)1 << bitIndex;
   // side == 1 means black
   if (side) {
-    attacks |= ((mask >> 7) & NOT_COL_7);
-    attacks |= ((mask >> 9) & NOT_COL_0);
+    attacks |= (mask >> 7) & NOT_COL_7;
+    attacks |= (mask >> 9) & NOT_COL_0;
   } else {
     attacks |= (mask << 7) & NOT_COL_7;
     attacks |= (mask << 9) & NOT_COL_0;
@@ -49,15 +49,14 @@ bitboard computePawnAttack(int bitIndex, int side) {
 bitboard computeKnightAttack(int bitIndex) {
   bitboard attacks = 0;
   uint64_t mask = (uint64_t)1 << bitIndex;
-  // attacks |= (bitboard <<7) & notAFile;
-  attacks |= (mask >> 17) & NOT_COL_0;
-  // attacks |= (mask ) &;
-  // attacks |= (mask) &;
-  // attacks |= (mask) &;
-  // attacks |= (mask) &;
-  // attacks |= (mask) &;
-  // attacks |= (mask) &;
-  // attacks |= (mask) &;
+  attacks |= (mask << 17) & NOT_COL_0;
+  attacks |= (mask << 10) & NOT_COL_01;
+  attacks |= (mask << 15) & NOT_COL_7;
+  attacks |= (mask << 6) & NOT_COL_67;
+  attacks |= (mask >> 17) & NOT_COL_7;
+  attacks |= (mask >> 10) & NOT_COL_67;
+  attacks |= (mask >> 15) & NOT_COL_0;
+  attacks |= (mask >> 6) & NOT_COL_01;
   if (DEBBUG) {
     printBitboard(attacks | mask);
   }
@@ -70,5 +69,11 @@ void fillPawnAttackTable(
     for (int j = 0; j < NUMBEROFSQUARES; j++) {
       pawnAttackTable[i][j] = computePawnAttack(j, i);
     }
+  }
+}
+
+void fillKnightAttackTable(bitboard knightAttackTable[NUMBEROFSQUARES]) {
+  for (int j = 0; j < NUMBEROFSQUARES; j++) {
+    knightAttackTable[j] = computeKnightAttack(j);
   }
 }
