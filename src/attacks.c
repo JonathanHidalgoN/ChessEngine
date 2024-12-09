@@ -26,12 +26,9 @@ const bitboard NOT_COL_7 = 9187201950435737471ULL;
 const bitboard NOT_ROW_0 = 18446744073709551360ULL;
 const bitboard NOT_ROW_7 = 72057594037927935ULL;
 
-// Attack tables
-bitboard pawnAttackTable[NUMBEROFCOLORS][NUMBEROFSQUARES];
-
-bitboard computePawnAttack(int row, int col, int side) {
+bitboard computePawnAttack(int bitIndex, int side) {
   bitboard attack = 0;
-  uint64_t mask = (uint64_t)1 << BOARD_INDEX(row, col);
+  uint64_t mask = (uint64_t)1 << bitIndex;
   // side == 1 means black
   if (side) {
     if (mask & NOT_COL_7)
@@ -50,9 +47,9 @@ bitboard computePawnAttack(int row, int col, int side) {
   return attack;
 }
 
-bitboard computeKingAttack(int row, int col) {
+bitboard computeKingAttack(int bitIndex) {
   bitboard attack = 0;
-  uint64_t mask = (uint64_t)1 << BOARD_INDEX(row, col);
+  uint64_t mask = (uint64_t)1 << bitIndex;
 
   if (DEBBUG) {
     printBitboard(attack | mask);
@@ -64,9 +61,7 @@ void fillPawnAttackTable(
     bitboard pawnAttackTable[NUMBEROFCOLORS][NUMBEROFSQUARES]) {
   for (int i = 0; i < NUMBEROFCOLORS; i++) {
     for (int j = 0; j < NUMBEROFSQUARES; j++) {
-      int row = (int)j / ROWS;
-      int col = j % COLS;
-      pawnAttackTable[i][j] = computePawnAttack(row, col, i);
+      pawnAttackTable[i][j] = computePawnAttack(j, i);
     }
   }
 }
