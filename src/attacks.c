@@ -26,6 +26,9 @@ const bitboard NOT_COL_7 = 9187201950435737471ULL;
 const bitboard NOT_ROW_0 = 18446744073709551360ULL;
 const bitboard NOT_ROW_7 = 72057594037927935ULL;
 
+// Attack tables
+bitboard pawnAttackTable[NUMBEROFCOLORS][NUMBEROFSQUARES];
+
 bitboard computePawnAttack(int row, int col, int side) {
   bitboard attack = 0;
   uint64_t mask = (uint64_t)1 << BOARD_INDEX(row, col);
@@ -55,4 +58,15 @@ bitboard computeKingAttack(int row, int col) {
     printBitboard(attack | mask);
   }
   return attack;
+}
+
+void fillPawnAttackTable(
+    bitboard pawnAttackTable[NUMBEROFCOLORS][NUMBEROFSQUARES]) {
+  for (int i = 0; i < NUMBEROFCOLORS; i++) {
+    for (int j = 0; j < NUMBEROFSQUARES; j++) {
+      int row = (int)j / ROWS;
+      int col = j % COLS;
+      pawnAttackTable[i][j] = computePawnAttack(row, col, i);
+    }
+  }
 }
