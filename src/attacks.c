@@ -84,3 +84,9 @@ void fillKnightAttackTable(bitboard knightAttackTable[NUMBEROFSQUARES]) {
     knightAttackTable[j] = computeKnightAttack(j);
   }
 }
+
+void fillKingAttackTable(bitboard kingAttackTable[NUMBEROFSQUARES]) {
+  for (int j = 0; j < NUMBEROFSQUARES; j++) {
+    kingAttackTable[j] = computeKingAttack(j);
+  }
+}
