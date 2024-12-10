@@ -98,6 +98,31 @@ bitboard maskBishopAttack(int bitIndex) {
   return attacks;
 }
 
+bitboard maskRookAttack(int bitIndex) {
+  bitboard attacks = 0;
+  int col = bitIndex % COLS;
+  int row = bitIndex / ROWS;
+  int i, j;
+  // Same as bishop, will be used in magic printBitboard
+  for (i = col + 1; i <= 6; i++) {
+    attacks |= (1ULL << (row * ROWS + i));
+  }
+  for (i = col - 1; i >= 1; i--) {
+    attacks |= (1ULL << (row * ROWS + i));
+  }
+  for (j = row + 1; j <= 6; j++) {
+    attacks |= (1ULL << (j * ROWS + col));
+  }
+  for (j = col - 1; j >= 1; j--) {
+    attacks |= (1ULL << (j * ROWS + col));
+  }
+  if (DEBBUG) {
+    uint64_t mask = (uint64_t)1 << bitIndex;
+    printBitboard(attacks | mask);
+  }
+  return attacks;
+}
+
 void fillPawnAttackTable(
     bitboard pawnAttackTable[NUMBEROFCOLORS][NUMBEROFSQUARES]) {
   for (int i = 0; i < NUMBEROFCOLORS; i++) {
