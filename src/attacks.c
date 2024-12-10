@@ -70,6 +70,34 @@ bitboard computeKingAttack(int bitIndex) {
   }
   return attacks;
 }
+
+bitboard maskBishopAttack(int bitIndex) {
+  bitboard attacks = 0;
+  int col = bitIndex % COLS;
+  int row = bitIndex / ROWS;
+  int i, j;
+  // This is short by 1 square but this bitboard will be use in magic
+  // bitboard right now I dont fully undertand how it works for now I will
+  // implement by myself as much as I can and copy the rest
+  for (i = col + 1, j = row + 1; i <= 6 && j <= 6; i++, j++) {
+    attacks |= (1ULL << (j * ROWS + i));
+  }
+  for (i = col - 1, j = row + 1; i >= 1 && j <= 6; i--, j++) {
+    attacks |= (1ULL << (j * ROWS + i));
+  }
+  for (i = col + 1, j = row - 1; i <= 6 && j >= 1; i++, j--) {
+    attacks |= (1ULL << (j * ROWS + i));
+  }
+  for (i = col - 1, j = row - 1; i >= 1 && j >= 1; i--, j--) {
+    attacks |= (1ULL << (j * ROWS + i));
+  }
+  if (DEBBUG) {
+    uint64_t mask = (uint64_t)1 << bitIndex;
+    printBitboard(attacks | mask);
+  }
+  return attacks;
+}
+
 void fillPawnAttackTable(
     bitboard pawnAttackTable[NUMBEROFCOLORS][NUMBEROFSQUARES]) {
   for (int i = 0; i < NUMBEROFCOLORS; i++) {
