@@ -52,4 +52,5 @@ void initChessBoard(chessBoard *chessBoard);
 void placePieceRepresentationIntoBoardString(bitboard bb, char *br,
                                              char symbol);
 void printChessBoard(chessBoard *chessBoard);
+int fromBoardCordsToBitIndex(int row, int col);
 #endif
