@@ -75,23 +75,59 @@ bitboard computeBishopAttack(int bitIndex, bitboard blockers) {
   bitboard attacks = 0;
   int col = bitIndex % COLS;
   int row = bitIndex / ROWS;
-  const int directions[4][2] = {{1, 1}, {-1, 1}, {1, -1}, {-1, -1}};
+  int i, j;
+  for (i = col + 1, j = row + 1; i <= 7 && j <= 7; i++, j++) {
+    attacks |= (1ULL << (j * ROWS + i));
+    if ((1ULL << (j * ROWS + i)) & blockers)
+      break;
+  }
+  for (i = col - 1, j = row + 1; i >= 0 && j <= 7; i--, j++) {
+    attacks |= (1ULL << (j * ROWS + i));
+    if ((1ULL << (j * ROWS + i)) & blockers)
+      break;
+  }
+  for (i = col + 1, j = row - 1; i <= 7 && j >= 0; i++, j--) {
+    attacks |= (1ULL << (j * ROWS + i));
+    if ((1ULL << (j * ROWS + i)) & blockers)
+      break;
+  }
+  for (i = col - 1, j = row - 1; i >= 0 && j >= 0; i--, j--) {
+    attacks |= (1ULL << (j * ROWS + i));
+    if ((1ULL << (j * ROWS + i)) & blockers)
+      break;
+  }
+  if (DEBBUG) {
+    uint64_t mask = (uint64_t)1 << bitIndex;
+    printBitboard(attacks | mask);
+  }
+  return attacks;
+}
 
-  for (int d = 0; d < 4; d++) {
-    int dx = directions[d][0];
-    int dy = directions[d][1];
-
-    for (int i = col + dx, j = row + dy;
-         i >= 0 && i < COLS && j >= 0 && j < ROWS; i += dx, j += dy) {
-
-      int attackSquare = (j * ROWS + i);
-      bitboard attack = (1ULL << attackSquare);
-
-      attacks |= attack;
-
-      if (attack & blockers)
-        break;
-    }
+bitboard computeRookAttack(int bitIndex, int blockers) {
+  bitboard attacks = 0;
+  int col = bitIndex % COLS;
+  int row = bitIndex / ROWS;
+  int i, j;
+  // Same as bishop, will be used in magic bitboard implementation
+  for (i = col + 1; i <= 7; i++) {
+    attacks |= (1ULL << (row * ROWS + i));
+    if ((1ULL << (row * ROWS + i)) & blockers)
+      break;
+  }
+  for (i = col - 1; i >= 0; i--) {
+    attacks |= (1ULL << (row * ROWS + i));
+    if ((1ULL << (row * ROWS + i)) & blockers)
+      break;
+  }
+  for (j = row + 1; j <= 7; j++) {
+    attacks |= (1ULL << (j * ROWS + col));
+    if ((1ULL << (j * ROWS + col)) & blockers)
+      break;
+  }
+  for (j = col - 1; j >= 0; j--) {
+    attacks |= (1ULL << (j * ROWS + col));
+    if ((1ULL << (j * ROWS + col)) & blockers)
+      break;
   }
   if (DEBBUG) {
     uint64_t mask = (uint64_t)1 << bitIndex;
@@ -104,22 +140,21 @@ bitboard maskBishopAttack(int bitIndex) {
   bitboard attacks = 0;
   int col = bitIndex % COLS;
   int row = bitIndex / ROWS;
+  int i, j;
   // This is short by 1 square but this bitboard will be use in magic
   // bitboard right now I dont fully undertand how it works for now I will
   // implement by myself as much as I can and copy the rest
-  const int directions[4][2] = {{1, 1}, {-1, 1}, {1, -1}, {-1, -1}};
-
-  for (int d = 0; d < 4; d++) {
-    int dx = directions[d][0];
-    int dy = directions[d][1];
-
-    for (int i = col + dx, j = row + dy;
-         i >= 0 && i < COLS - 1 && j >= 0 && j < ROWS - 1; i += dx, j += dy) {
-
-      bitboard attack = (1ULL << (j * ROWS + i));
-
-      attacks |= attack;
-    }
+  for (i = col + 1, j = row + 1; i <= 6 && j <= 6; i++, j++) {
+    attacks |= (1ULL << (j * ROWS + i));
+  }
+  for (i = col - 1, j = row + 1; i >= 1 && j <= 6; i--, j++) {
+    attacks |= (1ULL << (j * ROWS + i));
+  }
+  for (i = col + 1, j = row - 1; i <= 6 && j >= 1; i++, j--) {
+    attacks |= (1ULL << (j * ROWS + i));
+  }
+  for (i = col - 1, j = row - 1; i >= 1 && j >= 1; i--, j--) {
+    attacks |= (1ULL << (j * ROWS + i));
   }
   if (DEBBUG) {
     uint64_t mask = (uint64_t)1 << bitIndex;
