@@ -45,12 +45,10 @@ int testPlaceBitValue() {
   return 1;
 }
 
-int testBoard() {
+void testBoard() {
   int resultTestSetBitboard0 = testSetBitboard0();
   int resultTestPlaceBitValue = testPlaceBitValue();
   if (resultTestSetBitboard0 && resultTestPlaceBitValue) {
     printf("Test board sucessfully \n");
-    return 1;
   }
-  return 0;
 }
