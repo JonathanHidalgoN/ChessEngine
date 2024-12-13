@@ -2,6 +2,8 @@
 #include <stdint.h>
 #include <stdio.h>
 
+#define count_bits(bitboard) __builtin_popcountll(bitboard)
+
 void setBitboard0(bitboard *bb) { (*bb) = 0; }
 void printBitboard(bitboard bb) {
   int i, j;
