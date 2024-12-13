@@ -39,6 +39,7 @@
 #define ROOK 5
 #define NUMBEROFSQUARES (ROWS * COLS)
 #define LASTBIT (NUMBEROFSQUARES - 1)
+#define count_bits(bitboard) __builtin_popcountll(bitboard)
 
 // Will be using a bitboard representation
 typedef uint64_t bitboard;
