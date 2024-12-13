@@ -19,6 +19,15 @@ int testKnightAttack(int bitIndex, bitboard result, char testNumber) {
   return 1;
 }
 
+int testKingAttack(int bitIndex, bitboard result, char testNumber) {
+  bitboard bb = computeKingAttack(bitIndex);
+  if (bb != result) {
+    printf("Error in function compute King attack case %c \n", testNumber);
+    return 0;
+  }
+  return 1;
+}
+
 int testPawnAttacks() {
   int c0 = testPawnAttack(9, 1, (1ULL << 0) + (1ULL << 2), '0');
   int c1 = testPawnAttack(1, 1, 0, '1');
@@ -38,10 +47,19 @@ int testKnightAttacks() {
   return c0 && c1 && c2 && c3;
 }
 
+int testKingAttacks() {
+  int c0 = testKingAttack(0, (1ULL << 1) + (1ULL << 8) + (1ULL << 9), '0');
+  int c1 = testKingAttack(7, (1ULL << 6) + (1ULL << 15) + (1ULL << 14), '1');
+  int c2 = testKingAttack(56, (1ULL << 57) + (1ULL << 48) + (1ULL << 49), '2');
+  int c3 = testKingAttack(63, (1ULL << 62) + (1ULL << 55) + (1ULL << 54), '3');
+  return c0 && c1 && c2 && c3;
+}
+
 void testAttacks() {
   int resultTestPawnAttack = testPawnAttacks();
   int resultTestKnightAttack = testKnightAttacks();
-  if (resultTestPawnAttack && resultTestKnightAttack) {
+  int resultTestKingAttack = testKingAttacks();
+  if (resultTestPawnAttack && resultTestKnightAttack && resultTestKingAttack) {
     printf("Test attacks successfully \n");
   }
 }
