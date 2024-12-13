@@ -40,6 +40,7 @@
 #define NUMBEROFSQUARES (ROWS * COLS)
 #define LASTBIT (NUMBEROFSQUARES - 1)
 #define count_bits(bitboard) __builtin_popcountll(bitboard)
+#define fromBoardCordsToBitIndex(row, col) ((col) + ROWS * (row))
 
 // Will be using a bitboard representation
 typedef uint64_t bitboard;
@@ -53,5 +54,4 @@ void initChessBoard(chessBoard *chessBoard);
 void placePieceRepresentationIntoBoardString(bitboard bb, char *br,
                                              char symbol);
 void printChessBoard(chessBoard *chessBoard);
-int fromBoardCordsToBitIndex(int row, int col);
 #endif

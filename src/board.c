@@ -2,8 +2,6 @@
 #include <stdint.h>
 #include <stdio.h>
 
-#define count_bits(bitboard) __builtin_popcountll(bitboard)
-
 void setBitboard0(bitboard *bb) { (*bb) = 0; }
 void printBitboard(bitboard bb) {
   int i, j;
@@ -36,8 +34,6 @@ void placeBitValue(int bitIndex, int val, bitboard *bb) {
     *bb = *bb | mask;
   }
 }
-
-int fromBoardCordsToBitIndex(int row, int col) { return col + ROWS * row; }
 
 void cleanChessBoard(chessBoard *chessBoard) {
   int i, j;
