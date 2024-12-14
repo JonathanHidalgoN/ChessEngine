@@ -39,9 +39,9 @@
 #define ROOK 5
 #define NUMBEROFSQUARES (ROWS * COLS)
 #define LASTBIT (NUMBEROFSQUARES - 1)
-#define count_bits(bitboard) __builtin_popcountll(bitboard)
+#define countBits(bitboard) __builtin_popcountll(bitboard)
 #define fromBoardCordsToBitIndex(row, col) ((col) + ROWS * (row))
-
+#define getLSBIndex(bitboard) ((bitboard) ? __builtin_ctzll(bitboard) : -1)
 // Will be using a bitboard representation
 typedef uint64_t bitboard;
 typedef struct chessBoard {
