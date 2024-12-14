@@ -13,4 +13,5 @@ void fillPawnAttackTable(
     bitboard pawnAttackTable[NUMBEROFCOLORS][NUMBEROFSQUARES]);
 void fillKnightAttackTable(bitboard knightAttackTable[NUMBEROFSQUARES]);
 void fillKingAttackTable(bitboard kingAttackTable[NUMBEROFSQUARES]);
+bitboard setOccupancy(int index, int bitsInMask, bitboard attackMask);
 #endif

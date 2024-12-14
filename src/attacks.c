@@ -1,5 +1,5 @@
 #include "../include/attacks.h"
-#define DEBBUG 1
+#define DEBBUG 0
 
 // THIS CONST REPRESENT THE BOARD BELOW THEM
 const bitboard NOT_COL_0 = 18374403900871474942ULL;
@@ -206,4 +206,27 @@ void fillKingAttackTable(bitboard kingAttackTable[NUMBEROFSQUARES]) {
   for (int j = 0; j < NUMBEROFSQUARES; j++) {
     kingAttackTable[j] = computeKingAttack(j);
   }
+}
+
+/* Given an attack mask this computes all the possible permutations(turn or or
+off a bit on attack mask) up to an index for example if we have this attack mask
+for a rook on a1 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0
+1 0 0 0 0 0 0 0
+1 0 0 0 0 0 0 0
+1 0 0 0 0 0 0 0
+x 1 1 1 1 1 1 0
+We have 12 bits in the mask with n bits we can represent from 0 to 2**n - 1
+thats why you will see 2**n -1 in the index
+This function will compute the index permutations of the board show above
+*/
+bitboard setOccupancy(int index, int bitsInMask, bitboard attackMask) {
+  // TODO : Here is some wasted computation benchmark maybe is worth to optimize
+  bitboard occupancy = 0;
+  for (int i = 0; i < bitsInMask; i++) {
+    int bitIndex = getLSBIndex(attackMask);
+    placeBitValue(bitIndex, 0, &attackMask);
+    if (index & (1 << i))
+      occupancy |= (1ULL << bitIndex);
+  }
+  return occupancy;
 }
