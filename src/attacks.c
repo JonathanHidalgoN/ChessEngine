@@ -1,4 +1,5 @@
 #include "../include/attacks.h"
+#include <stdint.h>
 #define DEBBUG 0
 
 // THIS CONST REPRESENT THE BOARD BELOW THEM
@@ -243,19 +244,4 @@ bitboard setOccupancy(int index, int bitsInMask, bitboard attackMask) {
       occupancy |= (1ULL << bitIndex);
   }
   return occupancy;
-}
-
-/*
- * Pseudo random number generator
- * source :
- * https://www.youtube.com/watch?v=JjFYmkUhLN4&list=PLmN0neTso3Jxh8ZIylk74JpwfiWNI76Cs&index=13
- */
-unsigned int getRandomNumber() {
-  unsigned int state = 1804289383;
-  unsigned int number = state;
-  number ^= number << 13;
-  number ^= number >> 17;
-  number ^= number << 5;
-  state = number;
-  return number;
 }
