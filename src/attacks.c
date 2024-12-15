@@ -22,6 +22,18 @@ const bitboard NOT_ROW_7 = 72057594037927935ULL;
 const bitboard NOT_ROW_67 = 281474976710655ULL;
 const bitboard NOT_ROW_01 = 18446744073709486080ULL;
 
+// Max number of possible attacks per square for example a rook in h1 can attack
+// up to 12 squares
+const int occupancyRookMap[NUMBEROFSQUARES] = {
+    12, 11, 11, 11, 11, 11, 11, 12, 11, 10, 11, 11, 11, 11, 11, 12,
+    10, 9,  10, 11, 11, 11, 11, 12, 9,  8,  9,  10, 11, 11, 11, 12,
+    8,  7,  8,  9,  10, 11, 11, 12, 7,  6,  7,  8,  9,  10, 11, 12,
+    6,  5,  6,  7,  8,  9,  10, 12, 6,  5,  6,  7,  8,  9,  10, 12};
+const int occupancyBishopMap[NUMBEROFSQUARES] = {
+    6, 5, 5, 5, 5, 5, 5, 6, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 7, 7, 7, 7,
+    5, 5, 5, 5, 7, 9, 9, 7, 5, 5, 5, 5, 7, 9, 9, 7, 5, 5, 5, 5, 7, 7,
+    7, 7, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 6, 5, 5, 5, 5, 5, 5, 6};
+
 bitboard computePawnAttack(int bitIndex, int side) {
   bitboard attacks = 0;
   uint64_t mask = (uint64_t)1 << bitIndex;
@@ -218,6 +230,8 @@ x 1 1 1 1 1 1 0
 We have 12 bits in the mask with n bits we can represent from 0 to 2**n - 1
 thats why you will see 2**n -1 in the index
 This function will compute the index permutations of the board show above
+source :
+https://www.youtube.com/watch?v=gaXLyW-yMvg&list=PLmN0neTso3Jxh8ZIylk74JpwfiWNI76Cs&index=13
 */
 bitboard setOccupancy(int index, int bitsInMask, bitboard attackMask) {
   // TODO : Here is some wasted computation benchmark maybe is worth to optimize
