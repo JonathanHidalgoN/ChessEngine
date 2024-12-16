@@ -23,6 +23,6 @@ static uint64_t getRandom64UNumber() {
   return n1 | (n2 << 16) | (n3 << 32) | (n4 << 48);
 }
 
-uint64_t getMagicNumber() {
+uint64_t getMagicNumberCandidate() {
   return getRandom64UNumber() & getRandom64UNumber() & getRandom64UNumber();
 }
