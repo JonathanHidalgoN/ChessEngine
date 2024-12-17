@@ -1,5 +1,7 @@
 #include "../include/attacks.h"
 #include <stdint.h>
+#include <stdio.h>
+#include <string.h>
 #define DEBBUG 0
 
 // THIS CONST REPRESENT THE BOARD BELOW THEM
@@ -34,6 +36,52 @@ const int occupancyBishopMap[NUMBEROFSQUARES] = {
     6, 5, 5, 5, 5, 5, 5, 6, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 7, 7, 7, 7,
     5, 5, 5, 5, 7, 9, 9, 7, 5, 5, 5, 5, 7, 9, 9, 7, 5, 5, 5, 5, 7, 7,
     7, 7, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 6, 5, 5, 5, 5, 5, 5, 6};
+uint64_t rookMagicNumbers[NUMBEROFSQUARES] = {
+    0x84000200000001eULL,  0x42c0015000000028ULL, 0x1002005001400000ULL,
+    0x2810040800000100ULL, 0x2200041008200000ULL, 0x8840010042000000ULL,
+    0x880022180000000ULL,  0x98060280800000ULL,   0x400404000000001ULL,
+    0x844064000000003ULL,  0x8020a11100000000ULL, 0x1004a0000208ULL,
+    0x11802400000002ULL,   0x441020200000000ULL,  0x4040491000000ULL,
+    0x2c00880000000ULL,    0x600080804000001ULL,  0x809004000000024ULL,
+    0x9910002000000008ULL, 0x8025001000000000ULL, 0x3208404b00000ULL,
+    0x4000020010080000ULL, 0x808100600004000ULL,  0xb4011000822000ULL,
+    0x1080220501000023ULL, 0x10400501008000ULL,   0x60008880001082ULL,
+    0x8248c026b000000ULL,  0x4c138088000032cULL,  0xc10c000488000208ULL,
+    0x110a0001000ULL,      0x405310001000ULL,     0x1000000010100000ULL,
+    0x8000029002000200ULL, 0x401040081000001ULL,  0x1480000000620ULL,
+    0x8109a94a00000102ULL, 0x40041100a0000406ULL, 0x2020410280080004ULL,
+    0x828a68000002ULL,     0x811c300000430101ULL, 0x20000008800402cULL,
+    0x1010042000004020ULL, 0x3001040014800a20ULL, 0x8300892400000100ULL,
+    0x1329081000093ULL,    0x2088b0420000010ULL,  0x80c0308a09040000ULL,
+    0x20028600208ULL,      0x4001282000500208ULL, 0x18814000051080ULL,
+    0x881300280004100ULL,  0x401023080020009ULL,  0x4020801126008000ULL,
+    0x2012140018c0000ULL,  0xa0a50800420000ULL,   0x8100802000a8001ULL,
+    0x40000190000000a1ULL, 0x8001000100102021ULL, 0x201088404081008ULL,
+    0x2810324884c02000ULL, 0x480218c010502240ULL, 0x63084008a00000ULL,
+    0xc024804002ULL};
+uint64_t bishopMagicNumbers[NUMBEROFSQUARES] = {
+    0x202100400840040ULL,  0x5004108411002300ULL, 0x8008820410200000ULL,
+    0x1e080a0820000580ULL, 0x8284042014820010ULL, 0x6829101210000004ULL,
+    0x2000a80402200000ULL, 0x81010820840400ULL,   0x400300288031420ULL,
+    0x2e00200431020030ULL, 0x80821000808116c0ULL, 0x2008041d020b1082ULL,
+    0x2004340423000800ULL, 0x4082250100001ULL,    0x404108201064ULL,
+    0x80020042280402ULL,   0x6004002020041108ULL, 0x4010000404082049ULL,
+    0x90005a040a1820ULL,   0x100a000c202200a2ULL, 0xc064202202011420ULL,
+    0x20005018e0110ULL,    0x10208208201a000ULL,  0x1881f200840191ULL,
+    0x20224009080100ULL,   0x9914030020024400ULL, 0x18030111100cc205ULL,
+    0x480a040008010820ULL, 0x2194082044002002ULL, 0x2008a20001004200ULL,
+    0x40908041041004ULL,   0x881002200540404ULL,  0x4001082002082101ULL,
+    0x8110408880880ULL,    0x8000404040080200ULL, 0x200020082180080ULL,
+    0x1184440400114100ULL, 0xc220008020110412ULL, 0x4088084040090100ULL,
+    0x8822104100121080ULL, 0x100111884008200aULL, 0x2844040288820200ULL,
+    0x90901088003010ULL,   0x1000a218000400ULL,   0x1102010420204ULL,
+    0x8414a3483000200ULL,  0x6410849901420400ULL, 0x201080200901040ULL,
+    0x204880808050002ULL,  0x1001008201210000ULL, 0x16a6300a890040aULL,
+    0x8049000441108600ULL, 0x2212002060410044ULL, 0x100086308020020ULL,
+    0x484241408020421ULL,  0x105084028429c085ULL, 0x4282480801080cULL,
+    0x81c098488088240ULL,  0x1400000090480820ULL, 0x4444000030208810ULL,
+    0x1020142010820200ULL, 0x2234802004018200ULL, 0xc2040450820a00ULL,
+    0x2101021090020ULL};
 
 bitboard computePawnAttack(int bitIndex, int side) {
   bitboard attacks = 0;
@@ -221,21 +269,16 @@ void fillKingAttackTable(bitboard kingAttackTable[NUMBEROFSQUARES]) {
   }
 }
 
-/* Given an attack mask this computes all the possible permutations(turn or or
-off a bit on attack mask) up to an index for example if we have this attack mask
-for a rook on a1 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0
-1 0 0 0 0 0 0 0
-1 0 0 0 0 0 0 0
-1 0 0 0 0 0 0 0
-x 1 1 1 1 1 1 0
-We have 12 bits in the mask with n bits we can represent from 0 to 2**n - 1
-thats why you will see 2**n -1 in the index
-This function will compute the index permutations of the board show above
-source :
-https://www.youtube.com/watch?v=gaXLyW-yMvg&list=PLmN0neTso3Jxh8ZIylk74JpwfiWNI76Cs&index=13
-*/
+/*
+ * This function computes all possible permutations of the 1's bits in
+ *bitsInMask source :
+ *https://www.youtube.com/watch?v=UnEu5GOiSEs&list=PLmN0neTso3Jxh8ZIylk74JpwfiWNI76Cs&index=15
+ * */
 bitboard setOccupancy(int index, int bitsInMask, bitboard attackMask) {
-  // TODO : Here is some wasted computation benchmark maybe is worth to optimize
+  // TODO : Here is some wasted computation, benchmark maybe is worth to
+  // optimize
+  // TODO : Change name of index to number of combinations or something like
+  // that
   bitboard occupancy = 0;
   for (int i = 0; i < bitsInMask; i++) {
     int bitIndex = getLSBIndex(attackMask);
@@ -245,3 +288,47 @@ bitboard setOccupancy(int index, int bitsInMask, bitboard attackMask) {
   }
   return occupancy;
 }
+
+uint64_t findMagicNumber(int bitIndex, int relevantBits, int pieceType) {
+  int i, f, j;
+  const int COMBINATIONS_OCCUPANCIES = 4096;
+  const int NUMBER_OF_TRIES = 100000000;
+  bitboard occupancies[COMBINATIONS_OCCUPANCIES];
+  bitboard attacks[COMBINATIONS_OCCUPANCIES];
+  bitboard usedAttacks[COMBINATIONS_OCCUPANCIES];
+  bitboard attackMask =
+      pieceType ? maskBishopAttack(bitIndex) : maskRookAttack(bitIndex);
+  int numberOfPossibleBoards = 1 << relevantBits;
+  for (i = 0; i < numberOfPossibleBoards; i++) {
+    occupancies[i] = setOccupancy(i, relevantBits, attackMask);
+    attacks[i] = pieceType ? computeBishopAttack(bitIndex, occupancies[i])
+                           : computeRookAttack(bitIndex, occupancies[i]);
+  }
+  for (j = 0; j < NUMBER_OF_TRIES; j++) {
+    uint64_t mn = getMagicNumberCandidate();
+    if (countBits((attackMask * mn) & 0xFF00000000000000) < 6)
+      continue;
+    memset(usedAttacks, 0ULL, sizeof(usedAttacks));
+    for (i = 0, f = 0; !f && i < numberOfPossibleBoards; i++) {
+      int magicIndex = (int)((occupancies[i] * mn) >> (64 - relevantBits));
+      if (usedAttacks[magicIndex] == 0ULL)
+        usedAttacks[magicIndex] = attacks[i];
+      else if (usedAttacks[magicIndex] != attacks[i])
+        f = 1;
+    }
+    if (!f)
+      return mn;
+  }
+  printf("failed \n");
+  return 0ULL;
+}
+
+// void initMagiNumbers() {
+//   for (int i = 0; i < 64; i++) {
+//     printf("0x%lxULL,\n", findMagicNumber(i, occupancyRookMap[i], 0));
+//   }
+//   printf("\n\n");
+//   for (int i = 0; i < 64; i++) {
+//     printf("0x%lxULL,\n", findMagicNumber(i, occupancyBishopMap[i], 1));
+//   }
+// }
