@@ -1,10 +1,11 @@
 CC = gcc
 CFLAGS = -Wall -Wextra -Iinclude
-SRC =src/board.c src/attacks.c test/testBoard.c test/testAttacks.c main.c
+#TODO: check how to remove test from here so when making test are not compile
+SRC =src/board.c src/attacks.c src/random.c test/testBoard.c test/testAttacks.c main.c
 BUILD_DIR = build
-OBJ = $(patsubst %.c,$(BUILD_DIR)/%.o,$(SRC))
 TARGET = $(BUILD_DIR)/chess_game
 
+OBJ = $(patsubst %.c,$(BUILD_DIR)/%.o,$(SRC))
 # Create build directory if it doesn't exist
 $(shell mkdir -p $(BUILD_DIR))
 
