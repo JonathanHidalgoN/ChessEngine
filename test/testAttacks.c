@@ -65,8 +65,19 @@ int testRookAttacks() {
   int c3 = testRookAttack(63, bb, 9187484529235886208ULL, '3');
   int c4 = testRookAttack(20, bb, 1157442765423841296, '4');
   // With blockers
-  bb = 0ULL + (1ULL << 1) + (1ULL << 8);
-  return c0 && c1 && c2 && c3 && c4;
+  bb = BIT(1) + BIT(8);
+  int c5 = testRookAttack(0, bb, BIT(1) + BIT(8), '5');
+  bb = BIT(6) + BIT(15);
+  int c6 = testRookAttack(7, bb, BIT(6) + BIT(15), '6');
+  bb = BIT(57) + BIT(48);
+  int c7 = testRookAttack(56, bb, BIT(57) + BIT(48), '7');
+  bb = BIT(62) + BIT(55);
+  int c8 = testRookAttack(63, bb, BIT(62) + BIT(55), '8');
+  bb = BIT(19) + BIT(21) + BIT(28) + BIT(12);
+  int c9 = testRookAttack(20, bb, BIT(19) + BIT(21) + BIT(28) + BIT(12), '9');
+  bb = BIT(31) + BIT(45) + BIT(21);
+  int c10 = testRookAttack(29, bb, 35325554458624, 'a');
+  return c0 && c1 && c2 && c3 && c4 && c5 && c6 && c7 && c8 && c9 && c10;
 }
 
 #define BIT(n) (1ULL << (n))
