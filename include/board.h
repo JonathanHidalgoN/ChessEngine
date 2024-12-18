@@ -49,10 +49,6 @@ typedef struct chessBoard {
 } chessBoard;
 
 /**
-  Empty the birboard(set all bits to 0)
- */
-void setBitboard0(bitboard *bb);
-/**
   print the bitboard
  */
 void printBitboard(bitboard bb);

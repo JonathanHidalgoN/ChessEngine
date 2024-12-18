@@ -2,7 +2,6 @@
 #include <stdint.h>
 #include <stdio.h>
 
-void setBitboard0(bitboard *bb) { (*bb) = 0; }
 void printBitboard(bitboard bb) {
   int i, j;
   printf("\n");
@@ -39,7 +38,7 @@ void cleanChessBoard(chessBoard *chessBoard) {
   int i, j;
   for (i = 0; i < NUMBEROFCOLORS; i++) {
     for (j = 0; j < NUMBEROFDIFFERENTPIECES; j++) {
-      setBitboard0(&chessBoard->pieces[i][j]);
+      chessBoard->pieces[i][j] = 0ULL;
     }
   }
 }

@@ -1,22 +1,6 @@
 #include "test.h"
 #include <stdio.h>
 
-int testSetBitboard0() {
-  bitboard bb = 1234;
-  setBitboard0(&bb);
-  if (bb) {
-    printf("Error in function setBitboard0 case 0\n");
-    return 0;
-  }
-  bb = 0;
-  setBitboard0(&bb);
-  if (bb) {
-    printf("Error in function setBitboard0 case 1\n");
-    return 0;
-  }
-  return 1;
-}
-
 int testPlaceBitValue() {
   bitboard bb = 0;
   placeBitValue(0, 0, &bb);
@@ -46,9 +30,8 @@ int testPlaceBitValue() {
 }
 
 void testBoard() {
-  int resultTestSetBitboard0 = testSetBitboard0();
   int resultTestPlaceBitValue = testPlaceBitValue();
-  if (resultTestSetBitboard0 && resultTestPlaceBitValue) {
+  if (resultTestPlaceBitValue) {
     printf("Test board sucessfully \n");
   }
 }
