@@ -53,8 +53,11 @@ void fillKnightAttackTable(bitboard knightAttackTable[NUMBEROFSQUARES]);
 Populate the pieceAttack table
  */
 void fillKingAttackTable(bitboard kingAttackTable[NUMBEROFSQUARES]);
-/**
- */
+/*
+This function computes all index(possible) permutations of the bitsInMask
+1's bits in attackMask source :
+https://www.youtube.com/watch?v=UnEu5GOiSEs&list=PLmN0neTso3Jxh8ZIylk74JpwfiWNI76Cs&index=15
+ * */
 bitboard setOccupancy(int index, int bitsInMask, bitboard attackMask);
 /**
 Populate the pieceAttack table
