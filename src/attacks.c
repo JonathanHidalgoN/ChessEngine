@@ -92,8 +92,8 @@ bitboard computePawnAttack(int bitIndex, int side) {
   bitboard attacks = 0;
   uint64_t mask = (uint64_t)1 << bitIndex;
   // side == 1 means black
-  attacks |= (mask >> 9) & NOT_COL_7;
   if (side) {
+    attacks |= (mask >> 9) & NOT_COL_7;
     attacks |= (mask >> 7) & NOT_COL_0;
   } else {
     attacks |= (mask << 7) & NOT_COL_7;
@@ -174,7 +174,6 @@ bitboard computeRookAttack(int bitIndex, bitboard blockers) {
   int col = bitIndex % COLS;
   int row = bitIndex / ROWS;
   int i, j;
-  // Same as bishop, will be used in magic bitboard implementation
   for (i = col + 1; i <= 7; i++) {
     attacks |= (1ULL << (row * ROWS + i));
     if ((1ULL << (row * ROWS + i)) & blockers)
@@ -190,7 +189,7 @@ bitboard computeRookAttack(int bitIndex, bitboard blockers) {
     if ((1ULL << (j * ROWS + col)) & blockers)
       break;
   }
-  for (j = col - 1; j >= 0; j--) {
+  for (j = row - 1; j >= 0; j--) {
     attacks |= (1ULL << (j * ROWS + col));
     if ((1ULL << (j * ROWS + col)) & blockers)
       break;
