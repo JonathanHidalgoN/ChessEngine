@@ -46,7 +46,7 @@ int testKingAttack(int bitIndex, bitboard result, char testNumber) {
 
 int testRookAttack(int bitIndex, bitboard board, bitboard result,
                    char testNumber) {
-  bitboard bb = computeRookAttack(0, board);
+  bitboard bb = computeRookAttack(bitIndex, board);
   if (bb != result) {
     printf("Error in function compute Rook attacks case %c \n", testNumber);
     showDiff(bb, result);
@@ -58,9 +58,9 @@ int testRookAttack(int bitIndex, bitboard board, bitboard result,
 int testRookAttacks() {
   bitboard bb = 0ULL;
   int c0 = testRookAttack(0, bb, 72340172838076926ULL, '0');
-  int c1 = testRookAttack(7, bb, 9259542123305130174ULL, '1');
-  int c2 = testRookAttack(56, bb, 72340172838076927ULL, '2');
-  int c3 = testRookAttack(63, bb, 9259542123305130175ULL, '3');
+  int c1 = testRookAttack(7, bb, 9259542123273814143ULL, '1');
+  int c2 = testRookAttack(56, bb, 18302911464433844481ULL, '2');
+  int c3 = testRookAttack(63, bb, 9187484529235886208ULL, '3');
   return c0 && c1 && c2 && c3;
 }
 
