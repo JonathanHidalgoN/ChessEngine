@@ -59,6 +59,7 @@ uint64_t rookMagicNumbers[NUMBEROFSQUARES] = {
     0x40000190000000a1ULL, 0x8001000100102021ULL, 0x201088404081008ULL,
     0x2810324884c02000ULL, 0x480218c010502240ULL, 0x63084008a00000ULL,
     0xc024804002ULL};
+
 uint64_t bishopMagicNumbers[NUMBEROFSQUARES] = {
     0x202100400840040ULL,  0x5004108411002300ULL, 0x8008820410200000ULL,
     0x1e080a0820000580ULL, 0x8284042014820010ULL, 0x6829101210000004ULL,
@@ -142,26 +143,35 @@ bitboard computeBishopAttack(int bitIndex, bitboard blockers) {
   int col = bitIndex % COLS;
   int row = bitIndex / ROWS;
   int i, j;
+
+  // Northeast direction
   for (i = col + 1, j = row + 1; i <= 7 && j <= 7; i++, j++) {
-    attacks |= (1ULL << (j * ROWS + i));
-    if ((1ULL << (j * ROWS + i)) & blockers)
+    attacks |= (1ULL << BOARD_INDEX(j, i));
+    if ((1ULL << BOARD_INDEX(j, i)) & blockers)
       break;
   }
+
+  // Northwest direction
   for (i = col - 1, j = row + 1; i >= 0 && j <= 7; i--, j++) {
-    attacks |= (1ULL << (j * ROWS + i));
-    if ((1ULL << (j * ROWS + i)) & blockers)
+    attacks |= (1ULL << BOARD_INDEX(j, i));
+    if ((1ULL << BOARD_INDEX(j, i)) & blockers)
       break;
   }
+
+  // Southeast direction
   for (i = col + 1, j = row - 1; i <= 7 && j >= 0; i++, j--) {
-    attacks |= (1ULL << (j * ROWS + i));
-    if ((1ULL << (j * ROWS + i)) & blockers)
+    attacks |= (1ULL << BOARD_INDEX(j, i));
+    if ((1ULL << BOARD_INDEX(j, i)) & blockers)
       break;
   }
+
+  // Southwest direction
   for (i = col - 1, j = row - 1; i >= 0 && j >= 0; i--, j--) {
-    attacks |= (1ULL << (j * ROWS + i));
-    if ((1ULL << (j * ROWS + i)) & blockers)
+    attacks |= (1ULL << BOARD_INDEX(j, i));
+    if ((1ULL << BOARD_INDEX(j, i)) & blockers)
       break;
   }
+
   if (DEBBUG) {
     uint64_t mask = (uint64_t)1 << bitIndex;
     printBitboard(attacks | mask);
@@ -173,27 +183,36 @@ bitboard computeRookAttack(int bitIndex, bitboard blockers) {
   bitboard attacks = 0;
   int col = bitIndex % COLS;
   int row = bitIndex / ROWS;
-  int i, j;
+  int i;
+
+  // East direction
   for (i = col + 1; i <= 7; i++) {
-    attacks |= (1ULL << (row * ROWS + i));
-    if ((1ULL << (row * ROWS + i)) & blockers)
+    attacks |= (1ULL << BOARD_INDEX(row, i));
+    if ((1ULL << BOARD_INDEX(row, i)) & blockers)
       break;
   }
+
+  // West direction
   for (i = col - 1; i >= 0; i--) {
-    attacks |= (1ULL << (row * ROWS + i));
-    if ((1ULL << (row * ROWS + i)) & blockers)
+    attacks |= (1ULL << BOARD_INDEX(row, i));
+    if ((1ULL << BOARD_INDEX(row, i)) & blockers)
       break;
   }
-  for (j = row + 1; j <= 7; j++) {
-    attacks |= (1ULL << (j * ROWS + col));
-    if ((1ULL << (j * ROWS + col)) & blockers)
+
+  // North direction
+  for (i = row + 1; i <= 7; i++) {
+    attacks |= (1ULL << BOARD_INDEX(i, col));
+    if ((1ULL << BOARD_INDEX(i, col)) & blockers)
       break;
   }
-  for (j = row - 1; j >= 0; j--) {
-    attacks |= (1ULL << (j * ROWS + col));
-    if ((1ULL << (j * ROWS + col)) & blockers)
+
+  // South direction
+  for (i = row - 1; i >= 0; i--) {
+    attacks |= (1ULL << BOARD_INDEX(i, col));
+    if ((1ULL << BOARD_INDEX(i, col)) & blockers)
       break;
   }
+
   if (DEBBUG) {
     uint64_t mask = (uint64_t)1 << bitIndex;
     printBitboard(attacks | mask);
@@ -206,21 +225,27 @@ bitboard maskBishopAttack(int bitIndex) {
   int col = bitIndex % COLS;
   int row = bitIndex / ROWS;
   int i, j;
-  // This is short by 1 square but this bitboard will be use in magic
-  // bitboard right now I dont fully undertand how it works for now I will
-  // implement by myself as much as I can and copy the rest
+
+  // Northeast direction
   for (i = col + 1, j = row + 1; i <= 6 && j <= 6; i++, j++) {
-    attacks |= (1ULL << (j * ROWS + i));
+    attacks |= (1ULL << BOARD_INDEX(j, i));
   }
+
+  // Northwest direction
   for (i = col - 1, j = row + 1; i >= 1 && j <= 6; i--, j++) {
-    attacks |= (1ULL << (j * ROWS + i));
+    attacks |= (1ULL << BOARD_INDEX(j, i));
   }
+
+  // Southeast direction
   for (i = col + 1, j = row - 1; i <= 6 && j >= 1; i++, j--) {
-    attacks |= (1ULL << (j * ROWS + i));
+    attacks |= (1ULL << BOARD_INDEX(j, i));
   }
+
+  // Southwest direction
   for (i = col - 1, j = row - 1; i >= 1 && j >= 1; i--, j--) {
-    attacks |= (1ULL << (j * ROWS + i));
+    attacks |= (1ULL << BOARD_INDEX(j, i));
   }
+
   if (DEBBUG) {
     uint64_t mask = (uint64_t)1 << bitIndex;
     printBitboard(attacks | mask);
@@ -232,20 +257,28 @@ bitboard maskRookAttack(int bitIndex) {
   bitboard attacks = 0;
   int col = bitIndex % COLS;
   int row = bitIndex / ROWS;
-  int i, j;
-  // Same as bishop, will be used in magic bitboard implementation
+  int i;
+
+  // East direction
   for (i = col + 1; i <= 6; i++) {
-    attacks |= (1ULL << (row * ROWS + i));
+    attacks |= (1ULL << BOARD_INDEX(row, i));
   }
+
+  // West direction
   for (i = col - 1; i >= 1; i--) {
-    attacks |= (1ULL << (row * ROWS + i));
+    attacks |= (1ULL << BOARD_INDEX(row, i));
   }
-  for (j = row + 1; j <= 6; j++) {
-    attacks |= (1ULL << (j * ROWS + col));
+
+  // North direction
+  for (i = row + 1; i <= 6; i++) {
+    attacks |= (1ULL << BOARD_INDEX(i, col));
   }
-  for (j = col - 1; j >= 1; j--) {
-    attacks |= (1ULL << (j * ROWS + col));
+
+  // South direction
+  for (i = row - 1; i >= 1; i--) {
+    attacks |= (1ULL << BOARD_INDEX(i, col));
   }
+
   if (DEBBUG) {
     uint64_t mask = (uint64_t)1 << bitIndex;
     printBitboard(attacks | mask);
@@ -273,11 +306,49 @@ void fillKingAttackTable(bitboard kingAttackTable[NUMBEROFSQUARES]) {
   }
 }
 
-/*
- * This function computes all possible permutations of the 1's bits in
- *bitsInMask source :
- *https://www.youtube.com/watch?v=UnEu5GOiSEs&list=PLmN0neTso3Jxh8ZIylk74JpwfiWNI76Cs&index=15
- * */
+void fillRookAttackTable() {
+  for (int i = 0; i < NUMBEROFSQUARES; i++) {
+    rookMask[i] = maskRookAttack(i);
+    int numberOfBitsInMask = countBits(rookMask[i]);
+    int numberOfPossibleConfigsMask = (1 << numberOfBitsInMask);
+    for (int j = 0; j < numberOfPossibleConfigsMask; j++) {
+      bitboard currentConfig = setOccupancy(j, numberOfBitsInMask, rookMask[i]);
+      int magicIndex =
+          (currentConfig * rookMagicNumbers[i]) >> (64 - occupancyRookMap[i]);
+      rookAttacks[i][magicIndex] = computeRookAttack(i, currentConfig);
+    }
+  }
+}
+
+void fillbishopAttackTable() {
+  for (int i = 0; i < NUMBEROFSQUARES; i++) {
+    bishopMask[i] = maskBishopAttack(i);
+    int numberOfBitsInMask = countBits(bishopMask[i]);
+    int numberOfPossibleConfigsMask = (1 << numberOfBitsInMask);
+    for (int j = 0; j < numberOfPossibleConfigsMask; j++) {
+      bitboard currentConfig =
+          setOccupancy(j, numberOfBitsInMask, bishopMask[i]);
+      int magicIndex = (currentConfig * bishopMagicNumbers[i]) >>
+                       (64 - occupancyBishopMap[i]);
+      bishopAttacks[i][magicIndex] = computeBishopAttack(i, currentConfig);
+    }
+  }
+}
+
+bitboard getRookAttack(int bitIndex, bitboard board) {
+  board &= rookMask[bitIndex];
+  board *= rookMagicNumbers[bitIndex];
+  board >>= NUMBEROFSQUARES - occupancyRookMap[bitIndex];
+  return rookAttacks[bitIndex][board];
+}
+
+bitboard getBishopAttack(int bitIndex, bitboard board) {
+  board &= bishopMask[bitIndex];
+  board *= bishopMagicNumbers[bitIndex];
+  board >>= NUMBEROFSQUARES - occupancyBishopMap[bitIndex];
+  return bishopAttacks[bitIndex][board];
+}
+
 bitboard setOccupancy(int index, int bitsInMask, bitboard attackMask) {
   // TODO : Here is some wasted computation, benchmark maybe is worth to
   // optimize
@@ -327,53 +398,12 @@ uint64_t findMagicNumber(int bitIndex, int relevantBits, int pieceType) {
   return 0ULL;
 }
 
-void fillRookAttackTable() {
-  for (int i = 0; i < NUMBEROFSQUARES; i++) {
-    rookMask[i] = maskRookAttack(i);
-    int numberOfBitsInMask = countBits(rookMask[i]);
-    int numberOfPossibleConfigsMask = (1 << numberOfBitsInMask);
-    for (int j = 0; j < numberOfPossibleConfigsMask; j++) {
-      bitboard currentConfig = setOccupancy(j, numberOfBitsInMask, rookMask[i]);
-      int magicIndex =
-          (currentConfig * rookMagicNumbers[i]) >> (64 - occupancyRookMap[i]);
-      rookAttacks[i][magicIndex] = computeRookAttack(i, currentConfig);
-    }
+void initMagiNumbers() {
+  for (int i = 0; i < 64; i++) {
+    printf("0x%lxULL,\n", findMagicNumber(i, occupancyRookMap[i], 0));
+  }
+  printf("\n\n");
+  for (int i = 0; i < 64; i++) {
+    printf("0x%lxULL,\n", findMagicNumber(i, occupancyBishopMap[i], 1));
   }
 }
-
-void fillbishopAttackTable() {
-  for (int i = 0; i < NUMBEROFSQUARES; i++) {
-    bishopMask[i] = maskBishopAttack(i);
-    int numberOfBitsInMask = countBits(bishopMask[i]);
-    int numberOfPossibleConfigsMask = (1 << numberOfBitsInMask);
-    for (int j = 0; j < numberOfPossibleConfigsMask; j++) {
-      bitboard currentConfig =
-          setOccupancy(j, numberOfBitsInMask, bishopMask[i]);
-      int magicIndex = (currentConfig * bishopMagicNumbers[i]) >>
-                       (64 - occupancyBishopMap[i]);
-      bishopAttacks[i][magicIndex] = computeBishopAttack(i, currentConfig);
-    }
-  }
-}
-
-bitboard getRookAttack(int bitIndex, bitboard board) {
-  board &= rookMask[bitIndex];
-  board *= rookMagicNumbers[bitIndex];
-  board >>= NUMBEROFSQUARES - occupancyRookMap[bitIndex];
-  return rookAttacks[bitIndex][board];
-}
-
-bitboard getBishopAttack(int bitIndex, bitboard board) {
-  board &= bishopMask[bitIndex];
-  board *= bishopMagicNumbers[bitIndex];
-  board >>= NUMBEROFSQUARES - occupancyBishopMap[bitIndex];
-  return bishopAttacks[bitIndex][board];
-}
-
-// void initMagiNumbers() {
-//   for (int i = 0; i < 64; i++) {
-//     printf("0x%lxULL,\n", findMagicNumber(i, occupancyRookMap[i], 0));
-//   }
-//   printf("\n\n");
-//   for (int i = 0; i < 64; i++) {
-//     printf("0x%lxULL,\n", findMagicNumber(i, occupancyBishopMap[i], 1));
