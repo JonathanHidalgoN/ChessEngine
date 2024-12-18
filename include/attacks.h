@@ -16,5 +16,7 @@ void fillKnightAttackTable(bitboard knightAttackTable[NUMBEROFSQUARES]);
 void fillKingAttackTable(bitboard kingAttackTable[NUMBEROFSQUARES]);
 bitboard setOccupancy(int index, int bitsInMask, bitboard attackMask);
 void fillRookAttackTable();
+void fillbishopAttackTable();
 bitboard getRookAttack(int bitIndex, bitboard board);
+bitboard getBishopAttack(int bitIndex, bitboard board);
 #endif

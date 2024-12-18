@@ -342,11 +342,33 @@ void fillRookAttackTable() {
   }
 }
 
+void fillbishopAttackTable() {
+  for (int i = 0; i < NUMBEROFSQUARES; i++) {
+    bishopMask[i] = maskBishopAttack(i);
+    int numberOfBitsInMask = countBits(bishopMask[i]);
+    int numberOfPossibleConfigsMask = (1 << numberOfBitsInMask);
+    for (int j = 0; j < numberOfPossibleConfigsMask; j++) {
+      bitboard currentConfig =
+          setOccupancy(j, numberOfBitsInMask, bishopMask[i]);
+      int magicIndex = (currentConfig * bishopMagicNumbers[i]) >>
+                       (64 - occupancyBishopMap[i]);
+      bishopAttacks[i][magicIndex] = computeBishopAttack(i, currentConfig);
+    }
+  }
+}
+
 bitboard getRookAttack(int bitIndex, bitboard board) {
   board &= rookMask[bitIndex];
   board *= rookMagicNumbers[bitIndex];
   board >>= NUMBEROFSQUARES - occupancyRookMap[bitIndex];
   return rookAttacks[bitIndex][board];
+}
+
+bitboard getBishopAttack(int bitIndex, bitboard board) {
+  board &= bishopMask[bitIndex];
+  board *= bishopMagicNumbers[bitIndex];
+  board >>= NUMBEROFSQUARES - occupancyBishopMap[bitIndex];
+  return bishopAttacks[bitIndex][board];
 }
 
 // void initMagiNumbers() {
