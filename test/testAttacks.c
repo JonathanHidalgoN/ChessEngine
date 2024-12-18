@@ -1,10 +1,24 @@
 #include "test.h"
 #include <stdio.h>
+#define DEBUG 1
+
+void showDiff(bitboard expected, bitboard result) {
+  if (DEBUG) {
+    printf("------------------------------------------------------");
+    printf("\n Expected board \n");
+    printBitboard(expected);
+    printf("\n\n Result\n");
+    printBitboard(result);
+    printf("------------------------------------------------------");
+    printf("\n");
+  }
+}
 
 int testPawnAttack(int bitIndex, int side, bitboard result, char testNumber) {
   bitboard bb = computePawnAttack(bitIndex, side);
   if (bb != result) {
     printf("Error in function compute pawn attack case %c \n", testNumber);
+    showDiff(bb, result);
     return 0;
   }
   return 1;
@@ -14,6 +28,7 @@ int testKnightAttack(int bitIndex, bitboard result, char testNumber) {
   bitboard bb = computeKnightAttack(bitIndex);
   if (bb != result) {
     printf("Error in function compute knight attack case %c \n", testNumber);
+    showDiff(bb, result);
     return 0;
   }
   return 1;
@@ -23,9 +38,30 @@ int testKingAttack(int bitIndex, bitboard result, char testNumber) {
   bitboard bb = computeKingAttack(bitIndex);
   if (bb != result) {
     printf("Error in function compute King attack case %c \n", testNumber);
+    showDiff(bb, result);
     return 0;
   }
   return 1;
+}
+
+int testRookAttack(int bitIndex, bitboard board, bitboard result,
+                   char testNumber) {
+  bitboard bb = computeRookAttack(0, board);
+  if (bb != result) {
+    printf("Error in function compute Rook attacks case %c \n", testNumber);
+    showDiff(bb, result);
+    return 0;
+  }
+  return 1;
+}
+
+int testRookAttacks() {
+  bitboard bb = 0ULL;
+  int c0 = testRookAttack(0, bb, 72340172838076926ULL, '0');
+  int c1 = testRookAttack(7, bb, 9259542123305130174ULL, '1');
+  int c2 = testRookAttack(56, bb, 72340172838076927ULL, '2');
+  int c3 = testRookAttack(63, bb, 9259542123305130175ULL, '3');
+  return c0 && c1 && c2 && c3;
 }
 
 int testPawnAttacks() {
@@ -59,7 +95,9 @@ void testAttacks() {
   int resultTestPawnAttack = testPawnAttacks();
   int resultTestKnightAttack = testKnightAttacks();
   int resultTestKingAttack = testKingAttacks();
-  if (resultTestPawnAttack && resultTestKnightAttack && resultTestKingAttack) {
+  int resultTestRookAttack = testRookAttacks();
+  if (resultTestPawnAttack && resultTestKnightAttack && resultTestKingAttack &&
+      resultTestRookAttack) {
     printf("Test attacks successfully \n");
   }
 }
