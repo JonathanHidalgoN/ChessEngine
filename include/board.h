@@ -47,11 +47,30 @@ typedef uint64_t bitboard;
 typedef struct chessBoard {
   bitboard pieces[NUMBEROFCOLORS][NUMBEROFDIFFERENTPIECES];
 } chessBoard;
+
+/**
+  Empty the birboard(set all bits to 0)
+ */
 void setBitboard0(bitboard *bb);
+/**
+  print the bitboard
+ */
 void printBitboard(bitboard bb);
+/**
+  Place the val in the bitIndex on the Bitboard
+ */
 void placeBitValue(int bitIndex, int val, bitboard *bb);
+/**
+  Init the chessBoard with the classic chess config
+ */
 void initChessBoard(chessBoard *chessBoard);
+/**
+  Create a string representation of the chessBoard
+ */
 void placePieceRepresentationIntoBoardString(bitboard bb, char *br,
                                              char symbol);
+/**
+  Print the chessBoard
+ */
 void printChessBoard(chessBoard *chessBoard);
 #endif
