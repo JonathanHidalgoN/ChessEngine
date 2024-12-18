@@ -56,6 +56,36 @@ int testRookAttack(int bitIndex, bitboard board, bitboard result,
   return 1;
 }
 
+int testBishopAttack(int bitIndex, bitboard board, bitboard result,
+                     char testNumber) {
+  bitboard bb = computeBishopAttack(bitIndex, board);
+  if (bb != result) {
+    printf("Error in function compute bishop attacks case %c \n", testNumber);
+    showDiff(bb, result);
+    return 0;
+  }
+  return 1;
+}
+
+int testBishopAttacks() {
+  // empty board
+  bitboard bb = 0ULL;
+  int c0 = testBishopAttack(0, bb, 9241421688590303744ULL, '0');
+  int c1 = testBishopAttack(7, bb, 72624976668147712ULL, '1');
+  int c2 = testBishopAttack(56, bb, 567382630219904ULL, '2');
+  int c3 = testBishopAttack(63, bb, 18049651735527937ULL, '3');
+  // with blockers
+  bb = BIT(9);
+  int c4 = testBishopAttack(0, bb, BIT(9), '4');
+  bb = BIT(14);
+  int c5 = testBishopAttack(7, bb, BIT(14), '5');
+  bb = BIT(49);
+  int c6 = testBishopAttack(56, bb, BIT(49), '6');
+  bb = BIT(54);
+  int c7 = testBishopAttack(63, bb, BIT(54), '7');
+  return c0 && c1 && c2 && c3 && c4 && c5 && c6 && c7;
+}
+
 int testRookAttacks() {
   // empty board
   bitboard bb = 0ULL;
@@ -79,8 +109,6 @@ int testRookAttacks() {
   int c10 = testRookAttack(29, bb, 35325554458624, 'a');
   return c0 && c1 && c2 && c3 && c4 && c5 && c6 && c7 && c8 && c9 && c10;
 }
-
-#define BIT(n) (1ULL << (n))
 
 int testPawnAttacks() {
   int c0 = testPawnAttack(9, 1, BIT(0) + BIT(2), '0');
@@ -113,8 +141,9 @@ void testAttacks() {
   int resultTestKnightAttack = testKnightAttacks();
   int resultTestKingAttack = testKingAttacks();
   int resultTestRookAttack = testRookAttacks();
+  int resultTestBishopAttack = testBishopAttacks();
   if (resultTestPawnAttack && resultTestKnightAttack && resultTestKingAttack &&
-      resultTestRookAttack) {
+      resultTestRookAttack && resultTestBishopAttack) {
     printf("Test attacks successfully \n");
   }
 }
