@@ -4,7 +4,7 @@
 #include <string.h>
 #define DEBBUG 0
 
-// THIS CONST REPRESENT THE BOARD BELOW THEM
+// THIS CONSTS REPRESENT THE BOARD BELOW THEM
 const bitboard NOT_COL_0 = 18374403900871474942ULL;
 // 1 1 1 1 1 1 1 0
 // 1 1 1 1 1 1 1 0
@@ -82,14 +82,19 @@ uint64_t bishopMagicNumbers[NUMBEROFSQUARES] = {
     0x81c098488088240ULL,  0x1400000090480820ULL, 0x4444000030208810ULL,
     0x1020142010820200ULL, 0x2234802004018200ULL, 0xc2040450820a00ULL,
     0x2101021090020ULL};
+// To hold all possible attack patterns
+bitboard rookMask[NUMBEROFSQUARES];
+bitboard bishopMask[NUMBEROFSQUARES];
+bitboard rookAttacks[NUMBEROFSQUARES][4096];
+bitboard bishopAttacks[NUMBEROFSQUARES][512];
 
 bitboard computePawnAttack(int bitIndex, int side) {
   bitboard attacks = 0;
   uint64_t mask = (uint64_t)1 << bitIndex;
   // side == 1 means black
+  attacks |= (mask >> 9) & NOT_COL_7;
   if (side) {
     attacks |= (mask >> 7) & NOT_COL_0;
-    attacks |= (mask >> 9) & NOT_COL_7;
   } else {
     attacks |= (mask << 7) & NOT_COL_7;
     attacks |= (mask << 9) & NOT_COL_0;
@@ -164,7 +169,7 @@ bitboard computeBishopAttack(int bitIndex, bitboard blockers) {
   return attacks;
 }
 
-bitboard computeRookAttack(int bitIndex, int blockers) {
+bitboard computeRookAttack(int bitIndex, bitboard blockers) {
   bitboard attacks = 0;
   int col = bitIndex % COLS;
   int row = bitIndex / ROWS;
@@ -323,6 +328,27 @@ uint64_t findMagicNumber(int bitIndex, int relevantBits, int pieceType) {
   return 0ULL;
 }
 
+void fillRookAttackTable() {
+  for (int i = 0; i < NUMBEROFSQUARES; i++) {
+    rookMask[i] = maskRookAttack(i);
+    int numberOfBitsInMask = countBits(rookMask[i]);
+    int numberOfPossibleConfigsMask = (1 << numberOfBitsInMask);
+    for (int j = 0; j < numberOfPossibleConfigsMask; j++) {
+      bitboard currentConfig = setOccupancy(j, numberOfBitsInMask, rookMask[i]);
+      int magicIndex =
+          (currentConfig * rookMagicNumbers[i]) >> (64 - occupancyRookMap[i]);
+      rookAttacks[i][magicIndex] = computeRookAttack(i, currentConfig);
+    }
+  }
+}
+
+bitboard getRookAttack(int bitIndex, bitboard board) {
+  board &= rookMask[bitIndex];
+  board *= rookMagicNumbers[bitIndex];
+  board >>= NUMBEROFSQUARES - occupancyRookMap[bitIndex];
+  return rookAttacks[bitIndex][board];
+}
+
 // void initMagiNumbers() {
 //   for (int i = 0; i < 64; i++) {
 //     printf("0x%lxULL,\n", findMagicNumber(i, occupancyRookMap[i], 0));
@@ -330,5 +356,3 @@ uint64_t findMagicNumber(int bitIndex, int relevantBits, int pieceType) {
 //   printf("\n\n");
 //   for (int i = 0; i < 64; i++) {
 //     printf("0x%lxULL,\n", findMagicNumber(i, occupancyBishopMap[i], 1));
-//   }
-// }
