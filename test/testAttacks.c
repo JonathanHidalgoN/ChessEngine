@@ -83,7 +83,9 @@ int testBishopAttacks() {
   int c6 = testBishopAttack(56, bb, BIT(49), '6');
   bb = BIT(54);
   int c7 = testBishopAttack(63, bb, BIT(54), '7');
-  return c0 && c1 && c2 && c3 && c4 && c5 && c6 && c7;
+  bb = BIT(27);
+  int c8 = testBishopAttack(20, bb, 141013037361220ULL, '8');
+  return c0 && c1 && c2 && c3 && c4 && c5 && c6 && c7 && c8;
 }
 
 int testRookAttacks() {
@@ -136,6 +138,7 @@ int testKingAttacks() {
   int c3 = testKingAttack(63, BIT(62) + BIT(55) + BIT(54), '3');
   return c0 && c1 && c2 && c3;
 }
+
 void testAttacks() {
   int resultTestPawnAttack = testPawnAttacks();
   int resultTestKnightAttack = testKnightAttacks();
