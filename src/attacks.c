@@ -313,8 +313,8 @@ void fillRookAttackTable() {
     int numberOfPossibleConfigsMask = (1 << numberOfBitsInMask);
     for (int j = 0; j < numberOfPossibleConfigsMask; j++) {
       bitboard currentConfig = setOccupancy(j, numberOfBitsInMask, rookMask[i]);
-      int magicIndex =
-          (currentConfig * rookMagicNumbers[i]) >> (64 - occupancyRookMap[i]);
+      int magicIndex = (currentConfig * rookMagicNumbers[i]) >>
+                       (NUMBEROFSQUARES - occupancyRookMap[i]);
       rookAttacks[i][magicIndex] = computeRookAttack(i, currentConfig);
     }
   }
@@ -349,17 +349,16 @@ bitboard getBishopAttack(int bitIndex, bitboard board) {
   return bishopAttacks[bitIndex][board];
 }
 
-bitboard setOccupancy(int index, int bitsInMask, bitboard attackMask) {
-  // TODO : Here is some wasted computation, benchmark maybe is worth to
-  // optimize
-  // TODO : Change name of index to number of combinations or something like
-  // that
+//-------------------------------------------MAGIC NUMBER GENERATION-----------
+// source: https://www.chessprogramming.org/Magic_Bitboards
+bitboard setOccupancy(int possibleConfigs, int onesInMask,
+                      bitboard attackMask) {
   bitboard occupancy = 0;
-  for (int i = 0; i < bitsInMask; i++) {
-    int bitIndex = getLSBIndex(attackMask);
-    placeBitValue(bitIndex, 0, &attackMask);
-    if (index & (1 << i))
-      occupancy |= (1ULL << bitIndex);
+  for (int i = 0; i < onesInMask; i++) {
+    int bitpossibleConfigs = getLSBIndex(attackMask);
+    placeBitValue(bitpossibleConfigs, 0, &attackMask);
+    if (possibleConfigs & (1 << i))
+      occupancy |= (1ULL << bitpossibleConfigs);
   }
   return occupancy;
 }
@@ -407,3 +406,4 @@ void initMagiNumbers() {
     printf("0x%lxULL,\n", findMagicNumber(i, occupancyBishopMap[i], 1));
   }
 }
+//---------------------------------------------------------------------------------------------------------
