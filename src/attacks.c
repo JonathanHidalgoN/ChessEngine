@@ -330,6 +330,50 @@ bitboard computeSideBitBoard(int side, chessBoard *board) {
   return result;
 }
 
+bitboard computeLegalMoves(int bitIndex, chessBoard *board) {
+  bitboard legalMoves, alyBitBoard, generalBitBoard;
+  int side, piece, i, j, found;
+  found = 0;
+  // Find the index of piece to move
+  for (i = 0; i < NUMBEROFCOLORS; i++) {
+    for (j = 0; j < NUMBEROFDIFFERENTPIECES; j++) {
+      bitboard mask = 1ULL << bitIndex;
+      if (board->pieces[i][j] && mask) {
+        piece = j;
+        side = i;
+        found = 1;
+        break;
+      }
+      break;
+    }
+  }
+  if (DEBBUG) {
+    printf("Compute legal moves for side : %d, piece : %d\n", side, piece);
+  }
+  // Add castling, mate, passang pawn,
+  alyBitBoard = computeSideBitBoard(side, board);
+  switch (piece) {
+  case PAWN:
+    legalMoves = computePawnAttack(bitIndex, side) & ~alyBitBoard;
+    break;
+  case KING:
+    legalMoves = computePawnAttack(bitIndex, side) & ~alyBitBoard;
+    break;
+  case KNIGHT:
+    legalMoves = computePawnAttack(bitIndex, side) & ~alyBitBoard;
+    break;
+  case ROOK:
+    generalBitBoard = computeSideBitBoard(!side, board) | alyBitBoard;
+    legalMoves = computeRookAttack(bitIndex, generalBitBoard) & ~alyBitBoard;
+    break;
+  case BISHOP:
+    generalBitBoard = computeSideBitBoard(!side, board) | alyBitBoard;
+    legalMoves = computeBishopAttack(bitIndex, generalBitBoard) & ~alyBitBoard;
+    break;
+  }
+  return legalMoves;
+}
+
 //-------------------------------------------MAGIC NUMBER
 // GENERATION-----------
 // source: https://www.chessprogramming.org/Magic_Bitboards
