@@ -96,7 +96,7 @@ void initChessBoard(chessBoard *chessBoard) {
 void placePieceRepresentationIntoBoardString(bitboard bb, char *br,
                                              char symbol) {
   int i;
-  for (i = 0; i < LASTBIT; i++) {
+  for (i = 0; i <= LASTBIT; i++) {
     uint64_t mask = (uint64_t)1 << i;
     if ((mask & bb) != 0) {
       br[LASTBIT - i] = symbol;
