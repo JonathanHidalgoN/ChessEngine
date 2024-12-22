@@ -100,9 +100,6 @@ bitboard computePawnAttack(int bitIndex, int side) {
     attacks |= (mask << 7) & NOT_COL_7;
     attacks |= (mask << 9) & NOT_COL_0;
   }
-  if (DEBBUG) {
-    printBitboard(attacks | mask);
-  }
   return attacks;
 }
 
@@ -117,9 +114,6 @@ bitboard computeKnightAttack(int bitIndex) {
   attacks |= (mask >> 10) & NOT_COL_67;
   attacks |= (mask >> 15) & NOT_COL_0;
   attacks |= (mask >> 6) & NOT_COL_01;
-  if (DEBBUG) {
-    printBitboard(attacks | mask);
-  }
   return attacks;
 }
 
@@ -132,9 +126,6 @@ bitboard computeKingAttack(int bitIndex) {
   attacks |= (mask >> 1) & NOT_COL_7;
   attacks |= (mask << 8) & NOT_ROW_0;
   attacks |= (mask >> 8) & NOT_ROW_7;
-  if (DEBBUG) {
-    printBitboard(attacks | mask);
-  }
   return attacks;
 }
 
@@ -170,11 +161,6 @@ bitboard computeBishopAttack(int bitIndex, bitboard blockers) {
     attacks |= (1ULL << BOARD_INDEX(j, i));
     if ((1ULL << BOARD_INDEX(j, i)) & blockers)
       break;
-  }
-
-  if (DEBBUG) {
-    uint64_t mask = (uint64_t)1 << bitIndex;
-    printBitboard(attacks | mask);
   }
   return attacks;
 }
@@ -213,10 +199,6 @@ bitboard computeRookAttack(int bitIndex, bitboard blockers) {
       break;
   }
 
-  if (DEBBUG) {
-    uint64_t mask = (uint64_t)1 << bitIndex;
-    printBitboard(attacks | mask);
-  }
   return attacks;
 }
 
@@ -246,10 +228,6 @@ bitboard maskBishopAttack(int bitIndex) {
     attacks |= (1ULL << BOARD_INDEX(j, i));
   }
 
-  if (DEBBUG) {
-    uint64_t mask = (uint64_t)1 << bitIndex;
-    printBitboard(attacks | mask);
-  }
   return attacks;
 }
 
@@ -279,10 +257,6 @@ bitboard maskRookAttack(int bitIndex) {
     attacks |= (1ULL << BOARD_INDEX(i, col));
   }
 
-  if (DEBBUG) {
-    uint64_t mask = (uint64_t)1 << bitIndex;
-    printBitboard(attacks | mask);
-  }
   return attacks;
 }
 
@@ -349,7 +323,15 @@ bitboard getBishopAttack(int bitIndex, bitboard board) {
   return bishopAttacks[bitIndex][board];
 }
 
-//-------------------------------------------MAGIC NUMBER GENERATION-----------
+bitboard computeSideBitBoard(int side, chessBoard *board) {
+  bitboard result = 0ULL;
+  for (int i = 0; i < NUMBEROFDIFFERENTPIECES; i++)
+    result |= board->pieces[side][i];
+  return result;
+}
+
+//-------------------------------------------MAGIC NUMBER
+// GENERATION-----------
 // source: https://www.chessprogramming.org/Magic_Bitboards
 bitboard setOccupancy(int possibleConfigs, int onesInMask,
                       bitboard attackMask) {
