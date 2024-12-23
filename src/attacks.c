@@ -389,12 +389,13 @@ bitboard computeLegalMoves(int bitIndex, chessBoard *board) {
 // source: https://www.chessprogramming.org/Magic_Bitboards
 bitboard setOccupancy(int possibleConfigs, int onesInMask,
                       bitboard attackMask) {
+  // TODO : test what happends when bitPossibleConfigs is -1
   bitboard occupancy = 0;
   for (int i = 0; i < onesInMask; i++) {
-    int bitpossibleConfigs = getLSBIndex(attackMask);
-    placeBitValue(bitpossibleConfigs, 0, &attackMask);
+    int bitPossibleConfigs = getLSBIndex(attackMask);
+    placeBitValue(bitPossibleConfigs, 0, &attackMask);
     if (possibleConfigs & (1 << i))
-      occupancy |= (1ULL << bitpossibleConfigs);
+      occupancy |= (1ULL << bitPossibleConfigs);
   }
   return occupancy;
 }
