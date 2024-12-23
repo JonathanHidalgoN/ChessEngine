@@ -138,10 +138,14 @@ void printChessBoard(chessBoard *chessBoard) {
   placePieceRepresentationIntoBoardString(chessBoard->pieces[BLACK][BISHOP],
                                           boardRepresentation, 'b');
   for (i = 0; i < COLS; i++) {
+    printf("%d | ", ROWS - i - 1);
     for (j = 0; j < ROWS; j++) {
       int idx = (int)i * COLS + j;
       printf("%c ", boardRepresentation[idx]);
     }
     printf("\n");
   }
+  printf("\n");
+  printf("    7 6 5 4 3 2 1 0");
+  printf("\n");
 }
