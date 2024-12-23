@@ -355,7 +355,6 @@ static piece findPieceByBitIndex(int bitIndex, chessBoard *board) {
 bitboard computeLegalMoves(int bitIndex, chessBoard *board) {
   piece piece = findPieceByBitIndex(bitIndex, board);
   bitboard legalMoves, alyBitBoard, generalBitBoard;
-  int found = 0;
   if (DEBBUG) {
     printf("Compute legal moves for side : %d, piece : %d\n", piece.side,
            piece.type);
