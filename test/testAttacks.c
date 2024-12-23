@@ -289,41 +289,32 @@ void testAttacks() {
 // TODO: : test function to find piece and function that compute the board of a
 // side
 
-// int testPieceLegalMoves(piece *piece, bitboard expectedResult,
-//                         chessBoard *board, char testNumber, bitboard blocker)
-//                         {
-//   // This can be simplify, maybe implement a dict in c?
-//   bitboard result;
-//   char *pieceName;
-//   result = computeLegalMoves(piece->bitIndex, board);
-//   switch (piece->type) {
-//   case PAWN:
-//     pieceName = "Pawn";
-//     break;
-//   case KING:
-//     pieceName = "King";
-//     break;
-//   case KNIGHT:
-//     pieceName = "Knight";
-//     break;
-//   case ROOK:
-//     pieceName = "Rook";
-//     break;
-//   case BISHOP:
-//     pieceName = "Bishop";
-//     break;
-//   default:
-//     break;
-//   }
-//   if (result != expectedResult) {
-//     printf(
-//         "Error in function compute legal moves for piece %s, test case %c
-//         \n", pieceName, testNumber);
-//     showDiff(expectedResult, result);
-//     return 0;
-//   }
-//   return 1;
-// }
+int testPieceLegalMoves(piece *piece, bitboard expectedResult,
+                        chessBoard *board, char testNumber, bitboard blocker) {
+  bitboard result;
+  char *functionName;
+  result = computeLegalMoves(piece->bitIndex, board);
+  switch (piece->type) {
+  case PAWN:
+    functionName = "computeLegalMoves for pawn";
+    break;
+  case KING:
+    functionName = "computeLegalMoves for king";
+    break;
+  case KNIGHT:
+    functionName = "computeLegalMoves for knight";
+    break;
+  case ROOK:
+    functionName = "computeLegalMoves for rook";
+    break;
+  case BISHOP:
+    functionName = "computeLegalMoves for bishop";
+    break;
+  default:
+    break;
+  }
+  return compareBitBoard(expectedResult, result, testNumber, functionName);
+}
 
 // int testComputeSideBitBoard() {
 //   int side = WHITE;
