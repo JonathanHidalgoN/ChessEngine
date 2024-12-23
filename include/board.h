@@ -53,6 +53,10 @@ typedef struct piece {
   int bitIndex;
 } piece;
 /**
+ Set all pieces of the board to empty board
+*/
+void cleanChessBoard(chessBoard *chessBoard);
+/**
   print the bitboard
  */
 void printBitboard(bitboard bb);
