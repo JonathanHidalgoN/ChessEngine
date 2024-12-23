@@ -47,7 +47,11 @@ typedef uint64_t bitboard;
 typedef struct chessBoard {
   bitboard pieces[NUMBEROFCOLORS][NUMBEROFDIFFERENTPIECES];
 } chessBoard;
-
+typedef struct piece {
+  int side;
+  int type;
+  int bitIndex;
+} piece;
 /**
   print the bitboard
  */
