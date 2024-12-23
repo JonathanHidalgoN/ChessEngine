@@ -15,8 +15,8 @@ void showDiff(bitboard expected, bitboard result) {
   }
 }
 
-int compareExpectedBoard(bitboard expectedResult, bitboard result,
-                         char testNumber, char *functionName) {
+int compareBitBoard(bitboard expectedResult, bitboard result, char testNumber,
+                    char *functionName) {
 
   if (result != expectedResult) {
     printf("Error in function %s, test case %c \n", functionName, testNumber);
@@ -58,7 +58,7 @@ int testPieceAttack(piece *piece, bitboard expectedResult, char testNumber,
   default:
     break;
   }
-  return compareExpectedBoard(expectedResult, result, testNumber, functionName);
+  return compareBitBoard(expectedResult, result, testNumber, functionName);
 }
 
 int testBishopAttacks() {
