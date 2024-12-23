@@ -16,7 +16,7 @@ void showDiff(bitboard expected, bitboard result) {
 }
 
 // NOTE : Refactor to one general test function to attack generation, CLAUDE has
-// help me a lot in to change the calls from the individual test functions to
+// help me a lot to change the calls from the individual test functions to
 // this one
 //----------------------------------------------------------------------------------------
 int testPieceAttack(piece *piece, bitboard expectedResult, char testNumber,
@@ -279,6 +279,43 @@ void testAttacks() {
       resultTestRookAttack && resultTestBishopAttack) {
     printf("Tested attacks successfully \n");
   }
+}
+
+// TODO: : test function to find piece and function that compute the board of a
+// side
+int testPieceLegalMoves(piece *piece, bitboard expectedResult,
+                        chessBoard *board, char testNumber, bitboard blocker) {
+  // This can be simplify, maybe implement a dict in c?
+  bitboard result;
+  char *pieceName;
+  result = computeLegalMoves(piece->bitIndex, board);
+  switch (piece->type) {
+  case PAWN:
+    pieceName = "Pawn";
+    break;
+  case KING:
+    pieceName = "King";
+    break;
+  case KNIGHT:
+    pieceName = "Knight";
+    break;
+  case ROOK:
+    pieceName = "Rook";
+    break;
+  case BISHOP:
+    pieceName = "Bishop";
+    break;
+  default:
+    break;
+  }
+  if (result != expectedResult) {
+    printf(
+        "Error in function compute legal moves for piece %s, test case %c \n",
+        pieceName, testNumber);
+    showDiff(expectedResult, result);
+    return 0;
+  }
+  return 1;
 }
 
 // int testComputeSideBitBoard() {
