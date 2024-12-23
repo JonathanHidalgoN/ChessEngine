@@ -15,6 +15,17 @@ void showDiff(bitboard expected, bitboard result) {
   }
 }
 
+int compareExpectedBoard(bitboard expectedResult, bitboard result,
+                         char testNumber, char *functionName) {
+
+  if (result != expectedResult) {
+    printf("Error in function %s, test case %c \n", functionName, testNumber);
+    showDiff(expectedResult, result);
+    return 0;
+  }
+  return 1;
+}
+
 // NOTE : Refactor to one general test function to attack generation, CLAUDE has
 // help me a lot to change the calls from the individual test functions to
 // this one
@@ -22,38 +33,32 @@ void showDiff(bitboard expected, bitboard result) {
 int testPieceAttack(piece *piece, bitboard expectedResult, char testNumber,
                     bitboard blockers) {
   bitboard result;
-  char *pieceName;
+  char *functionName;
   switch (piece->type) {
   case PAWN:
     result = computePawnAttack(piece->bitIndex, piece->side);
-    pieceName = "Pawn";
+    functionName = "computePawnAttack";
     break;
   case KING:
     result = computeKingAttack(piece->bitIndex);
-    pieceName = "King";
+    functionName = "computeKingAttack";
     break;
   case KNIGHT:
     result = computeKnightAttack(piece->bitIndex);
-    pieceName = "Knight";
+    functionName = "computeKnightAttack";
     break;
   case ROOK:
     result = computeRookAttack(piece->bitIndex, blockers);
-    pieceName = "Rook";
+    functionName = "computeRookAttack";
     break;
   case BISHOP:
     result = computeBishopAttack(piece->bitIndex, blockers);
-    pieceName = "Bishop";
+    functionName = "computeBishopAttack";
     break;
   default:
     break;
   }
-  if (result != expectedResult) {
-    printf("Error in function compute%sAttack, test case %c \n", pieceName,
-           testNumber);
-    showDiff(expectedResult, result);
-    return 0;
-  }
-  return 1;
+  return compareExpectedBoard(expectedResult, result, testNumber, functionName);
 }
 
 int testBishopAttacks() {
@@ -283,47 +288,66 @@ void testAttacks() {
 
 // TODO: : test function to find piece and function that compute the board of a
 // side
-int testPieceLegalMoves(piece *piece, bitboard expectedResult,
-                        chessBoard *board, char testNumber, bitboard blocker) {
-  // This can be simplify, maybe implement a dict in c?
-  bitboard result;
-  char *pieceName;
-  result = computeLegalMoves(piece->bitIndex, board);
-  switch (piece->type) {
-  case PAWN:
-    pieceName = "Pawn";
-    break;
-  case KING:
-    pieceName = "King";
-    break;
-  case KNIGHT:
-    pieceName = "Knight";
-    break;
-  case ROOK:
-    pieceName = "Rook";
-    break;
-  case BISHOP:
-    pieceName = "Bishop";
-    break;
-  default:
-    break;
-  }
-  if (result != expectedResult) {
-    printf(
-        "Error in function compute legal moves for piece %s, test case %c \n",
-        pieceName, testNumber);
-    showDiff(expectedResult, result);
-    return 0;
-  }
-  return 1;
-}
+
+// int testPieceLegalMoves(piece *piece, bitboard expectedResult,
+//                         chessBoard *board, char testNumber, bitboard blocker)
+//                         {
+//   // This can be simplify, maybe implement a dict in c?
+//   bitboard result;
+//   char *pieceName;
+//   result = computeLegalMoves(piece->bitIndex, board);
+//   switch (piece->type) {
+//   case PAWN:
+//     pieceName = "Pawn";
+//     break;
+//   case KING:
+//     pieceName = "King";
+//     break;
+//   case KNIGHT:
+//     pieceName = "Knight";
+//     break;
+//   case ROOK:
+//     pieceName = "Rook";
+//     break;
+//   case BISHOP:
+//     pieceName = "Bishop";
+//     break;
+//   default:
+//     break;
+//   }
+//   if (result != expectedResult) {
+//     printf(
+//         "Error in function compute legal moves for piece %s, test case %c
+//         \n", pieceName, testNumber);
+//     showDiff(expectedResult, result);
+//     return 0;
+//   }
+//   return 1;
+// }
 
 // int testComputeSideBitBoard() {
-//   int side = 0;
+//   int side = WHITE;
 //   bitboard expectedResult = 0ULL;
 //   chessBoard board;
 //   cleanChessBoard(&board);
+//   // Board with no pieces should give 0 for white and black
+//   bitboard c0 = computeSideBitBoard(side, &board);
+//   if (c0) {
+//     printf("Error in function computeSideBitBoard WHITE side, should return "
+//            "empty board(0ULL)\n");
+//     showDiff(expectedResult, c0);
+//   }
+//   side = BLACK;
+//   bitboard c1 = computeSideBitBoard(side, &board);
+//   if (c1) {
+//     printf("Error in function computeSideBitBoard BLACK side, should return "
+//            "empty board(0ULL)\n");
+//     showDiff(expectedResult, c1);
+//   }
+//
+//   return 1;
 // }
+
 //
 // void testLegalMoves() {
 //   chessBoard board;
