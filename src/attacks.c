@@ -86,7 +86,10 @@ uint64_t bishopMagicNumbers[NUMBEROFSQUARES] = {
 // To hold all possible attack patterns
 bitboard rookMask[NUMBEROFSQUARES];
 bitboard bishopMask[NUMBEROFSQUARES];
+// A rook can attack at max 12 squares, 2**12 is 4096, this array holds all
+// possible attack patterns for a rook in all possible boards
 bitboard rookAttacks[NUMBEROFSQUARES][4096];
+// Same for BISHOP but at max can attack 9 squares
 bitboard bishopAttacks[NUMBEROFSQUARES][512];
 
 bitboard computePawnAttack(int bitIndex, int side) {
@@ -323,14 +326,14 @@ bitboard getBishopAttack(int bitIndex, bitboard board) {
   return bishopAttacks[bitIndex][board];
 }
 
-static bitboard computeSideBitBoard(int side, chessBoard *board) {
+bitboard computeSideBitBoard(int side, chessBoard *board) {
   bitboard result = 0ULL;
   for (int i = 0; i < NUMBEROFDIFFERENTPIECES; i++)
     result |= board->pieces[side][i];
   return result;
 }
 
-static piece findPieceByBitIndex(int bitIndex, chessBoard *board) {
+piece findPieceByBitIndex(int bitIndex, chessBoard *board) {
   struct piece newPiece;
   int i, j, found;
   found = 0;
