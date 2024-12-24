@@ -290,7 +290,7 @@ void testAttacks() {
 // side
 
 int testPieceLegalMoves(piece *piece, bitboard expectedResult,
-                        chessBoard *board, char testNumber, bitboard blocker) {
+                        chessBoard *board, char testNumber) {
   bitboard result;
   char *functionName;
   result = computeLegalMoves(piece->bitIndex, board);
@@ -316,28 +316,59 @@ int testPieceLegalMoves(piece *piece, bitboard expectedResult,
   return compareBitBoard(expectedResult, result, testNumber, functionName);
 }
 
-// int testComputeSideBitBoard() {
-//   int side = WHITE;
-//   bitboard expectedResult = 0ULL;
-//   chessBoard board;
-//   cleanChessBoard(&board);
-//   // Board with no pieces should give 0 for white and black
-//   bitboard c0 = computeSideBitBoard(side, &board);
-//   if (c0) {
-//     printf("Error in function computeSideBitBoard WHITE side, should return "
-//            "empty board(0ULL)\n");
-//     showDiff(expectedResult, c0);
-//   }
-//   side = BLACK;
-//   bitboard c1 = computeSideBitBoard(side, &board);
-//   if (c1) {
-//     printf("Error in function computeSideBitBoard BLACK side, should return "
-//            "empty board(0ULL)\n");
-//     showDiff(expectedResult, c1);
-//   }
-//
-//   return 1;
-// }
+int testComputeSideBitBoard() {
+  int side = WHITE;
+  bitboard expectedResult = 0ULL;
+  chessBoard board;
+  char *name = "computeSideBitBoard";
+  cleanChessBoard(&board);
+
+  // Board with no pieces should give 0 for white and black
+  bitboard result0 = computeSideBitBoard(side, &board);
+  int c0 = compareBitBoard(expectedResult, result0, '0', name);
+
+  side = BLACK;
+  bitboard result1 = computeSideBitBoard(side, &board);
+  int c1 = compareBitBoard(expectedResult, result1, '1', name);
+
+  // Test with pieces
+  board.pieces[BLACK][PAWN] = BIT(0);
+  board.pieces[BLACK][KING] = BIT(1);
+  board.pieces[BLACK][ROOK] = BIT(2);
+  board.pieces[BLACK][BISHOP] = BIT(3);
+
+  // White should return 0
+  side = WHITE;
+  bitboard result2 = computeSideBitBoard(side, &board);
+  int c2 = compareBitBoard(expectedResult, result2, '2', name);
+
+  // BLACK should not return 0
+  side = BLACK;
+  expectedResult = BIT(0) + BIT(1) + BIT(2) + BIT(3);
+  bitboard result3 = computeSideBitBoard(side, &board);
+  int c3 = compareBitBoard(expectedResult, result3, '3', name);
+
+  side = WHITE;
+  board.pieces[WHITE][KNIGHT] = BIT(10) + BIT(11);
+  board.pieces[WHITE][KING] = BIT(44);
+  expectedResult = BIT(10) + BIT(11) + BIT(44);
+  bitboard result4 = computeSideBitBoard(side, &board);
+  int c4 = compareBitBoard(expectedResult, result4, '4', name);
+
+  board.pieces[WHITE][KNIGHT] = 0ULL;
+  expectedResult = BIT(44);
+  bitboard result5 = computeSideBitBoard(side, &board);
+  int c5 = compareBitBoard(expectedResult, result5, '5', name);
+
+  return c1 && c0 && c2 && c3 && c4 && c5;
+}
+
+void testMoveGeneration() {
+  int resultTestComputeSideBitBoard = testComputeSideBitBoard();
+  if (resultTestComputeSideBitBoard) {
+    printf("Tested move generation successfully\n");
+  }
+}
 
 //
 // void testLegalMoves() {
