@@ -1,9 +1,24 @@
+#include "include/attacks.h"
 #include "include/board.h"
+#include "test/test.h"
+#include <stdio.h>
+
+void runTest() {
+  testBoard();
+  testAttacks();
+  testMoveGeneration();
+}
 
 int main() {
-  ChessBoard board;
-  cleanBoard(&board);
-  populateBoard(&board);
-  displayBoard(&board);
+
+  if (1) {
+    runTest();
+    return 0;
+  }
+
+  printf("Chess engine programmed by me (: \n");
+  chessBoard board;
+  initChessBoard(&board);
+  printChessBoard(&board);
   return 0;
 }
