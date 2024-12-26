@@ -363,16 +363,142 @@ int testComputeSideBitBoard() {
   return c1 && c0 && c2 && c3 && c4 && c5;
 }
 
+static int arePiecesEqual(piece *expectedResult, piece *functionResult) {
+  return expectedResult->bitIndex == functionResult->bitIndex &&
+         expectedResult->side == functionResult->side &&
+         expectedResult->type == functionResult->type;
+}
+
+static void printPieceStruct(piece *piece) {
+  printf("side:%d, type:%d, bitIndex:%d\n", piece->side, piece->type,
+         piece->bitIndex);
+}
+
+static int comparePieces(piece *expectedPiece, piece *resultPiece,
+                         char testNumber) {
+  int areEqual = arePiecesEqual(expectedPiece, resultPiece);
+  if (!areEqual) {
+    printf("Error in findPieceByBitIndex function case %c\n", testNumber);
+    printf("Expected piece: ");
+    printPieceStruct(expectedPiece);
+    printf("Actual value: ");
+    printPieceStruct(resultPiece);
+    return 0;
+  }
+  return 1;
+}
+
+int testFindPieceByIndex() {
+  chessBoard board;
+  initChessBoard(&board);
+  piece functionResult, expectedResult;
+  // Test for Pawns(8 because we have 8 pawns, 48 is bitIndex where black pawns
+  // start)
+  expectedResult.type = PAWN;
+  expectedResult.side = WHITE;
+  int c0 = 1;
+  for (int i = 0, j = 8 + i; i < 8; i++) {
+    expectedResult.bitIndex = j;
+    functionResult = findPieceByBitIndex(expectedResult.bitIndex, &board);
+    c0 = c0 && comparePieces(&expectedResult, &functionResult, '0');
+  }
+  expectedResult.type = PAWN;
+  expectedResult.side = BLACK;
+  int c1 = 1;
+  for (int i = 0, j = i + 48; i < 8; i++) {
+    expectedResult.bitIndex = j;
+    functionResult = findPieceByBitIndex(expectedResult.bitIndex, &board);
+    c1 = c1 && comparePieces(&expectedResult, &functionResult, '1');
+  }
+  // Rooks tests
+  expectedResult.type = ROOK;
+  expectedResult.side = WHITE;
+  expectedResult.bitIndex = 7;
+  functionResult = findPieceByBitIndex(expectedResult.bitIndex, &board);
+  int c2 = comparePieces(&expectedResult, &functionResult, '2');
+  expectedResult.type = ROOK;
+  expectedResult.side = BLACK;
+  expectedResult.bitIndex = 56;
+  functionResult = findPieceByBitIndex(expectedResult.bitIndex, &board);
+  int c3 = comparePieces(&expectedResult, &functionResult, '3');
+  expectedResult.type = ROOK;
+  expectedResult.side = WHITE;
+  expectedResult.bitIndex = 0;
+  functionResult = findPieceByBitIndex(expectedResult.bitIndex, &board);
+  int c4 = comparePieces(&expectedResult, &functionResult, '4');
+
+  expectedResult.type = ROOK;
+  expectedResult.side = BLACK;
+  expectedResult.bitIndex = 63;
+  functionResult = findPieceByBitIndex(expectedResult.bitIndex, &board);
+  int c5 = comparePieces(&expectedResult, &functionResult, '5');
+
+  // Knights tests
+  expectedResult.type = KNIGHT;
+  expectedResult.side = WHITE;
+  expectedResult.bitIndex = 1;
+  functionResult = findPieceByBitIndex(expectedResult.bitIndex, &board);
+  int c6 = comparePieces(&expectedResult, &functionResult, '6');
+
+  expectedResult.type = KNIGHT;
+  expectedResult.side = BLACK;
+  expectedResult.bitIndex = 62;
+  functionResult = findPieceByBitIndex(expectedResult.bitIndex, &board);
+  int c7 = comparePieces(&expectedResult, &functionResult, '7');
+
+  // Bishops tests
+  expectedResult.type = BISHOP;
+  expectedResult.side = WHITE;
+  expectedResult.bitIndex = 2;
+  functionResult = findPieceByBitIndex(expectedResult.bitIndex, &board);
+  int c8 = comparePieces(&expectedResult, &functionResult, '8');
+
+  expectedResult.type = BISHOP;
+  expectedResult.side = BLACK;
+  expectedResult.bitIndex = 61;
+  functionResult = findPieceByBitIndex(expectedResult.bitIndex, &board);
+  int c9 = comparePieces(&expectedResult, &functionResult, '9');
+
+  // Queens tests
+  expectedResult.type = QUEEN;
+  expectedResult.side = WHITE;
+  expectedResult.bitIndex = 3;
+  functionResult = findPieceByBitIndex(expectedResult.bitIndex, &board);
+  int c10 = comparePieces(&expectedResult, &functionResult, 'a');
+
+  expectedResult.type = QUEEN;
+  expectedResult.side = BLACK;
+  expectedResult.bitIndex = 59;
+  functionResult = findPieceByBitIndex(expectedResult.bitIndex, &board);
+  int c11 = comparePieces(&expectedResult, &functionResult, 'b');
+
+  // Kings tests
+  expectedResult.type = KING;
+  expectedResult.side = WHITE;
+  expectedResult.bitIndex = 4;
+  functionResult = findPieceByBitIndex(expectedResult.bitIndex, &board);
+  int c12 = comparePieces(&expectedResult, &functionResult, 'c');
+
+  expectedResult.type = KING;
+  expectedResult.side = BLACK;
+  expectedResult.bitIndex = 60;
+  functionResult = findPieceByBitIndex(expectedResult.bitIndex, &board);
+  int c13 = comparePieces(&expectedResult, &functionResult, 'd');
+  return c0 && c1 && c2 && c3 && c4 && c5 && c6 && c7 && c8 && c9 && c10 &&
+         c11 && c12 && c13;
+}
+
 void testMoveGeneration() {
   int resultTestComputeSideBitBoard = testComputeSideBitBoard();
-  if (resultTestComputeSideBitBoard) {
+  int resultTestFindPieceByIndex = testFindPieceByIndex();
+  if (resultTestComputeSideBitBoard && resultTestFindPieceByIndex) {
     printf("Tested move generation successfully\n");
   }
 }
+//   chessBoard board;
 
 //
 // void testLegalMoves() {
-//   chessBoard board;
 //   initChessBoard(&board);
 // }
 // int testLegalPawnMove(int bitIndex, int side, chessBoard *board, char
