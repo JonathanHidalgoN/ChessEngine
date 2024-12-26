@@ -334,6 +334,7 @@ bitboard computeSideBitBoard(int side, chessBoard *board) {
 }
 
 piece findPieceByBitIndex(int bitIndex, chessBoard *board) {
+  // TODO: Union with something to represent not found
   struct piece newPiece;
   int i, j, found;
   found = 0;
@@ -341,7 +342,7 @@ piece findPieceByBitIndex(int bitIndex, chessBoard *board) {
   for (i = 0; i < NUMBEROFCOLORS; i++) {
     for (j = 0; j < NUMBEROFDIFFERENTPIECES; j++) {
       bitboard mask = 1ULL << bitIndex;
-      if (board->pieces[i][j] && mask) {
+      if (board->pieces[i][j] & mask) {
         newPiece.type = j;
         newPiece.side = i;
         newPiece.bitIndex = bitIndex;
