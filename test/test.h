@@ -7,4 +7,5 @@
 
 void testBoard();
 void testAttacks();
+void testMoveGeneration();
 #endif
