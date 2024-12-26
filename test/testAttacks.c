@@ -286,36 +286,6 @@ void testAttacks() {
   }
 }
 
-// TODO: : test function to find piece and function that compute the board of a
-// side
-
-int testPieceLegalMoves(piece *piece, bitboard expectedResult,
-                        chessBoard *board, char testNumber) {
-  bitboard result;
-  char *functionName;
-  result = computeLegalMoves(piece->bitIndex, board);
-  switch (piece->type) {
-  case PAWN:
-    functionName = "computeLegalMoves for pawn";
-    break;
-  case KING:
-    functionName = "computeLegalMoves for king";
-    break;
-  case KNIGHT:
-    functionName = "computeLegalMoves for knight";
-    break;
-  case ROOK:
-    functionName = "computeLegalMoves for rook";
-    break;
-  case BISHOP:
-    functionName = "computeLegalMoves for bishop";
-    break;
-  default:
-    break;
-  }
-  return compareBitBoard(expectedResult, result, testNumber, functionName);
-}
-
 int testComputeSideBitBoard() {
   int side = WHITE;
   bitboard expectedResult = 0ULL;
@@ -488,10 +458,79 @@ int testFindPieceByIndex() {
          c11 && c12 && c13;
 }
 
+// TODO: : test function to find piece and function that compute the board of a
+// side
+// TODO : Move move generation to another test file and same for source code
+
+int testPieceLegalMoves(piece *piece, bitboard expectedResult,
+                        chessBoard *board, char testNumber) {
+  bitboard result;
+  char *functionName;
+  result = computeLegalMoves(piece->bitIndex, board);
+  switch (piece->type) {
+  case PAWN:
+    functionName = "computeLegalMoves for pawn";
+    break;
+  case KING:
+    functionName = "computeLegalMoves for king";
+    break;
+  case KNIGHT:
+    functionName = "computeLegalMoves for knight";
+    break;
+  case ROOK:
+    functionName = "computeLegalMoves for rook";
+    break;
+  case BISHOP:
+    functionName = "computeLegalMoves for bishop";
+    break;
+  default:
+    break;
+  }
+  return compareBitBoard(expectedResult, result, testNumber, functionName);
+}
+
+int testPawnLegalMoves() {
+  // TODO : test special pawn moves
+  bitboard expectedResult;
+  chessBoard board;
+  // Empty board test
+  cleanChessBoard(&board);
+  // white pawn at 0 bitIndex
+  piece testPawn = {WHITE, PAWN, 0};
+  board.pieces[testPawn.side][testPawn.type] = BIT(testPawn.bitIndex);
+  expectedResult = BIT(testPawn.bitIndex + 9) + BIT(testPawn.bitIndex + 8);
+  int c0 = testPieceLegalMoves(&testPawn, expectedResult, &board, '0');
+  cleanChessBoard(&board);
+  // move one square, now have two possible attacks
+  testPawn.bitIndex = 1;
+  testPawn.side = WHITE;
+  testPawn.type = PAWN;
+  board.pieces[testPawn.side][testPawn.type] = BIT(testPawn.bitIndex);
+  expectedResult = BIT(testPawn.bitIndex + 9) + BIT(testPawn.bitIndex + 8) +
+                   BIT(testPawn.bitIndex + 7);
+  int c1 = testPieceLegalMoves(&testPawn, expectedResult, &board, '1');
+  cleanChessBoard(&board);
+  // Place two black pawns at possible attack indices, should  be able to attack
+  testPawn.bitIndex = 1;
+  testPawn.side = WHITE;
+  testPawn.type = PAWN;
+  board.pieces[testPawn.side][testPawn.type] = BIT(testPawn.bitIndex);
+  board.pieces[BLACK][PAWN] =
+      BIT(testPawn.bitIndex + 9) + BIT(testPawn.bitIndex + 7);
+  expectedResult = BIT(testPawn.bitIndex + 9) + BIT(testPawn.bitIndex + 8) +
+                   BIT(testPawn.bitIndex + 7);
+  int c2 = testPieceLegalMoves(&testPawn, expectedResult, &board, '2');
+  cleanChessBoard(&board);
+  // Change for white pawns now we have no attack possible
+  return c0 && c1 && c2;
+}
+
 void testMoveGeneration() {
   int resultTestComputeSideBitBoard = testComputeSideBitBoard();
   int resultTestFindPieceByIndex = testFindPieceByIndex();
-  if (resultTestComputeSideBitBoard && resultTestFindPieceByIndex) {
+  int resultTestPawnLegalMoves = testPawnLegalMoves();
+  if (resultTestComputeSideBitBoard && resultTestFindPieceByIndex &&
+      resultTestPawnLegalMoves) {
     printf("Tested move generation successfully\n");
   }
 }
