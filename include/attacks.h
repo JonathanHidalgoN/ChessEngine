@@ -79,4 +79,11 @@ bitboard getRookAttack(int bitIndex, bitboard board);
  (where are the other pieces)
  */
 bitboard getBishopAttack(int bitIndex, bitboard board);
+
+/**
+Compute the legal moves of piece in bit index and in board
+ */
+bitboard computeLegalMoves(int bitIndex, chessBoard *board);
+bitboard computeSideBitBoard(int side, chessBoard *board);
+piece findPieceByBitIndex(int bitIndex, chessBoard *board);
 #endif
