@@ -106,6 +106,18 @@ bitboard computePawnAttack(int bitIndex, int side) {
   return attacks;
 }
 
+bitboard computePawnForwardMove(int bitIndex, int side) {
+  bitboard move = 0;
+  uint64_t mask = (uint64_t)1 << bitIndex;
+  // side == 1 means black
+  if (side) {
+    move |= (mask >> 8);
+  } else {
+    move |= (mask << 8);
+  }
+  return move;
+}
+
 bitboard computeKnightAttack(int bitIndex) {
   bitboard attacks = 0;
   uint64_t mask = (uint64_t)1 << bitIndex;
