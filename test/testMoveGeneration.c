@@ -187,8 +187,8 @@ int testPawnLegalMoves() {
   // TODO : test special pawn moves
   bitboard expectedResult;
   chessBoard board;
-  // Empty board test
   cleanChessBoard(&board);
+  // Empty board test
   // white pawn at 0 bitIndex
   piece testPawn = {WHITE, PAWN, 0};
   expectedResult = BIT(testPawn.bitIndex + 9) + BIT(testPawn.bitIndex + 8);
@@ -220,7 +220,33 @@ int testPawnLegalMoves() {
   expectedResult = BIT(testPawn.bitIndex - 8) + BIT(testPawn.bitIndex - 9);
   int c4 = testPawnLegalMove(&testPawn, &board, expectedResult, '4');
   cleanChessBoard(&board);
-  return c0 && c1 && c2 && c3 && c4;
+  // Black pawn at 19 with 3 black pieces, haven no possible attacks
+  testPawn = createPiece(19, BLACK, PAWN);
+  board.pieces[BLACK][BISHOP] = BIT(testPawn.bitIndex - 8) +
+                                BIT(testPawn.bitIndex - 9) +
+                                BIT(testPawn.bitIndex - 7);
+  expectedResult = 0ULL;
+  int c5 = testPawnLegalMove(&testPawn, &board, expectedResult, '5');
+  cleanChessBoard(&board);
+  // Black pawn with two blockers and one possible attack
+  testPawn = createPiece(19, BLACK, PAWN);
+  board.pieces[BLACK][BISHOP] =
+      BIT(testPawn.bitIndex - 8) + BIT(testPawn.bitIndex - 7);
+  board.pieces[WHITE][QUEEN] = BIT(testPawn.bitIndex - 9);
+  expectedResult = BIT(testPawn.bitIndex - 9);
+  int c6 = testPawnLegalMove(&testPawn, &board, expectedResult, '6');
+  cleanChessBoard(&board);
+  // White pawn at last row, can't move more
+  testPawn = createPiece(62, WHITE, PAWN);
+  expectedResult = 0ULL;
+  int c7 = testPawnLegalMove(&testPawn, &board, expectedResult, '7');
+  cleanChessBoard(&board);
+  // Black pawn at first row can't move
+  testPawn = createPiece(3, BLACK, PAWN);
+  expectedResult = 0ULL;
+  int c8 = testPawnLegalMove(&testPawn, &board, expectedResult, '8');
+  cleanChessBoard(&board);
+  return c0 && c1 && c2 && c3 && c4 && c5 && c6 && c7 && c8;
 }
 
 void testMoveGeneration() {
