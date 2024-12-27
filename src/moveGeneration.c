@@ -41,6 +41,8 @@ piece findPieceByBitIndex(int bitIndex, chessBoard *board) {
         break;
     }
   }
+  if (!found)
+    printf("Piece not found, this will create a bug");
   return newPiece;
 }
 
