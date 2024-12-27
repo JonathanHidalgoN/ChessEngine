@@ -46,3 +46,8 @@ int comparePieces(piece *expectedPiece, piece *resultPiece, char testNumber) {
   }
   return 1;
 }
+
+piece createPiece(int bitIndex, int side, int type) {
+  piece result = {side, type, bitIndex};
+  return result;
+}
