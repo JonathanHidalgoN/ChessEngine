@@ -174,6 +174,15 @@ int testPieceLegalMoves(piece *piece, bitboard expectedResult,
   return compareBitBoard(expectedResult, result, testNumber, functionName);
 }
 
+int testPawnLegalMove(piece *testPawn, chessBoard *blockers,
+                      bitboard expectedResult, char testNumber) {
+  //+= to merge the current value if we have the same piece
+  blockers->pieces[testPawn->side][testPawn->type] += BIT(testPawn->bitIndex);
+  int result =
+      testPieceLegalMoves(testPawn, expectedResult, blockers, testNumber);
+  return result;
+}
+
 int testPawnLegalMoves() {
   // TODO : test special pawn moves
   bitboard expectedResult;
@@ -182,32 +191,36 @@ int testPawnLegalMoves() {
   cleanChessBoard(&board);
   // white pawn at 0 bitIndex
   piece testPawn = {WHITE, PAWN, 0};
-  board.pieces[testPawn.side][testPawn.type] = BIT(testPawn.bitIndex);
   expectedResult = BIT(testPawn.bitIndex + 9) + BIT(testPawn.bitIndex + 8);
-  int c0 = testPieceLegalMoves(&testPawn, expectedResult, &board, '0');
+  int c0 = testPawnLegalMove(&testPawn, &board, expectedResult, '0');
   cleanChessBoard(&board);
   // move one square, now have two possible attacks
-  testPawn.bitIndex = 1;
-  testPawn.side = WHITE;
-  testPawn.type = PAWN;
-  board.pieces[testPawn.side][testPawn.type] = BIT(testPawn.bitIndex);
+  testPawn = createPiece(1, WHITE, PAWN);
   expectedResult = BIT(testPawn.bitIndex + 9) + BIT(testPawn.bitIndex + 8) +
                    BIT(testPawn.bitIndex + 7);
-  int c1 = testPieceLegalMoves(&testPawn, expectedResult, &board, '1');
+  int c1 = testPawnLegalMove(&testPawn, &board, expectedResult, '1');
   cleanChessBoard(&board);
   // Place two black pawns at possible attack indices, should  be able to attack
-  testPawn.bitIndex = 1;
-  testPawn.side = WHITE;
-  testPawn.type = PAWN;
-  board.pieces[testPawn.side][testPawn.type] = BIT(testPawn.bitIndex);
+  testPawn = createPiece(1, WHITE, PAWN);
   board.pieces[BLACK][PAWN] =
       BIT(testPawn.bitIndex + 9) + BIT(testPawn.bitIndex + 7);
   expectedResult = BIT(testPawn.bitIndex + 9) + BIT(testPawn.bitIndex + 8) +
                    BIT(testPawn.bitIndex + 7);
-  int c2 = testPieceLegalMoves(&testPawn, expectedResult, &board, '2');
+  int c2 = testPawnLegalMove(&testPawn, &board, expectedResult, '2');
   cleanChessBoard(&board);
-  // Change for white pawns now we have no attack possible
-  return c0 && c1 && c2;
+  // Change for white pawns, just one forward move
+  testPawn = createPiece(1, WHITE, PAWN);
+  board.pieces[WHITE][PAWN] =
+      BIT(testPawn.bitIndex + 9) + BIT(testPawn.bitIndex + 7);
+  expectedResult = BIT(testPawn.bitIndex + 8);
+  int c3 = testPawnLegalMove(&testPawn, &board, expectedResult, '3');
+  cleanChessBoard(&board);
+  // Black pawn test, empty board corner
+  testPawn = createPiece(63, BLACK, PAWN);
+  expectedResult = BIT(testPawn.bitIndex - 8) + BIT(testPawn.bitIndex - 9);
+  int c4 = testPawnLegalMove(&testPawn, &board, expectedResult, '4');
+  cleanChessBoard(&board);
+  return c0 && c1 && c2 && c3 && c4;
 }
 
 void testMoveGeneration() {
