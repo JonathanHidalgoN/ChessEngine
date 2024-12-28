@@ -15,6 +15,7 @@ bitboard computePawnForwardMove(int bitIndex, int side) {
 }
 
 bitboard computeSideBitBoard(int side, chessBoard *board) {
+  // TODO: This should be cache and compute only when neccesary
   bitboard result = 0ULL;
   for (int i = 0; i < NUMBEROFDIFFERENTPIECES; i++)
     result |= board->pieces[side][i];

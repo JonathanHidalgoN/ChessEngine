@@ -174,8 +174,8 @@ int testPieceLegalMoves(piece *piece, bitboard expectedResult,
   return compareBitBoard(expectedResult, result, testNumber, functionName);
 }
 
-int testPawnLegalMove(piece *testPawn, chessBoard *blockers,
-                      bitboard expectedResult, char testNumber) {
+static int testPawnLegalMove(piece *testPawn, chessBoard *blockers,
+                             bitboard expectedResult, char testNumber) {
   //+= to merge the current value if we have the same piece
   blockers->pieces[testPawn->side][testPawn->type] += BIT(testPawn->bitIndex);
   int result =
