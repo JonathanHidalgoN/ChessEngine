@@ -23,22 +23,11 @@
 #ifndef BOARD_H
 #define BOARD_H
 #include "boardConstants.h"
-#include <stdint.h>
 
 // Some useful constants
 #define countBits(bitboard) __builtin_popcountll(bitboard)
 #define fromBoardCordsToBitIndex(row, col) ((col) + ROWS * (row))
 #define getLSBIndex(bitboard) ((bitboard) ? __builtin_ctzll(bitboard) : -1)
-// Will be using a bitboard representation
-typedef uint64_t bitboard;
-typedef struct chessBoard {
-  bitboard pieces[NUMBEROFCOLORS][NUMBEROFDIFFERENTPIECES];
-} chessBoard;
-typedef struct piece {
-  int side;
-  int type;
-  int bitIndex;
-} piece;
 /**
  Set all pieces of the board to empty board
 */
