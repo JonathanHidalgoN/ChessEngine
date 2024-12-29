@@ -1,5 +1,5 @@
-#include "include/attacks.h"
 #include "include/board/board.h"
+#include "include/moveGeneration/attacks.h"
 #include "test/test.h"
 #include <stdio.h>
 

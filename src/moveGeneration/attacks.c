@@ -1,4 +1,4 @@
-#include "../include/attacks.h"
+#include "../../include/moveGeneration/attacks.h"
 #include <stdint.h>
 #include <stdio.h>
 #include <string.h>

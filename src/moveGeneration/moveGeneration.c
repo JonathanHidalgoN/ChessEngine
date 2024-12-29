@@ -1,4 +1,4 @@
-#include "../include/moveGeneration.h"
+#include "../../include/moveGeneration/moveGeneration.h"
 #define DEBBUG 1
 
 bitboard computePawnForwardMove(int bitIndex, int side) {

@@ -1,7 +1,7 @@
 #ifndef ATTACKS_H
 #define ATTACKS_H
-#include "../include/board/board.h"
-#include "../include/random.h"
+#include "../board/board.h"
+#include "../random.h"
 #define BOARD_INDEX(row, col) ((col) + (ROWS * (row)))
 /**
  Given a bitIndex and the side(0 white 1 black) returns a bitboard

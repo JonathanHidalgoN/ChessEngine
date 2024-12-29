@@ -1,5 +1,5 @@
-#include "../include/attacks.h"
-#include "test.h"
+#include "../../include/moveGeneration/attacks.h"
+#include "../test.h"
 
 // NOTE : Refactor to one general test function to attack generation, CLAUDE has
 // help me a lot to change the calls from the individual test functions to

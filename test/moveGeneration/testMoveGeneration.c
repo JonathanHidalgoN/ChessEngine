@@ -1,5 +1,5 @@
-#include "../include/moveGeneration.h"
-#include "test.h"
+#include "../../include/moveGeneration/moveGeneration.h"
+#include "../test.h"
 
 int testComputeSideBitBoard() {
   int side = WHITE;
