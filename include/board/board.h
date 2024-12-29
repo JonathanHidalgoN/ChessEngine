@@ -22,23 +22,10 @@
  */
 #ifndef BOARD_H
 #define BOARD_H
+#include "boardConstants.h"
 #include <stdint.h>
 
 // Some useful constants
-#define COLS 8
-#define NUMBEROFCOLORS 2
-#define ROWS 8
-#define WHITE 0
-#define BLACK 1
-#define NUMBEROFDIFFERENTPIECES 6
-#define PAWN 0
-#define KING 1
-#define QUEEN 2
-#define BISHOP 3
-#define KNIGHT 4
-#define ROOK 5
-#define NUMBEROFSQUARES (ROWS * COLS)
-#define LASTBIT (NUMBEROFSQUARES - 1)
 #define countBits(bitboard) __builtin_popcountll(bitboard)
 #define fromBoardCordsToBitIndex(row, col) ((col) + ROWS * (row))
 #define getLSBIndex(bitboard) ((bitboard) ? __builtin_ctzll(bitboard) : -1)
