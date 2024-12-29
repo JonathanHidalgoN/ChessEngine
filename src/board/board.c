@@ -1,4 +1,4 @@
-#include "../include/board.h"
+#include "../../include/board/board.h"
 #include <stdint.h>
 #include <stdio.h>
 

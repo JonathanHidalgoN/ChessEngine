@@ -1,6 +1,6 @@
 #ifndef ATTACKS_H
 #define ATTACKS_H
-#include "../include/board.h"
+#include "../include/board/board.h"
 #include "../include/random.h"
 #define BOARD_INDEX(row, col) ((col) + (ROWS * (row)))
 /**

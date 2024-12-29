@@ -6,7 +6,7 @@ ifeq ($(MAKECMDGOALS),debug)
     CFLAGS += -g -O0
 endif
 
-SRC = src/board.c src/attacks.c src/random.c src/moveGeneration.c test/testBoard.c test/testAttacks.c test/testMoveGeneration.c test/utils.c main.c
+SRC = src/board/board.c src/attacks.c src/random.c src/moveGeneration.c test/board/testBoard.c test/testAttacks.c test/testMoveGeneration.c test/utils.c main.c
 BUILD_DIR = build
 TARGET = $(BUILD_DIR)/chess_game
 OBJ = $(patsubst %.c,$(BUILD_DIR)/%.o,$(SRC))

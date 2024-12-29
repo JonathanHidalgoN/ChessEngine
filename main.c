@@ -1,5 +1,5 @@
 #include "include/attacks.h"
-#include "include/board.h"
+#include "include/board/board.h"
 #include "test/test.h"
 #include <stdio.h>
 
