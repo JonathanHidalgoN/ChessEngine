@@ -16,6 +16,7 @@
 #define ROOK 5
 #define NUMBEROFSQUARES (ROWS * COLS)
 #define LASTBIT (NUMBEROFSQUARES - 1)
+#define PLAYERS 2
 
 typedef uint64_t bitboard;
 
