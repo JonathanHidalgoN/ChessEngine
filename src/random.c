@@ -1,4 +1,5 @@
 #include "../include/random.h"
+#include <stdint.h>
 /*
  * Pseudo random number generator
  * source :
@@ -14,7 +15,7 @@ static unsigned int getRandom32UNumber() {
   return number;
 }
 
-static uint64_t getRandom64UNumber() {
+static uint64_t getRandom64UNumberMagic() {
   uint64_t n1, n2, n3, n4;
   n1 = (uint64_t)(getRandom32UNumber()) & 0xFFFF;
   n2 = (uint64_t)(getRandom32UNumber()) & 0xFFFF;
@@ -23,6 +24,16 @@ static uint64_t getRandom64UNumber() {
   return n1 | (n2 << 16) | (n3 << 32) | (n4 << 48);
 }
 
-uint64_t getMagicNumberCandidate() {
-  return getRandom64UNumber() & getRandom64UNumber() & getRandom64UNumber();
+uint64_t getRandom64UNumber() {
+  return getRandom64UNumberMagic() & getRandom64UNumberMagic() &
+         getRandom64UNumberMagic();
+}
+
+uint64_t random_64bit_number() {
+  static const uint64_t multiplier = 6364136223846793005ULL;
+  static const uint64_t increment = 1442695040888963407ULL;
+  static uint64_t seed = 0x5555555555555555ULL; // Starting seed
+
+  seed = seed * multiplier + increment;
+  return seed;
 }
