@@ -26,8 +26,8 @@ typedef struct piece {
 } piece;
 
 // Will be using a bitboard representation
-// TODO: change name to piece list or something like that
 typedef struct chessBoard {
+  // TODO: change name to piece list or something like that
   bitboard pieces[NUMBEROFCOLORS][NUMBEROFDIFFERENTPIECES];
 } chessBoard;
 #endif // !CONSTANTS_C
