@@ -4,7 +4,7 @@
 int testComputeSideBitBoard() {
   int side = WHITE;
   bitboard expectedResult = 0ULL;
-  pieceList board;
+  bitBoardsList board;
   char *name = "computeSideBitBoard";
   cleanPieceList(&board);
 
@@ -49,7 +49,7 @@ int testComputeSideBitBoard() {
 }
 
 int testFindPieceByIndex() {
-  pieceList board;
+  bitBoardsList board;
   initChessBoard(&board);
   piece functionResult, expectedResult;
   // Test for Pawns(8 because we have 8 pawns, 48 is bitIndex where black pawns
@@ -149,7 +149,7 @@ int testFindPieceByIndex() {
 }
 
 int testPieceLegalMoves(piece *piece, bitboard expectedResult,
-                        pieceList *board, char testNumber) {
+                        bitBoardsList *board, char testNumber) {
   bitboard result;
   char *functionName;
   result = computeLegalMoves(piece->bitIndex, board);
@@ -175,7 +175,7 @@ int testPieceLegalMoves(piece *piece, bitboard expectedResult,
   return compareBitBoard(expectedResult, result, testNumber, functionName);
 }
 
-static int testPawnLegalMove(piece *testPawn, pieceList *blockers,
+static int testPawnLegalMove(piece *testPawn, bitBoardsList *blockers,
                              bitboard expectedResult, char testNumber) {
   //+= to merge the current value if we have the same piece
   blockers->pieces[testPawn->side][testPawn->type] += BIT(testPawn->bitIndex);
@@ -187,7 +187,7 @@ static int testPawnLegalMove(piece *testPawn, pieceList *blockers,
 int testPawnLegalMoves() {
   // TODO : test special pawn moves
   bitboard expectedResult;
-  pieceList board;
+  bitBoardsList board;
   cleanPieceList(&board);
   // Empty board test
   // white pawn at 0 bitIndex

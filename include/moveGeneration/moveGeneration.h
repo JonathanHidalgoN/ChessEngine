@@ -3,9 +3,9 @@
 #include "../board/board.h"
 #include "attacks.h"
 #include <stdio.h>
-piece findPieceByBitIndex(int bitIndex, pieceList *board);
-bitboard computeLegalMoves(int bitIndex, pieceList *board);
-bitboard computeSideBitBoard(int side, pieceList *board);
+piece findPieceByBitIndex(int bitIndex, bitBoardsList *board);
+bitboard computeLegalMoves(int bitIndex, bitBoardsList *board);
+bitboard computeSideBitBoard(int side, bitBoardsList *board);
 /**
  * Computes the pawn forward move
  */

@@ -17,7 +17,7 @@ int main() {
   }
 
   printf("Chess engine programmed by me (: \n");
-  pieceList board;
+  bitBoardsList board;
   initChessBoard(&board);
   printChessBoard(&board);
   return 0;

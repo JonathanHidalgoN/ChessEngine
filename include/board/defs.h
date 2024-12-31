@@ -38,8 +38,8 @@ typedef struct gameState {
   int phaseValue;
 } gameState;
 
-typedef struct pieceList {
+typedef struct bitBoardsList {
   bitboard pieces[NUMBEROFCOLORS][NUMBEROFDIFFERENTPIECES];
-} pieceList;
+} bitBoardsList;
 
 #endif // !CONSTANTS_C
