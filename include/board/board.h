@@ -53,7 +53,7 @@ void placeBitValue(int bitIndex, int val, bitboard *bb);
 /**
   Init the bitBoardsList with the classic chess config
  */
-void initChessBoard(bitBoardsList *bitBoardsList);
+void initBitBoardsListStandarChess(bitBoardsList *bitBoardsList);
 /**
   Create a string representation of the bitBoardsList
  */

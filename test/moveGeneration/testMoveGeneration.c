@@ -50,7 +50,7 @@ int testComputeSideBitBoard() {
 
 int testFindPieceByIndex() {
   bitBoardsList board;
-  initChessBoard(&board);
+  initBitBoardsListStandarChess(&board);
   piece functionResult, expectedResult;
   // Test for Pawns(8 because we have 8 pawns, 48 is bitIndex where black pawns
   // start)

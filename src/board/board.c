@@ -43,7 +43,7 @@ void cleanPieceList(bitBoardsList *bitBoardsList) {
   }
 }
 
-void initChessBoard(bitBoardsList *bitBoardsList) {
+void initBitBoardsListStandarChess(bitBoardsList *bitBoardsList) {
   int i;
   // TODO : CHANGE COORDS TO USE BIT INDEX AND AVOID THE INIT
   cleanPieceList(bitBoardsList);
