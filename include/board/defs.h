@@ -2,6 +2,7 @@
 #define CONSTANTS_C
 
 #include <stdint.h>
+#include <stdio.h>
 
 #define COLS 8
 #define ROWS 8

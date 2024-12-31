@@ -53,4 +53,5 @@ void placePieceRepresentationIntoBoardString(bitboard bb, char *br,
   Print the chessBoard
  */
 void printChessBoard(chessBoard *chessBoard);
+void printGameState(const gameState *state);
 #endif
