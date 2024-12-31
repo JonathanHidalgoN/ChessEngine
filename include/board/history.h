@@ -5,12 +5,12 @@
 
 // This is like a stack
 typedef struct history {
-  gameState state[MAXTURNS];
+  gameState states[MAXTURNS];
   int len;
 } history;
 
 void pushIntoHistory(history *history, gameState *gameState);
-void popFromHistory(history *history, gameState *gameState);
+gameState *popFromHistory(history *history, gameState *gameState);
 int getLenHistory(history *history);
 gameState *getCurrentGameStateFromHistory(history *history);
 
