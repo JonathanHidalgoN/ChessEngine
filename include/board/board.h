@@ -31,7 +31,7 @@
 /**
  Set all pieces of the board to empty board
 */
-void cleanChessBoard(chessBoard *chessBoard);
+void cleanChessBoard(pieceList *pieceList);
 /**
   print the bitboard
  */
@@ -41,17 +41,17 @@ void printBitboard(bitboard bb);
  */
 void placeBitValue(int bitIndex, int val, bitboard *bb);
 /**
-  Init the chessBoard with the classic chess config
+  Init the pieceList with the classic chess config
  */
-void initChessBoard(chessBoard *chessBoard);
+void initChessBoard(pieceList *pieceList);
 /**
-  Create a string representation of the chessBoard
+  Create a string representation of the pieceList
  */
 void placePieceRepresentationIntoBoardString(bitboard bb, char *br,
                                              char symbol);
 /**
-  Print the chessBoard
+  Print the pieceList
  */
-void printChessBoard(chessBoard *chessBoard);
+void printChessBoard(pieceList *pieceList);
 void printGameState(const gameState *state);
 #endif
