@@ -9,20 +9,20 @@
 #ifndef BOARD_ENCODING_H
 #define BOARD_ENCODING_H
 #include "../random.h"
-#include "boardConstants.h"
+#include "defs.h"
 #include <stdint.h>
 
-const int keysForPieces =
-    (int)NUMBEROFSQUARES * NUMBEROFDIFFERENTPIECES * PLAYERS;
-const int keysForCastling = 16;
-const int keysForSides = 2;
-const int keysForPassant = 17;
+#define NKEYSFORPIECES                                                         \
+  (NUMBEROFSQUARES * NUMBEROFDIFFERENTPIECES * NUMBEROFCOLORS)
+#define NKEYSFORCASTLING 16
+#define NKEYSFORSIDES 2
+#define NKEYSFORPASSANT 17
 
 typedef struct zobristRandoms {
-  uint64_t pieceRandoms[keysForPieces];
-  uint64_t castlingRandoms[keysForCastling];
-  uint64_t sidesRandoms[keysForSides];
-  uint64_t passantRandoms[keysForPassant];
+  uint64_t pieceRandoms[NKEYSFORPIECES];
+  uint64_t castlingRandoms[NKEYSFORCASTLING];
+  uint64_t sidesRandoms[NKEYSFORSIDES];
+  uint64_t passantRandoms[NKEYSFORPASSANT];
 } zobristRandoms;
 
 void fillZobristRandoms(zobristRandoms *randoms);

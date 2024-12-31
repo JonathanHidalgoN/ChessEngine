@@ -2,9 +2,10 @@
 #define CONSTANTS_C
 
 #include <stdint.h>
+
 #define COLS 8
-#define NUMBEROFCOLORS 2
 #define ROWS 8
+#define NUMBEROFCOLORS 2
 #define WHITE 0
 #define BLACK 1
 #define NUMBEROFDIFFERENTPIECES 6
@@ -16,7 +17,6 @@
 #define ROOK 5
 #define NUMBEROFSQUARES (ROWS * COLS)
 #define LASTBIT (NUMBEROFSQUARES - 1)
-#define PLAYERS 2
 
 typedef uint64_t bitboard;
 
@@ -26,9 +26,18 @@ typedef struct piece {
   int bitIndex;
 } piece;
 
-// Will be using a bitboard representation
+typedef struct gameState {
+  int playingSide;
+  int castlingCode;
+  int halfMoveCounter;
+  int enPassantCode;
+  int fullMoveCounter;
+  uint64_t zobristKey;
+  int phaseValue;
+} gameState;
+
 typedef struct chessBoard {
-  // TODO: change name to piece list or something like that
   bitboard pieces[NUMBEROFCOLORS][NUMBEROFDIFFERENTPIECES];
 } chessBoard;
+
 #endif // !CONSTANTS_C

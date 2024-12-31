@@ -22,7 +22,7 @@
  */
 #ifndef BOARD_H
 #define BOARD_H
-#include "boardConstants.h"
+#include "defs.h"
 
 // Some useful constants
 #define countBits(bitboard) __builtin_popcountll(bitboard)
