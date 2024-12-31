@@ -31,7 +31,7 @@
 /**
  Set all pieces of the board to empty board
 */
-void cleanChessBoard(pieceList *pieceList);
+void cleanPieceList(pieceList *pieceList);
 /**
   print the bitboard
  */
