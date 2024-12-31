@@ -22,16 +22,26 @@
  */
 #ifndef BOARD_H
 #define BOARD_H
+#include "boardEncoding.h"
 #include "defs.h"
+#include "history.h"
 
-// Some useful constants
 #define countBits(bitboard) __builtin_popcountll(bitboard)
 #define fromBoardCordsToBitIndex(row, col) ((col) + ROWS * (row))
 #define getLSBIndex(bitboard) ((bitboard) ? __builtin_ctzll(bitboard) : -1)
+
+typedef struct board {
+  bitBoardsList bitBoardsList;
+  int side;
+  gameState gameState;
+  history history;
+  zobristRandoms zobristRandoms;
+} board;
+
 /**
  Set all pieces of the board to empty board
 */
-void cleanPieceList(pieceList *pieceList);
+void cleanPieceList(bitBoardsList *bitBoardsList);
 /**
   print the bitboard
  */
@@ -41,17 +51,21 @@ void printBitboard(bitboard bb);
  */
 void placeBitValue(int bitIndex, int val, bitboard *bb);
 /**
-  Init the pieceList with the classic chess config
+  Init the bitBoardsList with the classic chess config
  */
-void initChessBoard(pieceList *pieceList);
+void initChessBoard(bitBoardsList *bitBoardsList);
 /**
-  Create a string representation of the pieceList
+  Create a string representation of the bitBoardsList
  */
 void placePieceRepresentationIntoBoardString(bitboard bb, char *br,
                                              char symbol);
 /**
-  Print the pieceList
+  Print the bitBoardsList
  */
-void printChessBoard(pieceList *pieceList);
+void printChessBoard(bitBoardsList *bitBoardsList);
+/**
+ * Print the game state, just one function for this simple struct, that is why
+ * this is here and not in a different file
+ */
 void printGameState(const gameState *state);
 #endif
