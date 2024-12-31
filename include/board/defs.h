@@ -17,6 +17,7 @@
 #define ROOK 5
 #define NUMBEROFSQUARES (ROWS * COLS)
 #define LASTBIT (NUMBEROFSQUARES - 1)
+#define MAXTURNS 2048
 
 typedef uint64_t bitboard;
 
