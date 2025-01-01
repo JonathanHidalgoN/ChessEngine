@@ -149,14 +149,3 @@ void printChessBoard(bitBoardsList *bitBoardsList) {
   printf("    7 6 5 4 3 2 1 0");
   printf("\n");
 }
-
-void printGameState(const gameState *state) {
-  printf("Game State:\n");
-  printf("Playing Side: %d\n", state->playingSide);
-  printf("Castling Code: %d\n", state->castlingCode);
-  printf("Half Move Counter: %d\n", state->halfMoveCounter);
-  printf("En Passant Code: %d\n", state->enPassantCode);
-  printf("Full Move Counter: %d\n", state->fullMoveCounter);
-  printf("Zobrist Key: %lu\n", state->zobristKey);
-  printf("Phase Value: %d\n", state->phaseValue);
-}
