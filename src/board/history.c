@@ -1,5 +1,13 @@
 #include "../../include/board/history.h"
 
+history *getCleanHistory(history *history) {
+  for (int i = 0; i < MAXTURNS; i++) {
+    gameState dummyGameState = {0, 0, 0, 0, 0, 0ULL, 0};
+    history->states[i] = dummyGameState;
+  }
+  history->len = 0;
+  return history;
+}
 void pushIntoHistory(history *history, gameState *gameState) {
   history->states[history->len] = *gameState;
   history->len += 1;

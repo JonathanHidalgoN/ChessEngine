@@ -9,6 +9,7 @@ typedef struct history {
   int len;
 } history;
 
+history *getCleanHistory(history *history);
 void pushIntoHistory(history *history, gameState *gameState);
 gameState *popFromHistory(history *history);
 int getLenHistory(history *history);
