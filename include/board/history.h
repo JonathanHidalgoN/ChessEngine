@@ -10,7 +10,7 @@ typedef struct history {
 } history;
 
 void pushIntoHistory(history *history, gameState *gameState);
-gameState *popFromHistory(history *history, gameState *gameState);
+gameState *popFromHistory(history *history);
 int getLenHistory(history *history);
 gameState *getCurrentGameStateFromHistory(history *history);
 

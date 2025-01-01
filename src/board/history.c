@@ -5,7 +5,7 @@ void pushIntoHistory(history *history, gameState *gameState) {
   history->len += 1;
 }
 
-gameState *popFromHistory(history *history, gameState *gameState) {
+gameState *popFromHistory(history *history) {
   history->len -= 1;
   return &history->states[history->len];
 }
