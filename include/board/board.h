@@ -25,6 +25,7 @@
 #include "boardEncoding.h"
 #include "defs.h"
 #include "history.h"
+#include "pieceList.h"
 
 #define countBits(bitboard) __builtin_popcountll(bitboard)
 #define fromBoardCordsToBitIndex(row, col) ((col) + ROWS * (row))
@@ -36,6 +37,7 @@ typedef struct board {
   gameState gameState;
   history history;
   zobristRandoms zobristRandoms;
+  pieceList pieceList;
 } board;
 
 /**
