@@ -8,4 +8,10 @@ int compareBitBoard(bitboard expectedResult, bitboard result, char testNumber,
 void printPieceStruct(piece *piece);
 int comparePieces(piece *expectedPiece, piece *resultPiece, char testNumber);
 piece createPiece(int bitIndex, int side, int type);
+int areGameStatesEqual(gameState *expected, gameState *result);
+void printGameState(gameState *state);
+gameState createGameState(int playingSide, int castlingCode,
+                          int halfMoveCounter, int enPassantCode,
+                          int fullMoveCounter, uint64_t zobristKey,
+                          int phaseValue);
 #endif
