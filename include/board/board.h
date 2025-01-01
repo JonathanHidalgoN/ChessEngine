@@ -65,9 +65,4 @@ void placePieceRepresentationIntoBoardString(bitboard bb, char *br,
   Print the bitBoardsList
  */
 void printChessBoard(bitBoardsList *bitBoardsList);
-/**
- * Print the game state, just one function for this simple struct, that is why
- * this is here and not in a different file
- */
-void printGameState(const gameState *state);
 #endif
