@@ -50,10 +50,6 @@ piece findPieceByBitIndex(int bitIndex, bitBoardsList *board) {
 bitboard computeLegalMoves(int bitIndex, bitBoardsList *board) {
   piece piece = findPieceByBitIndex(bitIndex, board);
   bitboard legalMoves, alyBitBoard, generalBitBoard;
-  if (DEBBUG) {
-    printf("Compute legal moves for side : %d, piece : %d\n", piece.side,
-           piece.type);
-  }
   // Add castling, mate, passang pawn,
   alyBitBoard = computeSideBitBoard(piece.side, board);
   switch (piece.type) {
