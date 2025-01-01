@@ -5,7 +5,7 @@
 int testPushIntoHistory() {
   history history;
   cleanHistory(&history);
-  // Test case 2: Pushing a state for WHITE
+  // Test case 1: Pushing a state for WHITE
   gameState testGameState = {WHITE, 1, 2, 3, 4, 1ULL, 5};
   int expectedIndex = 0;
   pushIntoHistory(&history, &testGameState);
@@ -77,7 +77,68 @@ int testPushIntoHistory() {
   return 1;
 }
 
-int testPopFromHistory() { return 1; }
+int testPopFromHistory() {
+  history history;
+  cleanHistory(&history);
+  // Test case 1: Normal case
+  gameState expectedGameState = {WHITE, 1, 2, 3, 4, 1ULL, 5};
+  int len = 10;
+  history.len = len;
+  int expectedLen = len - 1;
+  gameState *resultGameState = popFromHistory(&history);
+  history.states[expectedLen] = expectedGameState;
+  if (!areGameStatesEqual(&expectedGameState, resultGameState) ||
+      history.len != expectedLen) {
+    printf("Error in pop from hisotry function case 0\n");
+    return 0;
+  }
+  // Test case 2: Edge case - Pop from a single-element history
+  cleanHistory(&history);
+  history.len = 1;
+  gameState expectedGameState2 = {WHITE, 1, 0, 0, 0, 1ULL, 0};
+  history.states[0] = expectedGameState2; // Single element
+  int expectedLen2 = 0;
+  gameState *resultGameState2 = popFromHistory(&history);
+  if (!areGameStatesEqual(&expectedGameState2, resultGameState2) ||
+      history.len != expectedLen2) {
+    printf("Error in popFromHistory function case 1\n");
+    return 0;
+  }
+  // Test case 4: Multiple pops in sequence
+  cleanHistory(&history);
+  history.len = 3;
+  gameState expectedGameState4a = {WHITE, 1, 1, 1, 1, 1ULL, 1};
+  gameState expectedGameState4b = {BLACK, 2, 2, 2, 2, 2ULL, 2};
+  gameState expectedGameState4c = {WHITE, 3, 3, 3, 3, 3ULL, 3};
+  history.states[0] = expectedGameState4a;
+  history.states[1] = expectedGameState4b;
+  history.states[2] = expectedGameState4c;
+
+  // First pop
+  gameState *resultGameState4a = popFromHistory(&history);
+  if (!areGameStatesEqual(&expectedGameState4c, resultGameState4a) ||
+      history.len != 2) {
+    printf("Error in popFromHistory function case 3a\n");
+    return 0;
+  }
+
+  // Second pop
+  gameState *resultGameState4b = popFromHistory(&history);
+  if (!areGameStatesEqual(&expectedGameState4b, resultGameState4b) ||
+      history.len != 1) {
+    printf("Error in popFromHistory function case 3b\n");
+    return 0;
+  }
+
+  // Third pop
+  gameState *resultGameState4c = popFromHistory(&history);
+  if (!areGameStatesEqual(&expectedGameState4a, resultGameState4c) ||
+      history.len != 0) {
+    printf("Error in popFromHistory function case 3c\n");
+    return 0;
+  }
+  return 1;
+}
 
 int testGetLenHistory() { return 1; }
 
