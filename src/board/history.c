@@ -14,6 +14,10 @@ void pushIntoHistory(history *history, gameState *gameState) {
 }
 
 gameState *popFromHistory(history *history) {
+  if (history->len == 0) {
+    printf("History will return null, error will occur\n");
+    return NULL;
+  }
   history->len -= 1;
   return &history->states[history->len];
 }
