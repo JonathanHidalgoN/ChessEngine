@@ -10,4 +10,5 @@
 void testBoard();
 void testAttacks();
 void testMoveGeneration();
+void testHistory();
 #endif
