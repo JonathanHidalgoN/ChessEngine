@@ -16,6 +16,7 @@
 #define BISHOP 3
 #define KNIGHT 4
 #define ROOK 5
+#define EMPTY 6
 #define NUMBEROFSQUARES (ROWS * COLS)
 #define LASTBIT (NUMBEROFSQUARES - 1)
 #define MAXTURNS 2048
