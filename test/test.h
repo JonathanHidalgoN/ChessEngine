@@ -11,4 +11,5 @@ void testBoard();
 void testAttacks();
 void testMoveGeneration();
 void testHistory();
+void testPieceList();
 #endif
