@@ -80,3 +80,11 @@ gameState createGameState(int playingSide, int castlingCode,
                       phaseValue};
   return result;
 }
+
+int arePieceListEqual(pieceList *pl1, pieceList *pl2) {
+  for (int i = 0; i < NUMBEROFSQUARES; i++) {
+    if (!(pl1->pieces[i] == pl2->pieces[i]))
+      return 0;
+  }
+  return 1;
+}

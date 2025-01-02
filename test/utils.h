@@ -14,4 +14,5 @@ gameState createGameState(int playingSide, int castlingCode,
                           int halfMoveCounter, int enPassantCode,
                           int fullMoveCounter, uint64_t zobristKey,
                           int phaseValue);
+int arePieceListEqual(pieceList *pl1, pieceList *pl2);
 #endif
