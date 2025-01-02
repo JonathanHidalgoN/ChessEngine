@@ -2,6 +2,9 @@
 #include "../test.h"
 #include <stdio.h>
 
+// TODO: : I dont like this test because we know that its not a stack but an
+// array inside, maybe integration test would be better for this
+
 int testPushIntoHistory() {
   history history;
   cleanHistory(&history);
@@ -140,18 +143,10 @@ int testPopFromHistory() {
   return 1;
 }
 
-int testGetLenHistory() { return 1; }
-
-int testGetCurrentGameStateFromHistory() { return 1; }
-
 void testHistory() {
   int testPushIntoHistoryResult = testPushIntoHistory();
   int testPopFromHistoryResult = testPopFromHistory();
-  int testGetLenHistoryResult = testGetLenHistory();
-  int testGetCurrentGameStateFromHistoryResult =
-      testGetCurrentGameStateFromHistory();
-  if (testPopFromHistoryResult && testPushIntoHistoryResult &&
-      testGetCurrentGameStateFromHistoryResult && testGetLenHistoryResult) {
+  if (testPopFromHistoryResult && testPushIntoHistoryResult) {
     printf("History tested successfully \n");
   }
 }
