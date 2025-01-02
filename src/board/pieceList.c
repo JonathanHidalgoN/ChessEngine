@@ -18,14 +18,14 @@ void updatePieceList(pieceList *pieceList, bitBoardsList *bitBoardsList) {
 }
 
 void cleanPieceList(pieceList *pieceList) {
-  for (int i = 0; i <= NUMBEROFSQUARES; i++) {
+  for (int i = 0; i < NUMBEROFSQUARES; i++) {
     pieceList->pieces[i] = EMPTY;
   }
 }
 
 void printPieceList(pieceList *pieceList) {
   // TODO: add format
-  for (int i = NUMBEROFSQUARES; i >= 0; i--) {
+  for (int i = NUMBEROFSQUARES - 1; i >= 0; i--) {
     int pieceType = pieceList->pieces[i];
     printf("%d ", pieceType);
   }
