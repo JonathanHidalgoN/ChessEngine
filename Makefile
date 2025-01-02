@@ -1,12 +1,15 @@
 CC = gcc
 CFLAGS = -Wall -Wextra -Iinclude
 
-# Add debug flags if making debug
+
+SRC =src/board/boardEncoding.c src/board/history.c src/board/pieceList.c src/board/board.c src/moveGeneration/attacks.c src/random.c src/moveGeneration/moveGeneration.c  main.c
+
+# Add debug
 ifeq ($(MAKECMDGOALS),debug)
+	SRC += test/board/testBoard.c test/moveGeneration/testAttacks.c test/moveGeneration/testMoveGeneration.c test/utils.c test/board/testHistory.c
     CFLAGS += -g -O0
 endif
 
-SRC =src/board/boardEncoding.c src/board/history.c src/board/pieceList.c src/board/board.c src/moveGeneration/attacks.c src/random.c src/moveGeneration/moveGeneration.c test/board/testBoard.c test/moveGeneration/testAttacks.c test/moveGeneration/testMoveGeneration.c test/utils.c test/board/testHistory.c main.c
 BUILD_DIR = build
 TARGET = $(BUILD_DIR)/chess_game
 OBJ = $(patsubst %.c,$(BUILD_DIR)/%.o,$(SRC))
