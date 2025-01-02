@@ -34,7 +34,7 @@ void placeBitValue(int bitIndex, int val, bitboard *bb) {
   }
 }
 
-void cleanPieceList(bitBoardsList *bitBoardsList) {
+void cleanBitBoardList(bitBoardsList *bitBoardsList) {
   int i, j;
   for (i = 0; i < NUMBEROFCOLORS; i++) {
     for (j = 0; j < NUMBEROFDIFFERENTPIECES; j++) {
@@ -46,7 +46,7 @@ void cleanPieceList(bitBoardsList *bitBoardsList) {
 void initBitBoardsListStandarChess(bitBoardsList *bitBoardsList) {
   int i;
   // TODO : CHANGE COORDS TO USE BIT INDEX AND AVOID THE INIT
-  cleanPieceList(bitBoardsList);
+  cleanBitBoardList(bitBoardsList);
 
   for (i = 0; i < COLS; i++) {
     placeBitValue(fromBoardCordsToBitIndex(1, i), 1,

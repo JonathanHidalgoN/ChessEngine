@@ -43,7 +43,7 @@ typedef struct board {
 /**
  Set all pieces of the board to empty board
 */
-void cleanPieceList(bitBoardsList *bitBoardsList);
+void cleanBitBoardList(bitBoardsList *bitBoardsList);
 /**
   print the bitboard
  */

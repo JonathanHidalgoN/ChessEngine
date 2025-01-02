@@ -6,7 +6,7 @@ int testComputeSideBitBoard() {
   bitboard expectedResult = 0ULL;
   bitBoardsList board;
   char *name = "computeSideBitBoard";
-  cleanPieceList(&board);
+  cleanBitBoardList(&board);
 
   // Board with no pieces should give 0 for white and black
   bitboard result0 = computeSideBitBoard(side, &board);
@@ -188,19 +188,19 @@ int testPawnLegalMoves() {
   // TODO : test special pawn moves
   bitboard expectedResult;
   bitBoardsList board;
-  cleanPieceList(&board);
+  cleanBitBoardList(&board);
   // Empty board test
   // white pawn at 0 bitIndex
   piece testPawn = {WHITE, PAWN, 0};
   expectedResult = BIT(testPawn.bitIndex + 9) + BIT(testPawn.bitIndex + 8);
   int c0 = testPawnLegalMove(&testPawn, &board, expectedResult, '0');
-  cleanPieceList(&board);
+  cleanBitBoardList(&board);
   // move one square, now have two possible attacks
   testPawn = createPiece(1, WHITE, PAWN);
   expectedResult = BIT(testPawn.bitIndex + 9) + BIT(testPawn.bitIndex + 8) +
                    BIT(testPawn.bitIndex + 7);
   int c1 = testPawnLegalMove(&testPawn, &board, expectedResult, '1');
-  cleanPieceList(&board);
+  cleanBitBoardList(&board);
   // Place two black pawns at possible attack indices, should  be able to attack
   testPawn = createPiece(1, WHITE, PAWN);
   board.pieces[BLACK][PAWN] =
@@ -208,19 +208,19 @@ int testPawnLegalMoves() {
   expectedResult = BIT(testPawn.bitIndex + 9) + BIT(testPawn.bitIndex + 8) +
                    BIT(testPawn.bitIndex + 7);
   int c2 = testPawnLegalMove(&testPawn, &board, expectedResult, '2');
-  cleanPieceList(&board);
+  cleanBitBoardList(&board);
   // Change for white pawns, just one forward move
   testPawn = createPiece(1, WHITE, PAWN);
   board.pieces[WHITE][PAWN] =
       BIT(testPawn.bitIndex + 9) + BIT(testPawn.bitIndex + 7);
   expectedResult = BIT(testPawn.bitIndex + 8);
   int c3 = testPawnLegalMove(&testPawn, &board, expectedResult, '3');
-  cleanPieceList(&board);
+  cleanBitBoardList(&board);
   // Black pawn test, empty board corner
   testPawn = createPiece(63, BLACK, PAWN);
   expectedResult = BIT(testPawn.bitIndex - 8) + BIT(testPawn.bitIndex - 9);
   int c4 = testPawnLegalMove(&testPawn, &board, expectedResult, '4');
-  cleanPieceList(&board);
+  cleanBitBoardList(&board);
   // Black pawn at 19 with 3 black pieces, haven no possible attacks
   testPawn = createPiece(19, BLACK, PAWN);
   board.pieces[BLACK][BISHOP] = BIT(testPawn.bitIndex - 8) +
@@ -228,7 +228,7 @@ int testPawnLegalMoves() {
                                 BIT(testPawn.bitIndex - 7);
   expectedResult = 0ULL;
   int c5 = testPawnLegalMove(&testPawn, &board, expectedResult, '5');
-  cleanPieceList(&board);
+  cleanBitBoardList(&board);
   // Black pawn with two blockers and one possible attack
   testPawn = createPiece(19, BLACK, PAWN);
   board.pieces[BLACK][BISHOP] =
@@ -236,17 +236,17 @@ int testPawnLegalMoves() {
   board.pieces[WHITE][QUEEN] = BIT(testPawn.bitIndex - 9);
   expectedResult = BIT(testPawn.bitIndex - 9);
   int c6 = testPawnLegalMove(&testPawn, &board, expectedResult, '6');
-  cleanPieceList(&board);
+  cleanBitBoardList(&board);
   // White pawn at last row, can't move more
   testPawn = createPiece(62, WHITE, PAWN);
   expectedResult = 0ULL;
   int c7 = testPawnLegalMove(&testPawn, &board, expectedResult, '7');
-  cleanPieceList(&board);
+  cleanBitBoardList(&board);
   // Black pawn at first row can't move
   testPawn = createPiece(3, BLACK, PAWN);
   expectedResult = 0ULL;
   int c8 = testPawnLegalMove(&testPawn, &board, expectedResult, '8');
-  cleanPieceList(&board);
+  cleanBitBoardList(&board);
   return c0 && c1 && c2 && c3 && c4 && c5 && c6 && c7 && c8;
 }
 
