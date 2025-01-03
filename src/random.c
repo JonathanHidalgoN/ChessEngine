@@ -1,7 +1,7 @@
 #include "../include/random.h"
 #include <stdint.h>
 /*
- * Pseudo random number generator
+ * Pseudo random number generator for magics
  * source :
  * https://www.youtube.com/watch?v=JjFYmkUhLN4&list=PLmN0neTso3Jxh8ZIylk74JpwfiWNI76Cs&index=13
  */
@@ -29,11 +29,13 @@ uint64_t getMagicNumberCandidate() {
          getRandom64UNumberMagic();
 }
 
-uint64_t getRandom64UNumber() {
-  static const uint64_t multiplier = 6364136223846793005ULL;
-  static const uint64_t increment = 1442695040888963407ULL;
-  static uint64_t seed = 0x5555555555555555ULL; // Starting seed
-
-  seed = seed * multiplier + increment;
-  return seed;
+uint64_t getRandom64UNumber(uint64_t *state) {
+  uint64_t x = state[0];
+  uint64_t const y = state[1];
+  state[0] = y;
+  x ^= x << 23;
+  x ^= x >> 17;
+  x ^= y ^ (y >> 26);
+  state[1] = x;
+  return x + y;
 }
