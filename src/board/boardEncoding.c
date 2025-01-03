@@ -29,12 +29,12 @@ uint64_t computeZobristFromBoard(zobristRandoms *randoms,
   int i, j, k;
   for (i = 0; i < NUMBEROFCOLORS; i++) {
     for (j = 0; j < NUMBEROFDIFFERENTPIECES; j++) {
-      for (k = 0; k < NUMBEROFSQUARES; k++) {
-        uint64_t mask = 1ULL << k;
-        if (mask & bitBoardsList->pieces[i][j]) {
-          int index = (int)i * j * k;
-          key ^= randoms->pieceRandoms[index];
-        }
+      bitboard bb = bitBoardsList->pieces[i][j];
+      while (bb) {
+        int k = __builtin_ctzll(bb);
+        bb &= bb - 1;
+        int index = k + NUMBEROFSQUARES * (j + NUMBEROFDIFFERENTPIECES * i);
+        key ^= randoms->pieceRandoms[index];
       }
     }
   }
