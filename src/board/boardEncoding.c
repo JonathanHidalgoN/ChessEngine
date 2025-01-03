@@ -1,25 +1,22 @@
 #include "../../include/board/boardEncoding.h"
 #include <stdint.h>
 
+// TODO: MULTI THREADS CAUSE A BUG HERE WITH THE STATIC VARIABLE
+static uint64_t ZOBRIST_RANDOM_STATE = 0x123456789ABCDEFULL;
+
+static void fillRandomArray(uint64_t *array, int size, uint64_t *state) {
+  for (int i = 0; i < size; i++) {
+    array[i] = getRandom64UNumber(state);
+  }
+}
+
 void fillZobristRandoms(zobristRandoms *randoms) {
-  int i;
-  uint64_t randomNumber;
-  for (i = 0; i < NKEYSFORPIECES; i++) {
-    randomNumber = getRandom64UNumber();
-    randoms->pieceRandoms[i] = randomNumber;
-  }
-  for (i = 0; i < NKEYSFORCASTLING; i++) {
-    randomNumber = getRandom64UNumber();
-    randoms->castlingRandoms[i] = randomNumber;
-  }
-  for (i = 0; i < NKEYSFORSIDES; i++) {
-    randomNumber = getRandom64UNumber();
-    randoms->sidesRandoms[i] = randomNumber;
-  }
-  for (i = 0; i < NKEYSFORPASSANT; i++) {
-    randomNumber = getRandom64UNumber();
-    randoms->passantRandoms[i] = randomNumber;
-  }
+  fillRandomArray(randoms->pieceRandoms, NKEYSFORPIECES, &ZOBRIST_RANDOM_STATE);
+  fillRandomArray(randoms->castlingRandoms, NKEYSFORCASTLING,
+                  &ZOBRIST_RANDOM_STATE);
+  fillRandomArray(randoms->sidesRandoms, NKEYSFORSIDES, &ZOBRIST_RANDOM_STATE);
+  fillRandomArray(randoms->passantRandoms, NKEYSFORPASSANT,
+                  &ZOBRIST_RANDOM_STATE);
 }
 
 uint64_t computeZobristFromBoard(zobristRandoms *randoms,
