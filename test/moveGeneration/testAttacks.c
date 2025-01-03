@@ -256,6 +256,6 @@ void testAttacks() {
   int resultTestBishopAttack = testBishopAttacks();
   if (resultTestPawnAttack && resultTestKnightAttack && resultTestKingAttack &&
       resultTestRookAttack && resultTestBishopAttack) {
-    printf("Tested attacks successfully \n");
+    printf(GREEN "Tested attacks successfully \n" RESET);
   }
 }

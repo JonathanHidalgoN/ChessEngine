@@ -256,6 +256,6 @@ void testMoveGeneration() {
   int resultTestPawnLegalMoves = testPawnLegalMoves();
   if (resultTestComputeSideBitBoard && resultTestFindPieceByIndex &&
       resultTestPawnLegalMoves) {
-    printf("Tested move generation successfully\n");
+    printf(GREEN "Tested move generation successfully\n" RESET);
   }
 }

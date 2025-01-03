@@ -1,3 +1,4 @@
+#include "utils.h"
 #include "test.h"
 
 void showDiff(bitboard expected, bitboard result) {
@@ -16,7 +17,8 @@ int compareBitBoard(bitboard expectedResult, bitboard result, char testNumber,
                     char *functionName) {
 
   if (result != expectedResult) {
-    printf("Error in function %s, test case %c \n", functionName, testNumber);
+    printf(RED "Error in function %s, test case %c \n" RESET, functionName,
+           testNumber);
     showDiff(expectedResult, result);
     return 0;
   }
@@ -37,7 +39,8 @@ void printPieceStruct(piece *piece) {
 int comparePieces(piece *expectedPiece, piece *resultPiece, char testNumber) {
   int areEqual = arePiecesEqual(expectedPiece, resultPiece);
   if (!areEqual) {
-    printf("Error in findPieceByBitIndex function case %c\n", testNumber);
+    printf(RED "Error in findPieceByBitIndex function case %c\n" RESET,
+           testNumber);
     printf("Expected piece: ");
     printPieceStruct(expectedPiece);
     printf("Actual value: ");

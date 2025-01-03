@@ -2,6 +2,12 @@
 #define TEST_UTILS_H
 #include "../include/board/board.h"
 
+#define RED "\x1b[31m"
+#define GREEN "\x1b[32m"
+#define YELLOW "\x1b[33m"
+#define BLUE "\x1b[34m"
+#define RESET "\x1b[0m"
+
 void showDiff(bitboard expected, bitboard result);
 int compareBitBoard(bitboard expectedResult, bitboard result, char testNumber,
                     char *functionName);

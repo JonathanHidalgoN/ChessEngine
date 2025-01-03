@@ -8,7 +8,7 @@ int computeAndCompareUpdatePieceList(pieceList *expectedPieceList,
   updatePieceList(&resultPieceList, bitBoardsList);
   int areEqual = arePieceListEqual(expectedPieceList, &resultPieceList);
   if (!areEqual) {
-    printf("Error in %s, test number %c\n", functionName, testNumber);
+    printf(RED "Error in %s, test number %c\n" RESET, functionName, testNumber);
     return 0;
   }
   return 1;
@@ -76,6 +76,6 @@ int testUpdatePieceList() {
 void testPieceList() {
   int testUpdatePieceListResult = testUpdatePieceList();
   if (testUpdatePieceListResult) {
-    printf("Tested piece list successfully\n");
+    printf(GREEN "Tested piece list successfully\n" RESET);
   }
 }
