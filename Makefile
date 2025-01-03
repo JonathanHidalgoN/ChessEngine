@@ -5,7 +5,7 @@ SRC =src/board/boardEncoding.c src/board/history.c src/board/pieceList.c src/boa
 
 # Add debug
 ifeq ($(MAKECMDGOALS),debug)
-	SRC += test/board/testPieceList.c test/board/testBoard.c test/moveGeneration/testAttacks.c test/moveGeneration/testMoveGeneration.c test/utils.c test/board/testHistory.c
+	SRC += test/board/testBoardEncoding.c test/board/testPieceList.c test/board/testBoard.c test/moveGeneration/testAttacks.c test/moveGeneration/testMoveGeneration.c test/utils.c test/board/testHistory.c
     CFLAGS += -g -O0
 endif
 
