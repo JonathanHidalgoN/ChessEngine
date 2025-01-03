@@ -2,6 +2,7 @@
 #include <stdio.h>
 
 void updatePieceList(pieceList *pieceList, bitBoardsList *bitBoardsList) {
+  cleanPieceList(pieceList);
   for (int i = 0; i < NUMBEROFCOLORS; i++) {
     for (int j = 0; j < NUMBEROFDIFFERENTPIECES; j++) {
       bitboard bb = bitBoardsList->pieces[i][j];
@@ -9,8 +10,6 @@ void updatePieceList(pieceList *pieceList, bitBoardsList *bitBoardsList) {
         bitboard mask = 1ULL << k;
         if (mask & bb) {
           pieceList->pieces[k] = j;
-        } else {
-          pieceList->pieces[k] = EMPTY;
         }
       }
     }
