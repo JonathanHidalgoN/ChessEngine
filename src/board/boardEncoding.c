@@ -23,7 +23,7 @@ uint64_t computeZobristFromBoard(zobristRandoms *randoms,
                                  bitBoardsList *bitBoardsList, int side,
                                  int castlingCode, int passantCode) {
   uint64_t key = 0ULL;
-  int i, j, k;
+  int i, j;
   for (i = 0; i < NUMBEROFCOLORS; i++) {
     for (j = 0; j < NUMBEROFDIFFERENTPIECES; j++) {
       bitboard bb = bitBoardsList->pieces[i][j];
