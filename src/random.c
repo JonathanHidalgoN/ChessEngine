@@ -5,13 +5,13 @@
  * source :
  * https://www.youtube.com/watch?v=JjFYmkUhLN4&list=PLmN0neTso3Jxh8ZIylk74JpwfiWNI76Cs&index=13
  */
-unsigned int state = 1804289383;
+static unsigned int state1 = 1804289383;
 static unsigned int getRandom32UNumber() {
-  unsigned int number = state;
+  unsigned int number = state1;
   number ^= number << 13;
   number ^= number >> 17;
   number ^= number << 5;
-  state = number;
+  state1 = number;
   return number;
 }
 
@@ -28,7 +28,7 @@ uint64_t getMagicNumberCandidate() {
   return getRandom64UNumberMagic() & getRandom64UNumberMagic() &
          getRandom64UNumberMagic();
 }
-
+//---------------------------------------------------------------------------------------------
 uint64_t getRandom64UNumber(uint64_t *state) {
   uint64_t x = state[0];
   uint64_t const y = state[1];
@@ -39,3 +39,20 @@ uint64_t getRandom64UNumber(uint64_t *state) {
   state[1] = x;
   return x + y;
 }
+//---------------------------------------------------------------------------------------------
+static unsigned int state2 = 123456789;
+unsigned int simpleRand() {
+  state2 = (1103515245 * state2 + 12345) & 0x7FFFFFFF;
+  return state2;
+}
+
+int randomInt(int a, int b) {
+  if (a > b) {
+    // Swap if a is greater than b
+    int temp = a;
+    a = b;
+    b = temp;
+  }
+  return a + (simpleRand() % (b - a + 1));
+}
+//---------------------------------------------------------------------------------------------
