@@ -69,21 +69,28 @@ int checkValidFenStringPart1(fenString *fenString) {
   return 1;
 }
 
-int checkValidFenString(fenString *fenString) {
-  int valid = 1;
-  int i;
-  if (fenString == NULL || fenString->string == NULL) {
-    valid = 0;
-    printf("NULL pointer to FEN string\n");
-  }
+int checkValidFenStringPart2(fenString *fenString) {
+
   char sideToMoveChar = fenString->string[fenString->sideToMove];
-  for (i = 0; i < NUMBEROFCOLORS; i++) {
-    if (sideToMoveChar != validSideToMove[i]) {
-      valid = 0;
-      printf("Character in FEN string: %c at index: %d is not valid, should be "
-             "w or b\n ",
-             sideToMoveChar, fenString->sideToMove);
-    }
+  int valid = checkCharInList(sideToMoveChar, FEN_STRING_VALID_SIDE_CHARACTERS,
+                              NUMBEROFCOLORS);
+  if (!valid) {
+    printf("Character in FEN string: %c at index: %d is not valid, should be "
+           "w or b\n ",
+           sideToMoveChar, fenString->sideToMove);
+    return 0;
   }
-  return valid;
+  return 1;
+}
+
+int checkValidFenString(fenString *fenString) {
+  int nullValid, valid1, valid2, valid3, valid4, valid5, valid6 = 1;
+  if (fenString == NULL || fenString->string == NULL) {
+    nullValid = 0;
+    printf("NULL pointer to FEN string\n");
+    return nullValid;
+  }
+  valid1 = checkValidFenStringPart1(fenString);
+  valid2 = checkValidFenStringPart2(fenString);
+  return nullValid;
 }
