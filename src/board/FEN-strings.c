@@ -41,7 +41,7 @@ void initFenString(char *string, int stringLen, fenString *fenString) {
   fullMoveIndex.second = stringLen;
 }
 
-static int checkCharInList(char val, char *list, int listLen) {
+static int checkCharInList(char val, const char *list, int listLen) {
   int found = 0;
   for (int i = 0; i < listLen; i++) {
     char charInList = list[i];
@@ -51,6 +51,22 @@ static int checkCharInList(char val, char *list, int listLen) {
     }
   }
   return found;
+}
+
+int checkValidFenStringPart1(fenString *fenString) {
+  for (int i = fenString->piecesPositions.first;
+       i < fenString->piecesPositions.second; i++) {
+    char val = fenString->string[i];
+    int valid = checkCharInList(val, FEN_STRING_VALID_POSITION_CHARACTERS,
+                                FEN_STRING_NUMBER_OF_VALID_POSITION_CHARACTERS);
+    if (!valid) {
+      printf("Error parsing character %c at index %d, valid characters are "
+             "[aA-rR] [1-8] or [/]\n",
+             val, i);
+      return 0;
+    }
+  }
+  return 1;
 }
 
 int checkValidFenString(fenString *fenString) {
