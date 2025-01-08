@@ -40,3 +40,22 @@ void initFenString(char *string, int stringLen, fenString *fenString) {
   fullMoveIndex.first = halfMoveIndex.second + 1;
   fullMoveIndex.second = stringLen;
 }
+
+int checkValidFenString(fenString *fenString) {
+  int valid = 1;
+  int i;
+  if (fenString == NULL || fenString->string == NULL) {
+    valid = 0;
+    printf("NULL pointer to FEN string\n");
+  }
+  char sideToMoveChar = fenString->string[fenString->sideToMove];
+  for (i = 0; i < NUMBEROFCOLORS; i++) {
+    if (sideToMoveChar != validSideToMove[i]) {
+      valid = 0;
+      printf("Character in FEN string: %c at index: %d is not valid, should be "
+             "w or b\n ",
+             sideToMoveChar, fenString->sideToMove);
+    }
+  }
+  return valid;
+}
