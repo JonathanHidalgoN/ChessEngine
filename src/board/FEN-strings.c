@@ -7,7 +7,7 @@ void initFenString(char *string, int stringLen, fenString *fenString) {
   intPair piecePositionIndex = {-1, -1};
   int sideToMoveIndex = 0;
   intPair castlingIndex = {-1, -1};
-  int enPassantIndex = 0;
+  intPair enPassantIndex = {-1, -1};
   intPair halfMoveIndex = {-1, -1};
   intPair fullMoveIndex = {-1, -1};
   int i;
@@ -17,24 +17,30 @@ void initFenString(char *string, int stringLen, fenString *fenString) {
     if (currentChar == ' ' && spaceNumber == 0) {
       piecePositionIndex.first = 0;
       piecePositionIndex.second = i - 1;
+      spaceNumber++;
     }
     if (currentChar == ' ' && spaceNumber == 1) {
       sideToMoveIndex = i - 1;
+      spaceNumber++;
     }
     if (currentChar == ' ' && spaceNumber == 2) {
-      castlingIndex.first = sideToMoveIndex + 1;
+      castlingIndex.first = sideToMoveIndex + 2;
       castlingIndex.second = i - 1;
+      spaceNumber++;
     }
     if (currentChar == ' ' && spaceNumber == 3) {
-      enPassantIndex = i - 1;
+      enPassantIndex.first = castlingIndex.second + 2;
+      enPassantIndex.second = i - 1;
+      spaceNumber++;
     }
     if (currentChar == ' ' && spaceNumber == 4) {
-      halfMoveIndex.first = enPassantIndex + 1;
+      halfMoveIndex.first = enPassantIndex.second + 2;
       halfMoveIndex.second = i - 1;
+      spaceNumber++;
     }
   }
   if (spaceNumber != 4) {
-    printf("FEN strings should have at 4 spaces, like : "
+    printf("FEN strings should have at 5 spaces, like : "
            "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1\n");
   }
   fullMoveIndex.first = halfMoveIndex.second + 1;
