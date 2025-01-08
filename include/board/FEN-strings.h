@@ -44,7 +44,7 @@ typedef struct fenString {
   intPair piecesPositions;
   int sideToMove;
   intPair castling;
-  int passant;
+  intPair passant;
   intPair halfMove;
   intPair fullMove;
 } fenString;
