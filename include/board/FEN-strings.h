@@ -21,15 +21,11 @@ const char FEN_STRING_VALID_POSITION_CHARACTERS
         '1', '2', '3', '4', '5', '6', '7', '8', // Empty squares
 };
 
-const int validSideToMove[NUMBEROFCOLORS] = {WHITE, BLACK};
+const char FEN_STRING_VALID_SIDE_CHARACTERS[NUMBEROFCOLORS] = {'w', 'b'};
 
-const int validCastlingCharacters[4] = {
+const int FEN_STRING_VALID_CASTLING_CHARACTERS[4] = {
     FEN_STRING_CASTLING_WHITE_QUEEN_SIDE, FEN_STRING_CASTLING_WHITE_KING_SIDE,
     FEN_STRING_CASTLING_BLACK_QUEEN_SIDE, FEN_STRING_CASTLING_BLACK_KING_SIDE};
-
-const int limitEnPassantIndex = FEN_STRING_LIMIT_EN_PASSANT_INDEX;
-const int limitHalfMoveIndex = FEN_STRING_LIMIT_HALF_MOVE_INDEX;
-const int limitFullMoveIndex = FEN_STRING_LIMIT_FULL_MOVE_INDEX;
 
 /*
  * This struct represent a FEN string where
