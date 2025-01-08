@@ -107,6 +107,23 @@ int checkValidFenStringPart3(fenString *fenString) {
   return 1;
 }
 
+// TODO: extract the logic of taking a string a parse number to a util function
+int checkValidFenStringNumberVals(fenString *fenString, int lowIndex,
+                                  int highIndex, int limit) {
+  char numberStr[5];
+  int c = 0;
+  for (int i = lowIndex; i <= highIndex; i++) {
+    numberStr[c] = fenString->string[i];
+    c++;
+  }
+  numberStr[c] = '\0';
+  int number = atoi(numberStr);
+  if (number > limit) {
+    return 0;
+  }
+  return 1;
+}
+
 int checkValidFenString(fenString *fenString) {
   int nullValid, valid1, valid2, valid3, valid4, valid5, valid6 = 1;
   if (fenString == NULL || fenString->string == NULL) {
