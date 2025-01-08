@@ -75,10 +75,28 @@ int checkValidFenStringPart2(fenString *fenString) {
   int valid = checkCharInList(sideToMoveChar, FEN_STRING_VALID_SIDE_CHARACTERS,
                               NUMBEROFCOLORS);
   if (!valid) {
-    printf("Character in FEN string: %c at index: %d is not valid, should be "
+    printf("Error parsing character: %c at index: %d is not valid, should be "
            "w or b\n ",
            sideToMoveChar, fenString->sideToMove);
     return 0;
+  }
+  return 1;
+}
+
+int checkValidFenStringPart3(fenString *fenString) {
+  for (int i = fenString->castling.first; i < fenString->castling.second; i++) {
+    char val = fenString->string[i];
+    int valid = checkCharInList(val, FEN_STRING_VALID_CASTLING_CHARACTERS,
+                                FEN_STRING_NUMBER_CASTLING_CHARACTERS);
+    if (!valid) {
+      printf("Error parsing character %c at index %d, valid characters are: ",
+             val, i);
+      for (int j = 0; j < FEN_STRING_NUMBER_CASTLING_CHARACTERS; j++) {
+        printf("%c ", FEN_STRING_VALID_CASTLING_CHARACTERS[j]);
+      }
+      printf("\n");
+      return 0;
+    }
   }
   return 1;
 }
@@ -92,5 +110,6 @@ int checkValidFenString(fenString *fenString) {
   }
   valid1 = checkValidFenStringPart1(fenString);
   valid2 = checkValidFenStringPart2(fenString);
+  valid3 = checkValidFenStringPart3(fenString);
   return nullValid;
 }
