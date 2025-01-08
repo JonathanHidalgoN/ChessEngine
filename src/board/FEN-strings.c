@@ -113,8 +113,16 @@ int checkValidFenStringNumberVals(fenString *fenString, int lowIndex,
   char numberStr[5];
   int c = 0;
   for (int i = lowIndex; i <= highIndex; i++) {
-    numberStr[c] = fenString->string[i];
-    c++;
+    char val = fenString->string[i];
+    if (isdigit(val)) {
+      numberStr[c] = val;
+      c++;
+    } else {
+      printf(
+          "Error parsing FEN string at index %c, %c should be a number[0-9]\n",
+          val, i);
+      return 0;
+    }
   }
   numberStr[c] = '\0';
   int number = atoi(numberStr);
@@ -134,5 +142,14 @@ int checkValidFenString(fenString *fenString) {
   valid1 = checkValidFenStringPart1(fenString);
   valid2 = checkValidFenStringPart2(fenString);
   valid3 = checkValidFenStringPart3(fenString);
+  valid4 = checkValidFenStringNumberVals(fenString, fenString->passant.first,
+                                         fenString->passant.second,
+                                         FEN_STRING_LIMIT_EN_PASSANT);
+  valid5 = checkValidFenStringNumberVals(fenString, fenString->halfMove.first,
+                                         fenString->halfMove.second,
+                                         FEN_STRING_LIMIT_HALF_MOVE);
+  valid6 = checkValidFenStringNumberVals(fenString, fenString->fullMove.first,
+                                         fenString->fullMove.second,
+                                         FEN_STRING_LIMIT_EN_PASSANT);
   return nullValid;
 }
