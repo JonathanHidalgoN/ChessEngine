@@ -43,4 +43,9 @@ typedef struct bitBoardsList {
   bitboard pieces[NUMBEROFCOLORS][NUMBEROFDIFFERENTPIECES];
 } bitBoardsList;
 
+typedef struct intPair {
+  int first;
+  int second;
+} intPair;
+
 #endif // !CONSTANTS_C
