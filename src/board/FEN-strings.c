@@ -41,6 +41,18 @@ void initFenString(char *string, int stringLen, fenString *fenString) {
   fullMoveIndex.second = stringLen;
 }
 
+static int checkCharInList(char val, char *list, int listLen) {
+  int found = 0;
+  for (int i = 0; i < listLen; i++) {
+    char charInList = list[i];
+    if (charInList == val) {
+      found = 1;
+      break;
+    }
+  }
+  return found;
+}
+
 int checkValidFenString(fenString *fenString) {
   int valid = 1;
   int i;
