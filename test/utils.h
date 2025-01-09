@@ -1,7 +1,6 @@
 #ifndef TEST_UTILS_H
 #define TEST_UTILS_H
 #include "../include/board/board.h"
-
 #define RED "\x1b[31m"
 #define GREEN "\x1b[32m"
 #define YELLOW "\x1b[33m"
@@ -21,4 +20,6 @@ gameState createGameState(int playingSide, int castlingCode,
                           int fullMoveCounter, uint64_t zobristKey,
                           int phaseValue);
 int arePieceListEqual(pieceList *pl1, pieceList *pl2);
+void printIntPair(intPair pair, const char *name);
+void printFenString(fenString fen);
 #endif
