@@ -1,3 +1,4 @@
+// TODO : CHECK HOW TO MOVE THIS IMPORT, SHOULD BE IN MOVE GENERATION AS GENERAL
 #include "../../include/moveGeneration/attacks.h"
 #include "../test.h"
 
