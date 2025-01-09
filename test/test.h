@@ -13,4 +13,5 @@ void testMoveGeneration();
 void testHistory();
 void testPieceList();
 void testZobristGeneration();
+void testFenString();
 #endif
