@@ -14,50 +14,68 @@ const char FEN_STRING_VALID_CASTLING_CHARACTERS
         FEN_STRING_CASTLING_BLACK_QUEEN_SIDE,
         FEN_STRING_CASTLING_BLACK_KING_SIDE};
 
+#include <stdio.h>
+#include <string.h>
+
 void initFenString(char *string, int stringLen, fenString *fenString) {
   fenString->string = string;
   fenString->stringLen = stringLen;
+
   intPair piecePositionIndex = {-1, -1};
-  int sideToMoveIndex = 0;
+  int sideToMoveIndex = -1;
   intPair castlingIndex = {-1, -1};
   intPair enPassantIndex = {-1, -1};
   intPair halfMoveIndex = {-1, -1};
   intPair fullMoveIndex = {-1, -1};
+
   int i;
   int spaceNumber = 0;
+
   for (i = 0; i < stringLen; i++) {
     char currentChar = string[i];
-    if (currentChar == ' ' && spaceNumber == 0) {
-      piecePositionIndex.first = 0;
-      piecePositionIndex.second = i - 1;
-      spaceNumber++;
-    }
-    if (currentChar == ' ' && spaceNumber == 1) {
-      sideToMoveIndex = i - 1;
-      spaceNumber++;
-    }
-    if (currentChar == ' ' && spaceNumber == 2) {
-      castlingIndex.first = sideToMoveIndex + 2;
-      castlingIndex.second = i - 1;
-      spaceNumber++;
-    }
-    if (currentChar == ' ' && spaceNumber == 3) {
-      enPassantIndex.first = castlingIndex.second + 2;
-      enPassantIndex.second = i - 1;
-      spaceNumber++;
-    }
-    if (currentChar == ' ' && spaceNumber == 4) {
-      halfMoveIndex.first = enPassantIndex.second + 2;
-      halfMoveIndex.second = i - 1;
+    if (currentChar == ' ') {
+      switch (spaceNumber) {
+      case 0:
+        piecePositionIndex.first = 0;
+        piecePositionIndex.second = i - 1;
+        break;
+      case 1:
+        sideToMoveIndex = i + 1;
+        break;
+      case 2:
+        castlingIndex.first = sideToMoveIndex + 1;
+        castlingIndex.second = i - 1;
+        break;
+      case 3:
+        enPassantIndex.first = castlingIndex.second + 2;
+        enPassantIndex.second = i - 1;
+        break;
+      case 4:
+        halfMoveIndex.first = enPassantIndex.second + 2;
+        halfMoveIndex.second = i - 1;
+        break;
+      default:
+        break;
+      }
       spaceNumber++;
     }
   }
+
   if (spaceNumber != 4) {
-    printf("FEN strings should have at 5 spaces, like : "
+    printf("FEN strings should have at least 5 spaces, like: "
            "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1\n");
+    return;
   }
-  fullMoveIndex.first = halfMoveIndex.second + 1;
-  fullMoveIndex.second = stringLen;
+
+  fullMoveIndex.first = halfMoveIndex.second + 2;
+  fullMoveIndex.second = stringLen - 1;
+
+  fenString->piecesPositions = piecePositionIndex;
+  fenString->sideToMove = sideToMoveIndex;
+  fenString->castling = castlingIndex;
+  fenString->passant = enPassantIndex;
+  fenString->halfMove = halfMoveIndex;
+  fenString->fullMove = fullMoveIndex;
 }
 
 static int checkCharInList(char val, const char *list, int listLen) {
