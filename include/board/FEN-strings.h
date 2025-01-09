@@ -51,4 +51,10 @@ typedef struct fenString {
   intPair fullMove;
 } fenString;
 
+int checkValidFenStringPart1(char *string, int start, int end);
+int checkValidFenStringPart2(char *string, int start);
+int checkValidFenStringPart3(char *string, int start, int end);
+int checkValidFenStringNumberVals(char *string, int lowIndex, int highIndex,
+                                  int limit);
+int checkValidFenString(fenString *fenString);
 #endif // !FEN_STRINGS
