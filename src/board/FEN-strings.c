@@ -59,10 +59,9 @@ static int checkCharInList(char val, const char *list, int listLen) {
   return found;
 }
 
-int checkValidFenStringPart1(fenString *fenString) {
-  for (int i = fenString->piecesPositions.first;
-       i < fenString->piecesPositions.second; i++) {
-    char val = fenString->string[i];
+int checkValidFenStringPart1(char *string, int start, int end) {
+  for (int i = start; i <= end; i++) {
+    char val = string[i];
     int valid = checkCharInList(val, FEN_STRING_VALID_POSITION_CHARACTERS,
                                 FEN_STRING_NUMBER_OF_VALID_POSITION_CHARACTERS);
     if (!valid) {
@@ -75,23 +74,23 @@ int checkValidFenStringPart1(fenString *fenString) {
   return 1;
 }
 
-int checkValidFenStringPart2(fenString *fenString) {
+int checkValidFenStringPart2(char *string, int start) {
 
-  char sideToMoveChar = fenString->string[fenString->sideToMove];
+  char sideToMoveChar = string[start];
   int valid = checkCharInList(sideToMoveChar, FEN_STRING_VALID_SIDE_CHARACTERS,
                               NUMBEROFCOLORS);
   if (!valid) {
     printf("Error parsing character: %c at index: %d is not valid, should be "
            "w or b\n ",
-           sideToMoveChar, fenString->sideToMove);
+           sideToMoveChar, start);
     return 0;
   }
   return 1;
 }
 
-int checkValidFenStringPart3(fenString *fenString) {
-  for (int i = fenString->castling.first; i < fenString->castling.second; i++) {
-    char val = fenString->string[i];
+int checkValidFenStringPart3(char *string, int start, int end) {
+  for (int i = start; i <= end; i++) {
+    char val = string[i];
     int valid = checkCharInList(val, FEN_STRING_VALID_CASTLING_CHARACTERS,
                                 FEN_STRING_NUMBER_CASTLING_CHARACTERS);
     if (!valid) {
@@ -108,12 +107,11 @@ int checkValidFenStringPart3(fenString *fenString) {
 }
 
 // TODO: extract the logic of taking a string a parse number to a util function
-int checkValidFenStringNumberVals(fenString *fenString, int lowIndex,
-                                  int highIndex, int limit) {
+int checkValidFenStringNumberVals(char *string, int start, int end, int limit) {
   char numberStr[5];
   int c = 0;
-  for (int i = lowIndex; i <= highIndex; i++) {
-    char val = fenString->string[i];
+  for (int i = start; i <= end; i++) {
+    char val = string[i];
     if (isdigit(val)) {
       numberStr[c] = val;
       c++;
@@ -139,17 +137,20 @@ int checkValidFenString(fenString *fenString) {
     printf("NULL pointer to FEN string\n");
     return nullValid;
   }
-  valid1 = checkValidFenStringPart1(fenString);
-  valid2 = checkValidFenStringPart2(fenString);
-  valid3 = checkValidFenStringPart3(fenString);
-  valid4 = checkValidFenStringNumberVals(fenString, fenString->passant.first,
-                                         fenString->passant.second,
-                                         FEN_STRING_LIMIT_EN_PASSANT);
-  valid5 = checkValidFenStringNumberVals(fenString, fenString->halfMove.first,
-                                         fenString->halfMove.second,
-                                         FEN_STRING_LIMIT_HALF_MOVE);
-  valid6 = checkValidFenStringNumberVals(fenString, fenString->fullMove.first,
-                                         fenString->fullMove.second,
-                                         FEN_STRING_LIMIT_EN_PASSANT);
-  return nullValid;
+  valid1 = checkValidFenStringPart1(fenString->string,
+                                    fenString->piecesPositions.first,
+                                    fenString->piecesPositions.second);
+  valid2 = checkValidFenStringPart2(fenString->string, fenString->sideToMove);
+  valid3 = checkValidFenStringPart3(
+      fenString->string, fenString->castling.first, fenString->castling.second);
+  valid4 = checkValidFenStringNumberVals(
+      fenString->string, fenString->passant.first, fenString->passant.second,
+      FEN_STRING_LIMIT_EN_PASSANT);
+  valid5 = checkValidFenStringNumberVals(
+      fenString->string, fenString->halfMove.first, fenString->halfMove.second,
+      FEN_STRING_LIMIT_HALF_MOVE);
+  valid6 = checkValidFenStringNumberVals(
+      fenString->string, fenString->fullMove.first, fenString->fullMove.second,
+      FEN_STRING_LIMIT_EN_PASSANT);
+  return valid1 && valid2 && valid3 && valid4 && valid5 && valid6;
 }
