@@ -22,6 +22,7 @@
  */
 #ifndef BOARD_H
 #define BOARD_H
+#include "FEN-strings.h"
 #include "boardEncoding.h"
 #include "defs.h"
 #include "history.h"
