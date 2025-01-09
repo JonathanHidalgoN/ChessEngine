@@ -92,19 +92,19 @@ int arePieceListEqual(pieceList *pl1, pieceList *pl2) {
   return 1;
 }
 
-void printIntPair(intPair pair, const char *name) {
-  printf("%s: {first: %d, second: %d}\n", name, pair.first, pair.second);
+void printIntPair(intPair *pair, const char *name) {
+  printf("%s: {first: %d, second: %d}\n", name, pair->first, pair->second);
 }
 
-void printFenString(fenString fen) {
+void printFenString(fenString *fen) {
   printf("fenString {\n");
-  printf("  string: \"%s\"\n", fen.string);
-  printf("  stringLen: %d\n", fen.stringLen);
-  printIntPair(fen.piecesPositions, "  piecesPositions");
-  printf("  sideToMove: %d\n", fen.sideToMove);
-  printIntPair(fen.castling, "  castling");
-  printIntPair(fen.passant, "  passant");
-  printIntPair(fen.halfMove, "  halfMove");
-  printIntPair(fen.fullMove, "  fullMove");
+  printf("  string: \"%s\"\n", fen->string);
+  printf("  stringLen: %d\n", fen->stringLen);
+  printIntPair(&fen->piecesPositions, "  piecesPositions");
+  printf("  sideToMove: %d\n", fen->sideToMove);
+  printIntPair(&fen->castling, "  castling");
+  printIntPair(&fen->passant, "  passant");
+  printIntPair(&fen->halfMove, "  halfMove");
+  printIntPair(&fen->fullMove, "  fullMove");
   printf("}\n");
 }

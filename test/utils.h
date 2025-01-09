@@ -20,6 +20,6 @@ gameState createGameState(int playingSide, int castlingCode,
                           int fullMoveCounter, uint64_t zobristKey,
                           int phaseValue);
 int arePieceListEqual(pieceList *pl1, pieceList *pl2);
-void printIntPair(intPair pair, const char *name);
-void printFenString(fenString fen);
+void printIntPair(intPair *pair, const char *name);
+void printFenString(fenString *fen);
 #endif
