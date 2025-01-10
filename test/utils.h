@@ -25,4 +25,5 @@ int arePieceListEqual(const pieceList *pl1, const pieceList *pl2);
 void printIntPair(const intPair *pair, const char *name);
 void printFenString(const fenString *fen);
 int compareIntPair(const intPair *a, const intPair *b);
+int compareFenString(const fenString *a, const fenString *b);
 #endif
