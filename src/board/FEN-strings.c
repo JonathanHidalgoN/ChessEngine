@@ -40,10 +40,10 @@ void initFenString(char *string, int stringLen, fenString *fenString) {
         piecePositionIndex.second = i - 1;
         break;
       case 1:
-        sideToMoveIndex = i + 1;
+        sideToMoveIndex = i - 1;
         break;
       case 2:
-        castlingIndex.first = sideToMoveIndex + 1;
+        castlingIndex.first = sideToMoveIndex + 2;
         castlingIndex.second = i - 1;
         break;
       case 3:
@@ -61,7 +61,7 @@ void initFenString(char *string, int stringLen, fenString *fenString) {
     }
   }
 
-  if (spaceNumber != 4) {
+  if (spaceNumber != 5) {
     printf("FEN strings should have at least 5 spaces, like: "
            "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1\n");
     return;
