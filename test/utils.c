@@ -161,3 +161,47 @@ void printFenString(fenString *fen) {
 
   printf("}\n");
 }
+
+int compareIntPair(const intPair *a, const intPair *b) {
+  return (a->first == b->first && a->second == b->second);
+}
+
+int compareFenString(const fenString *a, const fenString *b) {
+  if ((a->string == NULL || b->string == NULL)) {
+    if (a->string != b->string) {
+      return 0;
+    }
+  } else if (strcmp(a->string, b->string) != 0) {
+    return 0;
+  }
+
+  if (a->stringLen != b->stringLen) {
+    return 0;
+  }
+
+  if (!compareIntPair(&a->piecesPositions, &b->piecesPositions)) {
+    return 0;
+  }
+
+  if (a->sideToMove != b->sideToMove) {
+    return 0;
+  }
+
+  if (!compareIntPair(&a->castling, &b->castling)) {
+    return 0;
+  }
+
+  if (!compareIntPair(&a->passant, &b->passant)) {
+    return 0;
+  }
+
+  if (!compareIntPair(&a->halfMove, &b->halfMove)) {
+    return 0;
+  }
+
+  if (!compareIntPair(&a->fullMove, &b->fullMove)) {
+    return 0;
+  }
+
+  return 1;
+}
