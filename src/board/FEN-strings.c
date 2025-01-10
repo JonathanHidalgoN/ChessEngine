@@ -3,7 +3,7 @@
 const char FEN_STRING_VALID_POSITION_CHARACTERS
     [FEN_STRING_NUMBER_OF_VALID_POSITION_CHARACTERS] = {
         'p', 'n', 'b', 'q', 'k', 'r', 'P', 'N', 'B', 'Q', 'K',
-        'R', '/', '1', '2', '3', '4', '5', '6', '7', '8'};
+        'R', '/', '1', '2', '3', '4', '5', '6', '7', '8', '-'};
 
 const char FEN_STRING_VALID_SIDE_CHARACTERS[NUMBEROFCOLORS] = {'w', 'b'};
 
