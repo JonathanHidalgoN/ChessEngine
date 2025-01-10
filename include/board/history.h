@@ -12,7 +12,7 @@ typedef struct history {
 void cleanHistory(history *hist);
 void pushIntoHistory(history *history, gameState *gameState);
 gameState *popFromHistory(history *history);
-int getLenHistory(history *history);
+int getLenHistory(const history *history);
 gameState *getCurrentGameStateFromHistory(history *history);
 
 #endif // !HISTORY_H

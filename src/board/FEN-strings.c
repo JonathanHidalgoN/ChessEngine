@@ -17,8 +17,17 @@ const char FEN_STRING_VALID_CASTLING_CHARACTERS
 #include <stdio.h>
 #include <string.h>
 
-void initFenString(char *string, int stringLen, fenString *fenString) {
-  fenString->string = string;
+void initFenString(const char *string, int stringLen, fenString *fenString) {
+  int i;
+  char *stringCopy = malloc((stringLen + 1) * sizeof(char));
+  if (stringCopy == NULL) {
+    printf(
+        "Error allocating memory to FEN string copy, this will cause a bug\n");
+    return;
+  }
+  memcpy(stringCopy, string, stringLen);
+  stringCopy[stringLen] = '\0';
+  fenString->string = stringCopy;
   fenString->stringLen = stringLen;
 
   intPair piecePositionIndex = {-1, -1};
@@ -28,7 +37,6 @@ void initFenString(char *string, int stringLen, fenString *fenString) {
   intPair halfMoveIndex = {-1, -1};
   intPair fullMoveIndex = {-1, -1};
 
-  int i;
   int spaceNumber = 0;
 
   for (i = 0; i < stringLen; i++) {
@@ -90,7 +98,7 @@ static int checkCharInList(char val, const char *list, int listLen) {
   return found;
 }
 
-int checkValidFenStringPart1(char *string, int start, int end) {
+int checkValidFenStringPart1(const char *string, int start, int end) {
   for (int i = start; i <= end; i++) {
     char val = string[i];
     int valid = checkCharInList(val, FEN_STRING_VALID_POSITION_CHARACTERS,
@@ -105,7 +113,7 @@ int checkValidFenStringPart1(char *string, int start, int end) {
   return 1;
 }
 
-int checkValidFenStringPart2(char *string, int start) {
+int checkValidFenStringPart2(const char *string, int start) {
 
   char sideToMoveChar = string[start];
   int valid = checkCharInList(sideToMoveChar, FEN_STRING_VALID_SIDE_CHARACTERS,
@@ -119,7 +127,7 @@ int checkValidFenStringPart2(char *string, int start) {
   return 1;
 }
 
-int checkValidFenStringPart3(char *string, int start, int end) {
+int checkValidFenStringPart3(const char *string, int start, int end) {
   for (int i = start; i <= end; i++) {
     char val = string[i];
     int valid = checkCharInList(val, FEN_STRING_VALID_CASTLING_CHARACTERS,
@@ -138,7 +146,8 @@ int checkValidFenStringPart3(char *string, int start, int end) {
 }
 
 // TODO: extract the logic of taking a string a parse number to a util function
-int checkValidFenStringNumberVals(char *string, int start, int end, int limit) {
+int checkValidFenStringNumberVals(const char *string, int start, int end,
+                                  int limit) {
   char numberStr[5];
   int c = 0;
   for (int i = start; i <= end; i++) {
@@ -161,7 +170,7 @@ int checkValidFenStringNumberVals(char *string, int start, int end, int limit) {
   return 1;
 }
 
-int checkValidFenString(fenString *fenString) {
+int checkValidFenString(const fenString *fenString) {
   int nullValid, valid1, valid2, valid3, valid4, valid5, valid6 = 1;
   if (fenString == NULL || fenString->string == NULL) {
     nullValid = 0;

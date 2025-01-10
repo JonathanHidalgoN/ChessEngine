@@ -22,7 +22,7 @@ gameState *popFromHistory(history *history) {
   return &history->states[history->len];
 }
 
-int getLenHistory(history *history) { return history->len; }
+int getLenHistory(const history *history) { return history->len; }
 
 gameState *getCurrentGameStateFromHistory(history *history) {
   return &history->states[history->len - 1];

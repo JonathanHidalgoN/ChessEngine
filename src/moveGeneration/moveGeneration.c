@@ -14,7 +14,7 @@ bitboard computePawnForwardMove(int bitIndex, int side) {
   return move;
 }
 
-bitboard computeSideBitBoard(int side, bitBoardsList *board) {
+bitboard computeSideBitBoard(int side, const bitBoardsList *board) {
   // TODO: This should be cache and compute only when neccesary
   bitboard result = 0ULL;
   for (int i = 0; i < NUMBEROFDIFFERENTPIECES; i++)
@@ -22,7 +22,7 @@ bitboard computeSideBitBoard(int side, bitBoardsList *board) {
   return result;
 }
 
-piece findPieceByBitIndex(int bitIndex, bitBoardsList *board) {
+piece findPieceByBitIndex(int bitIndex, const bitBoardsList *board) {
   // TODO: Union with something to represent not found
   struct piece newPiece;
   int i, j, found;
@@ -47,7 +47,7 @@ piece findPieceByBitIndex(int bitIndex, bitBoardsList *board) {
   return newPiece;
 }
 
-bitboard computeLegalMoves(int bitIndex, bitBoardsList *board) {
+bitboard computeLegalMoves(int bitIndex, const bitBoardsList *board) {
   piece piece = findPieceByBitIndex(bitIndex, board);
   bitboard legalMoves, alyBitBoard, generalBitBoard;
   // Add castling, mate, passang pawn,
