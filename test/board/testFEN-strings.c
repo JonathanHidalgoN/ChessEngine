@@ -49,7 +49,22 @@ int testInitFenString() {
   return c1 && c2 && c3 && c4;
 }
 
-int testCheckValidFenString() { return 1; }
+int testCaseCheckValidFenString(fenString *fenString, int expetingValid,
+                                char testNumber) {
+  int valid = checkValidFenString(fenString);
+  if (expetingValid && !valid) {
+    printf(RED "Error, expecting valid FEN string but got invalid %c\n" RESET,
+           testNumber);
+    printFenString(fenString);
+    return 0;
+  } else if (!expetingValid && valid) {
+    printf(RED "Error, expecting invalid FEN string but got valid %c\n" RESET,
+           testNumber);
+    printFenString(fenString);
+    return 0;
+  }
+  return 1;
+}
 
 void testFenString() {
   int resultTestInitFenString = testInitFenString();
