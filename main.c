@@ -16,6 +16,8 @@ void runTest() {
   testMoveGeneration();
   testHistory();
   testPieceList();
+  testZobristGeneration();
+  testFenString();
 }
 
 int main() {
