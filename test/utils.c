@@ -14,7 +14,7 @@ void showDiff(bitboard expected, bitboard result) {
 }
 
 int compareBitBoard(bitboard expectedResult, bitboard result, char testNumber,
-                    char *functionName) {
+                    const char *functionName) {
 
   if (result != expectedResult) {
     printf(RED "Error in function %s, test case %c \n" RESET, functionName,
@@ -25,18 +25,19 @@ int compareBitBoard(bitboard expectedResult, bitboard result, char testNumber,
   return 1;
 }
 
-int arePiecesEqual(piece *expectedResult, piece *functionResult) {
+int arePiecesEqual(const piece *expectedResult, const piece *functionResult) {
   return expectedResult->bitIndex == functionResult->bitIndex &&
          expectedResult->side == functionResult->side &&
          expectedResult->type == functionResult->type;
 }
 
-void printPieceStruct(piece *piece) {
+void printPieceStruct(const piece *piece) {
   printf("side:%d, type:%d, bitIndex:%d\n", piece->side, piece->type,
          piece->bitIndex);
 }
 
-int comparePieces(piece *expectedPiece, piece *resultPiece, char testNumber) {
+int comparePieces(const piece *expectedPiece, const piece *resultPiece,
+                  char testNumber) {
   int areEqual = arePiecesEqual(expectedPiece, resultPiece);
   if (!areEqual) {
     printf(RED "Error in findPieceByBitIndex function case %c\n" RESET,
@@ -55,7 +56,7 @@ piece createPiece(int bitIndex, int side, int type) {
   return result;
 }
 
-int areGameStatesEqual(gameState *expected, gameState *result) {
+int areGameStatesEqual(const gameState *expected, const gameState *result) {
   return expected->playingSide == result->playingSide &&
          expected->castlingCode == result->castlingCode &&
          expected->halfMoveCounter == result->halfMoveCounter &&
@@ -65,7 +66,7 @@ int areGameStatesEqual(gameState *expected, gameState *result) {
          expected->phaseValue == result->phaseValue;
 }
 
-void printGameState(gameState *state) {
+void printGameState(const gameState *state) {
   printf("playingSide: %d\ncastlingCode: %d\nhalfMoveCounter: %d\n"
          "enPassantCode: %d\nfullMoveCounter: %d\nzobristKey: %lu\n"
          "phaseValue: %d\n",
@@ -84,7 +85,7 @@ gameState createGameState(int playingSide, int castlingCode,
   return result;
 }
 
-int arePieceListEqual(pieceList *pl1, pieceList *pl2) {
+int arePieceListEqual(const pieceList *pl1, const pieceList *pl2) {
   for (int i = 0; i < NUMBEROFSQUARES; i++) {
     if (!(pl1->pieces[i] == pl2->pieces[i]))
       return 0;
@@ -92,11 +93,11 @@ int arePieceListEqual(pieceList *pl1, pieceList *pl2) {
   return 1;
 }
 
-void printIntPair(intPair *pair, const char *name) {
+void printIntPair(const intPair *pair, const char *name) {
   printf("%s: {first: %d, second: %d}\n", name, pair->first, pair->second);
 }
 
-void printFenString(fenString *fen) {
+void printFenString(const fenString *fen) {
   printf("fenString {\n");
   printf("  string: \"%s\"\n", fen->string);
   printf("  stringLen: %d\n", fen->stringLen);

@@ -10,18 +10,19 @@
 
 void showDiff(bitboard expected, bitboard result);
 int compareBitBoard(bitboard expectedResult, bitboard result, char testNumber,
-                    char *functionName);
-void printPieceStruct(piece *piece);
-int comparePieces(piece *expectedPiece, piece *resultPiece, char testNumber);
+                    const char *functionName);
+void printPieceStruct(const piece *piece);
+int comparePieces(const piece *expectedPiece, const piece *resultPiece,
+                  char testNumber);
 piece createPiece(int bitIndex, int side, int type);
-int areGameStatesEqual(gameState *expected, gameState *result);
-void printGameState(gameState *state);
+int areGameStatesEqual(const gameState *expected, const gameState *result);
+void printGameState(const gameState *state);
 gameState createGameState(int playingSide, int castlingCode,
                           int halfMoveCounter, int enPassantCode,
                           int fullMoveCounter, uint64_t zobristKey,
                           int phaseValue);
-int arePieceListEqual(pieceList *pl1, pieceList *pl2);
-void printIntPair(intPair *pair, const char *name);
-void printFenString(fenString *fen);
+int arePieceListEqual(const pieceList *pl1, const pieceList *pl2);
+void printIntPair(const intPair *pair, const char *name);
+void printFenString(const fenString *fen);
 int compareIntPair(const intPair *a, const intPair *b);
 #endif
