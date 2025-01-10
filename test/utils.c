@@ -100,11 +100,64 @@ void printFenString(fenString *fen) {
   printf("fenString {\n");
   printf("  string: \"%s\"\n", fen->string);
   printf("  stringLen: %d\n", fen->stringLen);
-  printIntPair(&fen->piecesPositions, "  piecesPositions");
-  printf("  sideToMove: %d\n", fen->sideToMove);
-  printIntPair(&fen->castling, "  castling");
-  printIntPair(&fen->passant, "  passant");
-  printIntPair(&fen->halfMove, "  halfMove");
-  printIntPair(&fen->fullMove, "  fullMove");
+
+  if (fen->piecesPositions.first >= 0 &&
+      fen->piecesPositions.second < fen->stringLen) {
+    printf("  piecesPositions: {first: %d, end: %d}, string: \"%.*s\"\n",
+           fen->piecesPositions.first, fen->piecesPositions.second,
+           fen->piecesPositions.second - fen->piecesPositions.first + 1,
+           fen->string + fen->piecesPositions.first);
+  } else {
+    printf("  piecesPositions: {first: %d, end: %d}, string: INVALID RANGE\n",
+           fen->piecesPositions.first, fen->piecesPositions.second);
+  }
+
+  if (fen->sideToMove >= 0 && fen->sideToMove < fen->stringLen) {
+    printf("  sideToMove: %d, string: \"%c\"\n", fen->sideToMove,
+           fen->string[fen->sideToMove]);
+  } else {
+    printf("  sideToMove: %d, string: INVALID INDEX\n", fen->sideToMove);
+  }
+
+  if (fen->castling.first >= 0 && fen->castling.second < fen->stringLen) {
+    printf("  castling: {first: %d, end: %d}, string: \"%.*s\"\n",
+           fen->castling.first, fen->castling.second,
+           fen->castling.second - fen->castling.first + 1,
+           fen->string + fen->castling.first);
+  } else {
+    printf("  castling: {first: %d, end: %d}, string: INVALID RANGE\n",
+           fen->castling.first, fen->castling.second);
+  }
+
+  if (fen->passant.first >= 0 && fen->passant.second < fen->stringLen) {
+    printf("  passant: {first: %d, end: %d}, string: \"%.*s\"\n",
+           fen->passant.first, fen->passant.second,
+           fen->passant.second - fen->passant.first + 1,
+           fen->string + fen->passant.first);
+  } else {
+    printf("  passant: {first: %d, end: %d}, string: INVALID RANGE\n",
+           fen->passant.first, fen->passant.second);
+  }
+
+  if (fen->halfMove.first >= 0 && fen->halfMove.second < fen->stringLen) {
+    printf("  halfMove: {first: %d, end: %d}, string: \"%.*s\"\n",
+           fen->halfMove.first, fen->halfMove.second,
+           fen->halfMove.second - fen->halfMove.first + 1,
+           fen->string + fen->halfMove.first);
+  } else {
+    printf("  halfMove: {first: %d, end: %d}, string: INVALID RANGE\n",
+           fen->halfMove.first, fen->halfMove.second);
+  }
+
+  if (fen->fullMove.first >= 0 && fen->fullMove.second < fen->stringLen) {
+    printf("  fullMove: {first: %d, end: %d}, string: \"%.*s\"\n",
+           fen->fullMove.first, fen->fullMove.second,
+           fen->fullMove.second - fen->fullMove.first + 1,
+           fen->string + fen->fullMove.first);
+  } else {
+    printf("  fullMove: {first: %d, end: %d}, string: INVALID RANGE\n",
+           fen->fullMove.first, fen->fullMove.second);
+  }
+
   printf("}\n");
 }
