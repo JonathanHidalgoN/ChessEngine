@@ -18,6 +18,15 @@ const char FEN_STRING_VALID_CASTLING_CHARACTERS
 #include <string.h>
 
 void initFenString(const char *string, int stringLen, fenString *fenString) {
+  const char *EXAMPLE_VALID_STRING =
+      "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
+  if (stringLen < FEN_STRING_MIN_CHARACTERS) {
+    printf("Error FEN string min characters are %d, your string has %d, valid "
+           "FEN string example: %s\n",
+           FEN_STRING_NUMBER_CASTLING_CHARACTERS, stringLen,
+           EXAMPLE_VALID_STRING);
+    return;
+  }
   int i;
   char *stringCopy = malloc((stringLen + 1) * sizeof(char));
   if (stringCopy == NULL) {
@@ -70,8 +79,8 @@ void initFenString(const char *string, int stringLen, fenString *fenString) {
   }
 
   if (spaceNumber != 5) {
-    printf("FEN strings should have at least 5 spaces, like: "
-           "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1\n");
+    printf("FEN strings should have at least 5 spaces, like: %s \n",
+           EXAMPLE_VALID_STRING);
     return;
   }
 
