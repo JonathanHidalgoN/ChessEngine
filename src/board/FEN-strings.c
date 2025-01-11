@@ -1,4 +1,6 @@
 #include "../../include/board/FEN-strings.h"
+#include <stdio.h>
+#include <string.h>
 
 const char FEN_STRING_VALID_POSITION_CHARACTERS
     [FEN_STRING_NUMBER_OF_VALID_POSITION_CHARACTERS] = {
@@ -9,13 +11,10 @@ const char FEN_STRING_VALID_SIDE_CHARACTERS[NUMBEROFCOLORS] = {'w', 'b'};
 
 const char FEN_STRING_VALID_CASTLING_CHARACTERS
     [FEN_STRING_NUMBER_CASTLING_CHARACTERS] = {
-        FEN_STRING_NO_CASTLING, FEN_STRING_CASTLING_WHITE_QUEEN_SIDE,
+        FEN_STRING_NO_VALUE, FEN_STRING_CASTLING_WHITE_QUEEN_SIDE,
         FEN_STRING_CASTLING_WHITE_KING_SIDE,
         FEN_STRING_CASTLING_BLACK_QUEEN_SIDE,
         FEN_STRING_CASTLING_BLACK_KING_SIDE};
-
-#include <stdio.h>
-#include <string.h>
 
 void initFenString(const char *string, int stringLen, fenString *fenString) {
   const char *EXAMPLE_VALID_STRING =
@@ -167,7 +166,7 @@ int checkValidFenStringNumberVals(const char *string, int start, int end,
     } else {
       printf(
           "Error parsing FEN string at index %c, %c should be a number[0-9]\n",
-          val, i);
+          i, val);
       return 0;
     }
   }
