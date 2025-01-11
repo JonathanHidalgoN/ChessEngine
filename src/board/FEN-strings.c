@@ -201,13 +201,75 @@ int checkValidFenString(const fenString *fenString) {
   return valid1 && valid2 && valid3 && valid4 && valid5 && valid6;
 }
 
+static void assingPiece(int *boardSquare, int color, int pieceType,
+                        bitBoardsList *bbl) {
+  bitboard mask = 1ULL << *boardSquare;
+  bbl->pieces[color][pieceType] |= mask;
+  boardSquare++;
+}
+
 void initBitBoardListWithFenString(bitBoardsList *bbl, int stringLen,
                                    char *string) {
   fenString fenString;
   initFenString(string, stringLen, &fenString);
   int valid = checkValidFenString(&fenString);
   if (!valid) {
-    printf("FEN string invalid\n");
+    printf("invalid FEN string \n");
     return;
   }
+  cleanBitBoardList(bbl);
+  int boardSquare = 0;
+  for (int i = fenString.piecesPositions.first;
+       i < fenString.piecesPositions.second; i++) {
+    switch (fenString.string[i]) {
+    case 'p':
+      assingPiece(&boardSquare, WHITE, PAWN, bbl);
+      break;
+    case 'P':
+      assingPiece(&boardSquare, BLACK, PAWN, bbl);
+      break;
+    case 'r':
+      assingPiece(&boardSquare, WHITE, ROOK, bbl);
+      break;
+    case 'R':
+      assingPiece(&boardSquare, BLACK, ROOK, bbl);
+      break;
+    case 'n':
+      assingPiece(&boardSquare, WHITE, KNIGHT, bbl);
+      break;
+    case 'N':
+      assingPiece(&boardSquare, BLACK, KNIGHT, bbl);
+      break;
+    case 'b':
+      assingPiece(&boardSquare, WHITE, BISHOP, bbl);
+      break;
+    case 'B':
+      assingPiece(&boardSquare, BLACK, BISHOP, bbl);
+      break;
+    case 'q':
+      assingPiece(&boardSquare, WHITE, QUEEN, bbl);
+      break;
+    case 'Q':
+      assingPiece(&boardSquare, BLACK, QUEEN, bbl);
+      break;
+    case 'k':
+      assingPiece(&boardSquare, WHITE, KING, bbl);
+      break;
+    case 'K':
+      assingPiece(&boardSquare, BLACK, KING, bbl);
+      break;
+    case '-':
+      boardSquare++;
+      break;
+    case '/':
+      // Do nothing
+      break;
+    default:
+      // Quick and dirty number conversion
+      boardSquare = boardSquare + (fenString.string[i] - '0');
+      break;
+    }
+  }
+  printf("Ended bitBoardsList init with fen string, square count is %d\n",
+         boardSquare);
 }
