@@ -11,7 +11,7 @@
 
 void showDiff(bitboard expected, bitboard result);
 int compareBitBoard(bitboard expectedResult, bitboard result, char testNumber,
-                    const char *functionName);
+                    const char *functionName, int printMessage);
 void printPieceStruct(const piece *piece);
 int comparePieces(const piece *expectedPiece, const piece *resultPiece,
                   char testNumber);
