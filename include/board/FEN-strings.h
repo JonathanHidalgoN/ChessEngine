@@ -2,6 +2,7 @@
 #ifndef FEN_STRINGS
 #define FEN_STRINGS
 
+#include "board.h"
 #include "defs.h"
 #include "stdlib.h"
 #include <ctype.h>
@@ -43,5 +44,7 @@ void initFenString(char *string, int stringLen, fenString *fenString);
 int checkValidFenStringNumberVals(const char *string, int lowIndex,
                                   int highIndex, int limit);
 int checkValidFenString(const fenString *fenString);
+void initBitBoardListWithFenString(bitBoardsList *bbl, int stringLen,
+                                   char *string);
 
 #endif // FEN_STRINGS
