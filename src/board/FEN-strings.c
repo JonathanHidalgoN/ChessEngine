@@ -163,6 +163,8 @@ int checkValidFenStringNumberVals(const char *string, int start, int end,
     if (isdigit(val)) {
       numberStr[c] = val;
       c++;
+    } else if (val == FEN_STRING_NO_VALUE) {
+      return 1;
     } else {
       printf(
           "Error parsing FEN string at index %c, %c should be a number[0-9]\n",
