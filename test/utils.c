@@ -27,6 +27,17 @@ int compareBitBoard(bitboard expectedResult, bitboard result, char testNumber,
   return 1;
 }
 
+int areBitBoardListEqual(bitBoardsList *bbl1, bitBoardsList *bbl2) {
+  for (int i = 0; i < NUMBEROFCOLORS; i++) {
+    for (int j = 0; j < NUMBEROFDIFFERENTPIECES; j++) {
+      if (bbl1->pieces[i][j] != bbl2->pieces[i][j]) {
+        return 0;
+      }
+    }
+  }
+  return 1;
+}
+
 int arePiecesEqual(const piece *expectedResult, const piece *functionResult) {
   return expectedResult->bitIndex == functionResult->bitIndex &&
          expectedResult->side == functionResult->side &&
