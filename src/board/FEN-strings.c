@@ -168,6 +168,9 @@ int checkValidFenStringNumberVals(const char *string, int start, int end,
   numberStr[c] = '\0';
   int number = atoi(numberStr);
   if (number > limit) {
+    printf("Error parsing FEN string limit number is %d, provided "
+           "number is %d\n",
+           limit, number);
     return 0;
   }
   return 1;
@@ -194,6 +197,6 @@ int checkValidFenString(const fenString *fenString) {
       FEN_STRING_LIMIT_HALF_MOVE);
   valid6 = checkValidFenStringNumberVals(
       fenString->string, fenString->fullMove.first, fenString->fullMove.second,
-      FEN_STRING_LIMIT_EN_PASSANT);
+      FEN_STRING_LIMIT_FULL_MOVE);
   return valid1 && valid2 && valid3 && valid4 && valid5 && valid6;
 }
