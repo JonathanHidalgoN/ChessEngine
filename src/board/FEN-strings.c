@@ -17,7 +17,7 @@ const char FEN_STRING_VALID_CASTLING_CHARACTERS
         FEN_STRING_CASTLING_BLACK_QUEEN_SIDE,
         FEN_STRING_CASTLING_BLACK_KING_SIDE};
 
-void initFenString(const char *string, int stringLen, fenString *fenString) {
+void initFenString(char *string, int stringLen, fenString *fenString) {
   const char *EXAMPLE_VALID_STRING =
       "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
   if (stringLen < FEN_STRING_MIN_CHARACTERS) {
@@ -28,15 +28,7 @@ void initFenString(const char *string, int stringLen, fenString *fenString) {
     return;
   }
   int i;
-  char *stringCopy = malloc((stringLen + 1) * sizeof(char));
-  if (stringCopy == NULL) {
-    printf(
-        "Error allocating memory to FEN string copy, this will cause a bug\n");
-    return;
-  }
-  memcpy(stringCopy, string, stringLen);
-  stringCopy[stringLen] = '\0';
-  fenString->string = stringCopy;
+  fenString->string = string;
   fenString->stringLen = stringLen;
 
   intPair piecePositionIndex = {-1, -1};
