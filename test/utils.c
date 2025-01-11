@@ -25,7 +25,7 @@ int compareBitBoard(bitboard expectedResult, bitboard result, char testNumber,
   return 1;
 }
 
-int areBitBoardListEqual(bitBoardsList *bbl1, bitBoardsList *bbl2) {
+int areBitBoardListEqual(const bitBoardsList *bbl1, const bitBoardsList *bbl2) {
   for (int i = 0; i < NUMBEROFCOLORS; i++) {
     for (int j = 0; j < NUMBEROFDIFFERENTPIECES; j++) {
       if (bbl1->pieces[i][j] != bbl2->pieces[i][j]) {
@@ -74,7 +74,8 @@ int areGameStatesEqual(const gameState *expected, const gameState *result) {
          expected->enPassantCode == result->enPassantCode &&
          expected->fullMoveCounter == result->fullMoveCounter &&
          expected->zobristKey == result->zobristKey &&
-         expected->phaseValue == result->phaseValue;
+         expected->phaseValue == result->phaseValue &&
+         areBitBoardListEqual(&expected->bitBoardsList, &result->bitBoardsList);
 }
 
 void printGameState(const gameState *state) {
