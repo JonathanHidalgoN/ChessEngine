@@ -14,10 +14,8 @@ void showDiff(bitboard expected, bitboard result) {
 }
 
 int compareBitBoard(bitboard expectedResult, bitboard result, char testNumber,
-                    const char *functionName, int printMessage) {
+                    const char *functionName) {
 
-  if (!printMessage)
-    return result == expectedResult;
   if (result != expectedResult) {
     printf(RED "Error in function %s, test case %c \n" RESET, functionName,
            testNumber);
