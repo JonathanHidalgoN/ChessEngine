@@ -67,6 +67,14 @@ piece createPiece(int bitIndex, int side, int type) {
   return result;
 }
 
+int arePieceListEqual(const pieceList *pl1, const pieceList *pl2) {
+  for (int i = 0; i < NUMBEROFSQUARES; i++) {
+    if (!(pl1->pieces[i] == pl2->pieces[i]))
+      return 0;
+  }
+  return 1;
+}
+
 int areGameStatesEqual(const gameState *expected, const gameState *result) {
   return expected->playingSide == result->playingSide &&
          expected->castlingCode == result->castlingCode &&
@@ -75,7 +83,9 @@ int areGameStatesEqual(const gameState *expected, const gameState *result) {
          expected->fullMoveCounter == result->fullMoveCounter &&
          expected->zobristKey == result->zobristKey &&
          expected->phaseValue == result->phaseValue &&
-         areBitBoardListEqual(&expected->bitBoardsList, &result->bitBoardsList);
+         areBitBoardListEqual(&expected->bitBoardsList,
+                              &result->bitBoardsList) &&
+         arePieceListEqual(&expected->pieceList, &result->pieceList);
 }
 
 void printGameState(const gameState *state) {
@@ -97,14 +107,6 @@ gameState createGameState(int playingSide, int castlingCode,
       fullMoveCounter, zobristKey,   phaseValue,      bbl,
       pieceList};
   return result;
-}
-
-int arePieceListEqual(const pieceList *pl1, const pieceList *pl2) {
-  for (int i = 0; i < NUMBEROFSQUARES; i++) {
-    if (!(pl1->pieces[i] == pl2->pieces[i]))
-      return 0;
-  }
-  return 1;
 }
 
 void printIntPair(const intPair *pair, const char *name) {
