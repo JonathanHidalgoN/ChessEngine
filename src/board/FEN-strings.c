@@ -1,7 +1,8 @@
 #include "../../include/board/FEN-strings.h"
 #include <stdio.h>
 #include <string.h>
-
+// TODO : When testing for invalid fen string the message is print, maybe move
+// it because when test are run everything is fine but still print to console
 const char FEN_STRING_VALID_POSITION_CHARACTERS
     [FEN_STRING_NUMBER_OF_VALID_POSITION_CHARACTERS] = {
         'p', 'n', 'b', 'q', 'k', 'r', 'P', 'N', 'B', 'Q', 'K',
@@ -167,7 +168,7 @@ int checkValidFenStringNumberVals(const char *string, int start, int end,
       return 1;
     } else {
       printf(
-          "Error parsing FEN string at index %c, %c should be a number[0-9]\n",
+          "Error parsing FEN string at index %d, %c should be a number [0-9]\n",
           i, val);
       return 0;
     }
