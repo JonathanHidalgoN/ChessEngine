@@ -200,3 +200,14 @@ int checkValidFenString(const fenString *fenString) {
       FEN_STRING_LIMIT_FULL_MOVE);
   return valid1 && valid2 && valid3 && valid4 && valid5 && valid6;
 }
+
+void initBitBoardListWithFenString(bitBoardsList *bbl, int stringLen,
+                                   char *string) {
+  fenString fenString;
+  initFenString(string, stringLen, &fenString);
+  int valid = checkValidFenString(&fenString);
+  if (!valid) {
+    printf("FEN string invalid\n");
+    return;
+  }
+}
