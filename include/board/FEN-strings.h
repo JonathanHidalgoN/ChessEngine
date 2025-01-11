@@ -17,6 +17,7 @@
 #define FEN_STRING_LIMIT_HALF_MOVE 50
 #define FEN_STRING_LIMIT_FULL_MOVE 800
 #define FEN_STRING_MIN_CHARACTERS 28
+#define FEN_STRING_MAX_CHARACTERS 87
 
 extern const char FEN_STRING_VALID_POSITION_CHARACTERS
     [FEN_STRING_NUMBER_OF_VALID_POSITION_CHARACTERS];
@@ -38,7 +39,7 @@ typedef struct fenString {
   intPair fullMove;
 } fenString;
 
-void initFenString(const char *string, int stringLen, fenString *fenString);
+void initFenString(char *string, int stringLen, fenString *fenString);
 int checkValidFenStringPart1(const char *string, int start, int end);
 int checkValidFenStringPart2(const char *string, int start);
 int checkValidFenStringPart3(const char *string, int start, int end);
