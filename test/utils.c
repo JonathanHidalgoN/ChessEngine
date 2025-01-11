@@ -69,7 +69,7 @@ int areGameStatesEqual(const gameState *expected, const gameState *result) {
 void printGameState(const gameState *state) {
   printf("playingSide: %d\ncastlingCode: %d\nhalfMoveCounter: %d\n"
          "enPassantCode: %d\nfullMoveCounter: %d\nzobristKey: %lu\n"
-         "phaseValue: %d\n",
+         "phaseValue: %d\n TODO:ADD PIECE LIST PRINT AND BBL\n",
          state->playingSide, state->castlingCode, state->halfMoveCounter,
          state->enPassantCode, state->fullMoveCounter, state->zobristKey,
          state->phaseValue);
@@ -78,10 +78,12 @@ void printGameState(const gameState *state) {
 gameState createGameState(int playingSide, int castlingCode,
                           int halfMoveCounter, int enPassantCode,
                           int fullMoveCounter, uint64_t zobristKey,
-                          int phaseValue) {
-  gameState result = {playingSide,   castlingCode,    halfMoveCounter,
-                      enPassantCode, fullMoveCounter, zobristKey,
-                      phaseValue};
+                          int phaseValue, bitBoardsList bbl,
+                          pieceList pieceList) {
+  gameState result = {
+      playingSide,     castlingCode, halfMoveCounter, enPassantCode,
+      fullMoveCounter, zobristKey,   phaseValue,      bbl,
+      pieceList};
   return result;
 }
 

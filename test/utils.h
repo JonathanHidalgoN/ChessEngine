@@ -1,5 +1,6 @@
 #ifndef TEST_UTILS_H
 #define TEST_UTILS_H
+#include "../include/board/FEN-strings.h"
 #include "../include/board/board.h"
 #include <string.h>
 #define RED "\x1b[31m"
@@ -20,7 +21,8 @@ void printGameState(const gameState *state);
 gameState createGameState(int playingSide, int castlingCode,
                           int halfMoveCounter, int enPassantCode,
                           int fullMoveCounter, uint64_t zobristKey,
-                          int phaseValue);
+                          int phaseValue, bitBoardsList bbl,
+                          pieceList pieceList);
 int arePieceListEqual(const pieceList *pl1, const pieceList *pl2);
 void printIntPair(const intPair *pair, const char *name);
 void printFenString(const fenString *fen);
