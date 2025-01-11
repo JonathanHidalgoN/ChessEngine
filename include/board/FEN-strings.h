@@ -40,9 +40,6 @@ typedef struct fenString {
 } fenString;
 
 void initFenString(char *string, int stringLen, fenString *fenString);
-int checkValidFenStringPart1(const char *string, int start, int end);
-int checkValidFenStringPart2(const char *string, int start);
-int checkValidFenStringPart3(const char *string, int start, int end);
 int checkValidFenStringNumberVals(const char *string, int lowIndex,
                                   int highIndex, int limit);
 int checkValidFenString(const fenString *fenString);
