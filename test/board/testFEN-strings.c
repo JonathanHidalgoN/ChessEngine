@@ -24,7 +24,6 @@ int testInitFenString() {
                               {46, 49},    {51, 51},  {53, 53}, {55, 55}};
   initFenString(validString, stringLen, &functionResult);
   int c1 = areFenStringEqual(&functionResult, &expectedResult, '1');
-
   stringLen = 57;
   validString = "rnbqkrrr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq 1 5 10";
   fenString expectedResult2 = {validString, stringLen, {0, 42},  44,
@@ -79,20 +78,20 @@ int testCheckValidFenString() {
   stringLen = 56;
   validString = "--------/--------/8/8/8/8/--------/-------- w ---- - 0 0";
   initFenString(validString, stringLen, &result);
-  int c1 = testCaseCheckValidFenString(&result, expectingValid, '0');
+  int c1 = testCaseCheckValidFenString(&result, expectingValid, '1');
 
   expectingValid = 1;
   stringLen = 28;
   validString = "8/8/8/8/8/8/8/8 w KQkq - 0 1";
   initFenString(validString, stringLen, &result);
-  int c2 = testCaseCheckValidFenString(&result, expectingValid, '0');
+  int c2 = testCaseCheckValidFenString(&result, expectingValid, '2');
 
   expectingValid = 1;
   stringLen = 87;
   validString = "rnbqkbnr/pppppppp/pppppppp/pppppppp/pppppppp/pppppppp/"
                 "PPPPPPPP/RNBQKBNR w KQkq 10 10 11";
   initFenString(validString, stringLen, &result);
-  int c3 = testCaseCheckValidFenString(&result, expectingValid, '0');
+  int c3 = testCaseCheckValidFenString(&result, expectingValid, '3');
 
   // Add invalid char "z" to get invalid FEN string
   expectingValid = 0;
@@ -100,16 +99,48 @@ int testCheckValidFenString() {
   validString = "znbqkbnr/pppppppp/pppppppp/pppppppp/pppppppp/pppppppp/"
                 "PPPPPPPP/RNBQKBNR w KQkq 10 10 11";
   initFenString(validString, stringLen, &result);
-  int c4 = testCaseCheckValidFenString(&result, expectingValid, '0');
+  int c4 = testCaseCheckValidFenString(&result, expectingValid, '4');
   // Add invalid char "z" to get invalid FEN string at the end
   expectingValid = 0;
   stringLen = 87;
   validString = "pnbqkbnr/pppppppp/pppppppp/pppppppp/pppppppp/pppppppp/"
                 "PPPPPPPP/RNBQKBNR w KQkq 10 10 1z";
   initFenString(validString, stringLen, &result);
-  int c5 = testCaseCheckValidFenString(&result, expectingValid, '0');
+  int c5 = testCaseCheckValidFenString(&result, expectingValid, '5');
 
-  return c0 && c1 && c2 && c3 && c4 && c5;
+  // Test numeric limits
+  expectingValid = 0;
+  stringLen = 88;
+  validString = "pnbqkbnr/pppppppp/pppppppp/pppppppp/pppppppp/pppppppp/"
+                "PPPPPPPP/RNBQKBNR w KQkq 10 10 900";
+  initFenString(validString, stringLen, &result);
+  int c6 = testCaseCheckValidFenString(&result, expectingValid, '6');
+
+  // Test numeric limits
+  expectingValid = 0;
+  stringLen = 88;
+  validString = "pnbqkbnr/pppppppp/pppppppp/pppppppp/pppppppp/pppppppp/"
+                "PPPPPPPP/RNBQKBNR w KQkq 10 53 800";
+  initFenString(validString, stringLen, &result);
+  int c7 = testCaseCheckValidFenString(&result, expectingValid, '7');
+
+  // Test numeric limits
+  expectingValid = 0;
+  stringLen = 88;
+  validString = "pnbqkbnr/pppppppp/pppppppp/pppppppp/pppppppp/pppppppp/"
+                "PPPPPPPP/RNBQKBNR w KQkq 17 50 800";
+  initFenString(validString, stringLen, &result);
+  int c8 = testCaseCheckValidFenString(&result, expectingValid, '8');
+
+  // Add invalid side "s"
+  expectingValid = 0;
+  stringLen = 88;
+  validString = "pnbqkbnr/pppppppp/pppppppp/pppppppp/pppppppp/pppppppp/"
+                "PPPPPPPP/RNBQKBNR s KQkq 14 50 800";
+  initFenString(validString, stringLen, &result);
+  int c9 = testCaseCheckValidFenString(&result, expectingValid, '9');
+
+  return c8 && c0 && c1 && c2 && c3 && c4 && c5 && c6 && c7 && c9;
 }
 
 void testFenString() {
