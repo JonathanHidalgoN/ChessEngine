@@ -29,6 +29,17 @@ typedef struct piece {
   int bitIndex;
 } piece;
 
+typedef struct bitBoardsList {
+  bitboard pieces[NUMBEROFCOLORS][NUMBEROFDIFFERENTPIECES];
+} bitBoardsList;
+
+// TODO: I dont like to move pieceList struct here but I had a problem with
+// circular import and didn't find a solution that was simple enough for now I
+// will leave this here I should see how to solve this
+typedef struct pieceList {
+  int pieces[NUMBEROFSQUARES];
+} pieceList;
+
 typedef struct gameState {
   int playingSide;
   int castlingCode;
@@ -37,11 +48,9 @@ typedef struct gameState {
   int fullMoveCounter;
   uint64_t zobristKey;
   int phaseValue;
+  bitBoardsList bitBoardsList;
+  pieceList pieceList;
 } gameState;
-
-typedef struct bitBoardsList {
-  bitboard pieces[NUMBEROFCOLORS][NUMBEROFDIFFERENTPIECES];
-} bitBoardsList;
 
 typedef struct intPair {
   int first;
