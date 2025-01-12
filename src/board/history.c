@@ -1,6 +1,10 @@
 #include "../../include/board/history.h"
 
 void cleanHistory(history *hist) {
+  bitBoardsList bbl;
+  pieceList pieceList;
+  cleanBitBoardList(&bbl);
+  cleanPieceList(&pieceList);
   for (int i = 0; i < MAXTURNS; i++) {
     gameState dummyGameState = {0, 0, 0, 0, 0, 0ULL, 0};
     hist->states[i] = dummyGameState;
