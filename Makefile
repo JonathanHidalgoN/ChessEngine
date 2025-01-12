@@ -1,7 +1,7 @@
 CC = gcc
 CFLAGS = -Wall -Wextra -Iinclude
 
-SRC =src/board/FEN-strings.c src/board/boardEncoding.c src/board/history.c src/board/pieceList.c src/board/board.c src/moveGeneration/attacks.c src/random.c src/moveGeneration/moveGeneration.c  main.c
+SRC =src/board/bitBoard.c src/board/FEN-strings.c src/board/boardEncoding.c src/board/history.c src/board/pieceList.c src/board/board.c src/moveGeneration/attacks.c src/random.c src/moveGeneration/moveGeneration.c  main.c
 
 # Add debug
 ifeq ($(MAKECMDGOALS),debug)
