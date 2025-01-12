@@ -36,6 +36,17 @@ int areBitBoardListEqual(const bitBoardsList *bbl1, const bitBoardsList *bbl2) {
   return 1;
 }
 
+int compareBitBoardLists(const bitBoardsList *bbl1, const bitBoardsList *bbl2,
+                         char testNumber, char *functionName) {
+  int areEqual = areBitBoardListEqual(bbl1, bbl2);
+  if (!areEqual) {
+    printf(RED "Error in %s, expected equal bitBoardsList test number %d\n",
+           functionName, testNumber);
+    return 0;
+  }
+  return 1;
+}
+
 int arePiecesEqual(const piece *expectedResult, const piece *functionResult) {
   return expectedResult->bitIndex == functionResult->bitIndex &&
          expectedResult->side == functionResult->side &&

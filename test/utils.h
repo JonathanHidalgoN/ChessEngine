@@ -30,4 +30,6 @@ int compareIntPair(const intPair *a, const intPair *b);
 int areFenStringsEqual(const fenString *a, const fenString *b);
 int compareFenStrings(const fenString *functionResult,
                       const fenString *expectedResult, char testNumber);
+int compareBitBoardLists(const bitBoardsList *bbl1, const bitBoardsList *bbl2,
+                         char testNumber, char *functionName);
 #endif
