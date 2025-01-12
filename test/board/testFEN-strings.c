@@ -129,21 +129,35 @@ int testCheckValidFenString() {
   return c8 && c0 && c1 && c2 && c3 && c4 && c5 && c6 && c7 && c9;
 }
 
-int testInitBitBoardWithFenString() {
+int testInitBitBoardWithFenStringC0() {
+  int i;
+  char *functionName = "initBitBoardListWithFenString";
   int stringLen = 88;
   char *string = "pppppppp/pppppppp/pppppppp/pppppppp/pppppppp/pppppppp/"
-                 "pppppppp/pppppppp s KQkq 14 50 800";
+                 "pppppppp/pppppppp w KQkq 14 50 800";
   fenString fenString;
   initFenString(string, stringLen, &fenString);
   bitBoardsList result, expected;
   cleanBitBoardList(&expected);
   initBitBoardListWithFenString(&expected, &fenString);
+  for (i = 0; i < NUMBEROFSQUARES; i++) {
+    expected.pieces[WHITE][PAWN] |= BIT(i);
+  }
+  int valid = compareBitBoardLists(&expected, &result, '0', functionName);
+  return valid;
+}
+
+int testInitBitBoardWithFenString() {
+  int c0 = testInitBitBoardWithFenStringC0();
+  return c0;
 }
 
 void testFenString() {
   int resultTestInitFenString = testInitFenString();
   int resultCheckValidFenString = testCheckValidFenString();
-  if (resultTestInitFenString && resultCheckValidFenString) {
+  int resultTestIniBitBoardWithFenString = testInitBitBoardWithFenString();
+  if (resultTestInitFenString && resultCheckValidFenString &&
+      resultTestIniBitBoardWithFenString) {
     printf(GREEN "Tested FEN string successfully\n" RESET);
   }
 }
