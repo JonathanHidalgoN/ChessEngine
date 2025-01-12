@@ -6,7 +6,7 @@ void cleanHistory(history *hist) {
   cleanBitBoardList(&bbl);
   cleanPieceList(&pieceList);
   for (int i = 0; i < MAXTURNS; i++) {
-    gameState dummyGameState = {0, 0, 0, 0, 0, 0ULL, 0};
+    gameState dummyGameState = {0, 0, 0, 0, 0, 0ULL, 0, bbl, pieceList};
     hist->states[i] = dummyGameState;
   }
   hist->len = 0;

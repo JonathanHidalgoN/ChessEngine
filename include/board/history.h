@@ -1,8 +1,8 @@
 #ifndef HISTORY_H
 #define HISTORY_H
 
-#include "board.h"
 #include "defs.h"
+#include "gameState.h"
 
 // This is like a stack
 typedef struct history {
