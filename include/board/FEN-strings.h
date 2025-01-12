@@ -44,7 +44,7 @@ void initFenString(char *string, int stringLen, fenString *fenString);
 int checkValidFenStringNumberVals(const char *string, int lowIndex,
                                   int highIndex, int limit);
 int checkValidFenString(const fenString *fenString);
-void initBitBoardListWithFenString(bitBoardsList *bbl, int stringLen,
-                                   char *string);
-
+void initBitBoardListWithFenString(bitBoardsList *bbl, fenString *fenString);
+void initGameStateWithFenString(gameState *gameState, char *string,
+                                int stringLen);
 #endif // FEN_STRINGS

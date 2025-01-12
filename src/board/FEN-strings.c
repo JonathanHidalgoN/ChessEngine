@@ -3,6 +3,10 @@
 #include <string.h>
 // TODO : When testing for invalid fen string the message is print, maybe move
 // it because when test are run everything is fine but still print to console
+// NOTE: I dont like the fact that we are first checking the fen string to see
+// it is valid and then we are again checking it to parse it to a game state, I
+// wont refactor this for now because it is not performance critial but the work
+// could be done just on one cycle
 const char FEN_STRING_VALID_POSITION_CHARACTERS
     [FEN_STRING_NUMBER_OF_VALID_POSITION_CHARACTERS] = {
         'p', 'n', 'b', 'q', 'k', 'r', 'P', 'N', 'B', 'Q', 'K',
@@ -99,21 +103,6 @@ static int checkCharInList(char val, const char *list, int listLen) {
   return found;
 }
 
-int checkValidFenStringPart1(const char *string, int start, int end) {
-  for (int i = start; i <= end; i++) {
-    char val = string[i];
-    int valid = checkCharInList(val, FEN_STRING_VALID_POSITION_CHARACTERS,
-                                FEN_STRING_NUMBER_OF_VALID_POSITION_CHARACTERS);
-    if (!valid) {
-      printf("Error parsing character %c at index %d, valid characters are "
-             "[aA-rR] [1-8] or [/]\n",
-             val, i);
-      return 0;
-    }
-  }
-  return 1;
-}
-
 int checkValidFenStringPart2(const char *string, int start) {
 
   char sideToMoveChar = string[start];
@@ -176,6 +165,21 @@ int checkValidFenStringNumberVals(const char *string, int start, int end,
   return 1;
 }
 
+int checkValidFenStringPart1(const char *string, int start, int end) {
+  for (int i = start; i <= end; i++) {
+    char val = string[i];
+    int valid = checkCharInList(val, FEN_STRING_VALID_POSITION_CHARACTERS,
+                                FEN_STRING_NUMBER_OF_VALID_POSITION_CHARACTERS);
+    if (!valid) {
+      printf("Error parsing character %c at index %d, valid characters are "
+             "[aA-rR] [1-8] or [/]\n",
+             val, i);
+      return 0;
+    }
+  }
+  return 1;
+}
+
 int checkValidFenString(const fenString *fenString) {
   int nullValid, valid1, valid2, valid3, valid4, valid5, valid6 = 1;
   if (fenString == NULL || fenString->string == NULL) {
@@ -208,8 +212,9 @@ static void assingPiece(int *boardSquare, int color, int pieceType,
   boardSquare++;
 }
 
-void initBitBoardListWithFenString(bitBoardsList *bbl, int stringLen,
-                                   char *string) {
+void initGameStateWithFenString(gameState *gameState, char *string,
+                                int stringLen) {
+
   fenString fenString;
   initFenString(string, stringLen, &fenString);
   int valid = checkValidFenString(&fenString);
@@ -217,11 +222,15 @@ void initBitBoardListWithFenString(bitBoardsList *bbl, int stringLen,
     printf("invalid FEN string \n");
     return;
   }
+  initBitBoardListWithFenString(&gameState->bitBoardsList, &fenString);
+}
+
+void initBitBoardListWithFenString(bitBoardsList *bbl, fenString *fenString) {
   cleanBitBoardList(bbl);
   int boardSquare = 0;
-  for (int i = fenString.piecesPositions.first;
-       i < fenString.piecesPositions.second; i++) {
-    switch (fenString.string[i]) {
+  for (int i = fenString->piecesPositions.first;
+       i < fenString->piecesPositions.second; i++) {
+    switch (fenString->string[i]) {
     case 'p':
       assingPiece(&boardSquare, WHITE, PAWN, bbl);
       break;
@@ -266,7 +275,7 @@ void initBitBoardListWithFenString(bitBoardsList *bbl, int stringLen,
       break;
     default:
       // Quick and dirty number conversion
-      boardSquare = boardSquare + (fenString.string[i] - '0');
+      boardSquare = boardSquare + (fenString->string[i] - '0');
       break;
     }
   }
