@@ -1,3 +1,4 @@
+// TODO: MOVE DEFS TO UPPER FILE LEVEL
 #ifndef CONSTANTS_C
 #define CONSTANTS_C
 
@@ -20,37 +21,15 @@
 #define NUMBEROFSQUARES (ROWS * COLS)
 #define LASTBIT (NUMBEROFSQUARES - 1)
 #define MAXTURNS 2048
-
-typedef uint64_t bitboard;
+#define countBits(bitboard) __builtin_popcountll(bitboard)
+#define fromBoardCordsToBitIndex(row, col) ((col) + ROWS * (row))
+#define getLSBIndex(bitboard) ((bitboard) ? __builtin_ctzll(bitboard) : -1)
 
 typedef struct piece {
   int side;
   int type;
   int bitIndex;
 } piece;
-
-typedef struct bitBoardsList {
-  bitboard pieces[NUMBEROFCOLORS][NUMBEROFDIFFERENTPIECES];
-} bitBoardsList;
-
-// TODO: I dont like to move pieceList struct here but I had a problem with
-// circular import and didn't find a solution that was simple enough for now I
-// will leave this here I should see how to solve this
-typedef struct pieceList {
-  int pieces[NUMBEROFSQUARES];
-} pieceList;
-
-typedef struct gameState {
-  int playingSide;
-  int castlingCode;
-  int halfMoveCounter;
-  int enPassantCode;
-  int fullMoveCounter;
-  uint64_t zobristKey;
-  int phaseValue;
-  bitBoardsList bitBoardsList;
-  pieceList pieceList;
-} gameState;
 
 typedef struct intPair {
   int first;
