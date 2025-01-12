@@ -62,6 +62,20 @@ int comparePieces(const piece *expectedPiece, const piece *resultPiece,
   return 1;
 }
 
+int compareFenStrings(const fenString *functionResult,
+                      const fenString *expectedResult, char testNumber) {
+  int areEqual = areFenStringsEqual(functionResult, expectedResult);
+  if (!areEqual) {
+    printf(RED "Error testing FEN string case: %c\n" RESET, testNumber);
+    printf("------------------- Expected result ------------------------\n");
+    printFenString(expectedResult);
+    printf("------------------- Function result ------------------------\n");
+    printFenString(functionResult);
+    return 0;
+  }
+  return 1;
+}
+
 piece createPiece(int bitIndex, int side, int type) {
   piece result = {side, type, bitIndex};
   return result;
@@ -183,7 +197,7 @@ int compareIntPair(const intPair *a, const intPair *b) {
   return (a->first == b->first && a->second == b->second);
 }
 
-int compareFenString(const fenString *a, const fenString *b) {
+int areFenStringsEqual(const fenString *a, const fenString *b) {
   if ((a->string == NULL || b->string == NULL)) {
     if (a->string != b->string) {
       return 0;

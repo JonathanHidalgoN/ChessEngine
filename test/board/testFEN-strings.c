@@ -1,20 +1,6 @@
 #include "../test.h"
 #include <stdio.h>
 
-int areFenStringEqual(const fenString *functionResult,
-                      const fenString *expectedResult, char testNumber) {
-  int areEqual = compareFenString(functionResult, expectedResult);
-  if (!areEqual) {
-    printf(RED "Error testing FEN string case: %c\n" RESET, testNumber);
-    printf("------------------- Expected result ------------------------\n");
-    printFenString(expectedResult);
-    printf("------------------- Function result ------------------------\n");
-    printFenString(functionResult);
-    return 0;
-  }
-  return 1;
-}
-
 int testInitFenString() {
   int stringLen = 56;
   char *validString =
@@ -23,27 +9,27 @@ int testInitFenString() {
   fenString expectedResult = {validString, stringLen, {0, 42},  44,
                               {46, 49},    {51, 51},  {53, 53}, {55, 55}};
   initFenString(validString, stringLen, &functionResult);
-  int c1 = areFenStringEqual(&functionResult, &expectedResult, '1');
+  int c1 = compareFenStrings(&functionResult, &expectedResult, '1');
   stringLen = 57;
   validString = "rnbqkrrr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq 1 5 10";
   fenString expectedResult2 = {validString, stringLen, {0, 42},  44,
                                {46, 49},    {51, 51},  {53, 53}, {55, 56}};
   initFenString(validString, stringLen, &functionResult);
-  int c2 = areFenStringEqual(&functionResult, &expectedResult2, '2');
+  int c2 = compareFenStrings(&functionResult, &expectedResult2, '2');
 
   stringLen = 28;
   validString = "8/8/8/8/8/8/8/8 w ---q - 5 1";
   fenString expectedResult3 = {validString, stringLen, {0, 14},  16,
                                {18, 21},    {23, 23},  {25, 25}, {27, 27}};
   initFenString(validString, stringLen, &functionResult);
-  int c3 = areFenStringEqual(&functionResult, &expectedResult3, '3');
+  int c3 = compareFenStrings(&functionResult, &expectedResult3, '3');
 
   stringLen = 45;
   validString = "pppp-ppp/8/8/8/8/8/8/ppppppp- w K--q 14 12 12";
   fenString expectedResult4 = {validString, stringLen, {0, 28},  30,
                                {32, 35},    {37, 38},  {40, 41}, {43, 44}};
   initFenString(validString, stringLen, &functionResult);
-  int c4 = areFenStringEqual(&functionResult, &expectedResult4, '4');
+  int c4 = compareFenStrings(&functionResult, &expectedResult4, '4');
 
   return c1 && c2 && c3 && c4;
 }
@@ -141,6 +127,17 @@ int testCheckValidFenString() {
   int c9 = testCaseCheckValidFenString(&result, expectingValid, '9');
 
   return c8 && c0 && c1 && c2 && c3 && c4 && c5 && c6 && c7 && c9;
+}
+
+int testInitBitBoardWithFenString() {
+  int stringLen = 88;
+  char *string = "pppppppp/pppppppp/pppppppp/pppppppp/pppppppp/pppppppp/"
+                 "pppppppp/pppppppp s KQkq 14 50 800";
+  fenString fenString;
+  initFenString(string, stringLen, &fenString);
+  bitBoardsList result, expected;
+  cleanBitBoardList(&expected);
+  initBitBoardListWithFenString(&expected, &fenString);
 }
 
 void testFenString() {
