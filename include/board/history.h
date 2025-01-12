@@ -1,6 +1,7 @@
 #ifndef HISTORY_H
 #define HISTORY_H
 
+#include "board.h"
 #include "defs.h"
 
 // This is like a stack
