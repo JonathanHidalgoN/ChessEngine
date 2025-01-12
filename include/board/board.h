@@ -27,10 +27,6 @@
 #include "history.h"
 #include "pieceList.h"
 
-#define countBits(bitboard) __builtin_popcountll(bitboard)
-#define fromBoardCordsToBitIndex(row, col) ((col) + ROWS * (row))
-#define getLSBIndex(bitboard) ((bitboard) ? __builtin_ctzll(bitboard) : -1)
-
 typedef struct board {
   bitBoardsList bitBoardsList;
   int side;

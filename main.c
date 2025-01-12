@@ -1,7 +1,4 @@
-#include "include/board/board.h"
 #include "include/board/defs.h"
-#include "include/board/pieceList.h"
-#include "include/moveGeneration/attacks.h"
 #include "test/test.h"
 #include <stdio.h>
 
@@ -26,15 +23,6 @@ int main() {
     runTest();
     return 0;
   }
-
-  if (0) {
-    pieceList pieceList;
-    cleanPieceList(&pieceList);
-    pieceList.pieces[0] = PAWN;
-    printPieceList(&pieceList);
-    return 0;
-  }
-
   // printf("Chess engine programmed by me (: \n");
   // bitBoardsList board;
   // initBitBoardsListStandarChess(&board);

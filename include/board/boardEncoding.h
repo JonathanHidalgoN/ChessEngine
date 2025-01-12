@@ -9,6 +9,7 @@
 #ifndef BOARD_ENCODING_H
 #define BOARD_ENCODING_H
 #include "../random.h"
+#include "bitBoard.h"
 #include "defs.h"
 #include <stdint.h>
 
