@@ -25,10 +25,13 @@ int compareBitBoard(bitboard expectedResult, bitboard result, char testNumber,
   return 1;
 }
 
-int areBitBoardListEqual(const bitBoardsList *bbl1, const bitBoardsList *bbl2) {
+int areBitBoardListEqual(const bitBoardsList *expectedBBL,
+                         const bitBoardsList *functionBBL, int *f1, int *f2) {
   for (int i = 0; i < NUMBEROFCOLORS; i++) {
     for (int j = 0; j < NUMBEROFDIFFERENTPIECES; j++) {
-      if (bbl1->pieces[i][j] != bbl2->pieces[i][j]) {
+      if (expectedBBL->pieces[i][j] != functionBBL->pieces[i][j]) {
+        *f1 = i;
+        *f2 = j;
         return 0;
       }
     }
@@ -38,10 +41,16 @@ int areBitBoardListEqual(const bitBoardsList *bbl1, const bitBoardsList *bbl2) {
 
 int compareBitBoardLists(const bitBoardsList *bbl1, const bitBoardsList *bbl2,
                          char testNumber, char *functionName) {
-  int areEqual = areBitBoardListEqual(bbl1, bbl2);
+  int colorWhereFailed = -1;
+  int pieceWhereFailed = -1;
+  int areEqual =
+      areBitBoardListEqual(bbl1, bbl2, &colorWhereFailed, &pieceWhereFailed);
   if (!areEqual) {
-    printf(RED "Error in %s, expected equal bitBoardsList test number %d\n",
-           functionName, testNumber);
+    printf(RED "Error in %s, color:%d, piece:%d expected equal bitBoardsList "
+               "test number %c\n" RESET,
+           functionName, colorWhereFailed, pieceWhereFailed, testNumber);
+    showDiff(bbl1->pieces[colorWhereFailed][pieceWhereFailed],
+             bbl2->pieces[colorWhereFailed][pieceWhereFailed]);
     return 0;
   }
   return 1;
@@ -101,6 +110,8 @@ int arePieceListEqual(const pieceList *pl1, const pieceList *pl2) {
 }
 
 int areGameStatesEqual(const gameState *expected, const gameState *result) {
+  int colorWhereFailed = -1;
+  int pieceWhereFailed = -1;
   return expected->playingSide == result->playingSide &&
          expected->castlingCode == result->castlingCode &&
          expected->halfMoveCounter == result->halfMoveCounter &&
@@ -108,8 +119,8 @@ int areGameStatesEqual(const gameState *expected, const gameState *result) {
          expected->fullMoveCounter == result->fullMoveCounter &&
          expected->zobristKey == result->zobristKey &&
          expected->phaseValue == result->phaseValue &&
-         areBitBoardListEqual(&expected->bitBoardsList,
-                              &result->bitBoardsList) &&
+         areBitBoardListEqual(&expected->bitBoardsList, &result->bitBoardsList,
+                              &colorWhereFailed, &pieceWhereFailed) &&
          arePieceListEqual(&expected->pieceList, &result->pieceList);
 }
 
