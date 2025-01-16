@@ -147,9 +147,24 @@ int testInitBitBoardWithFenStringC0() {
   return valid;
 }
 
+int testInitBitBoardWithFenStringC1() {
+  char *functionName = "initBitBoardListWithFenString";
+  int stringLen = 28;
+  char *string = "8/8/8/8/8/8/"
+                 "8/8 w KQkq 1 5 8";
+  fenString fenString;
+  initFenString(string, stringLen, &fenString);
+  bitBoardsList result, expected;
+  cleanBitBoardList(&expected);
+  initBitBoardListWithFenString(&result, &fenString);
+  int valid = compareBitBoardLists(&expected, &result, '0', functionName);
+  return valid;
+}
+
 int testInitBitBoardWithFenString() {
   int c0 = testInitBitBoardWithFenStringC0();
-  return c0;
+  int c1 = testInitBitBoardWithFenStringC1();
+  return c0 && c1;
 }
 
 void testFenString() {
