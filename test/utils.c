@@ -13,35 +13,35 @@ void showDiff(bitboard expected, bitboard result) {
   }
 }
 
-int compareBitBoard(bitboard expectedResult, bitboard result, char testNumber,
-                    const char *functionName) {
+BOOL compareBitBoard(bitboard expectedResult, bitboard result, char testNumber,
+                     const char *functionName) {
 
   if (result != expectedResult) {
     printf(RED "Error in function %s, test case %c \n" RESET, functionName,
            testNumber);
     showDiff(expectedResult, result);
-    return 0;
+    return FALSE;
   }
-  return 1;
+  return TRUE;
 }
 
-int areBitBoardListEqual(const bitBoardsList *expectedBBL,
-                         const bitBoardsList *functionBBL, int *f1, int *f2) {
+BOOL areBitBoardListEqual(const bitBoardsList *expectedBBL,
+                          const bitBoardsList *functionBBL, int *f1, int *f2) {
   for (int i = 0; i < NUMBEROFCOLORS; i++) {
     for (int j = 0; j < NUMBEROFDIFFERENTPIECES; j++) {
       if (expectedBBL->pieces[i][j] != functionBBL->pieces[i][j]) {
         *f1 = i;
         *f2 = j;
-        return 0;
+        return FALSE;
       }
     }
   }
-  return 1;
+  return TRUE;
 }
 
-int compareBitBoardLists(const bitBoardsList *bbl1, const bitBoardsList *bbl2,
-                         char testNumber, char *functionName,
-                         int expectedToFail) {
+BOOL compareBitBoardLists(const bitBoardsList *bbl1, const bitBoardsList *bbl2,
+                          char testNumber, char *functionName,
+                          int expectedToFail) {
   int colorWhereFailed = -1;
   int pieceWhereFailed = -1;
   int areEqual =
@@ -52,7 +52,7 @@ int compareBitBoardLists(const bitBoardsList *bbl1, const bitBoardsList *bbl2,
            functionName, colorWhereFailed, pieceWhereFailed, testNumber);
     showDiff(bbl1->pieces[colorWhereFailed][pieceWhereFailed],
              bbl2->pieces[colorWhereFailed][pieceWhereFailed]);
-    return 0;
+    return FALSE;
   } else if (areEqual && expectedToFail) {
     printf(RED
            "Error in %s, color:%d, piece:%d expected different bitBoardsList "
@@ -60,12 +60,12 @@ int compareBitBoardLists(const bitBoardsList *bbl1, const bitBoardsList *bbl2,
            functionName, colorWhereFailed, pieceWhereFailed, testNumber);
     showDiff(bbl1->pieces[colorWhereFailed][pieceWhereFailed],
              bbl2->pieces[colorWhereFailed][pieceWhereFailed]);
-    return 0;
+    return FALSE;
   }
-  return 1;
+  return TRUE;
 }
 
-int arePiecesEqual(const piece *expectedResult, const piece *functionResult) {
+BOOL arePiecesEqual(const piece *expectedResult, const piece *functionResult) {
   return expectedResult->bitIndex == functionResult->bitIndex &&
          expectedResult->side == functionResult->side &&
          expectedResult->type == functionResult->type;
@@ -76,8 +76,8 @@ void printPieceStruct(const piece *piece) {
          piece->bitIndex);
 }
 
-int comparePieces(const piece *expectedPiece, const piece *resultPiece,
-                  char testNumber) {
+BOOL comparePieces(const piece *expectedPiece, const piece *resultPiece,
+                   char testNumber) {
   int areEqual = arePiecesEqual(expectedPiece, resultPiece);
   if (!areEqual) {
     printf(RED "Error in findPieceByBitIndex function case %c\n" RESET,
@@ -91,8 +91,8 @@ int comparePieces(const piece *expectedPiece, const piece *resultPiece,
   return 1;
 }
 
-int compareFenStrings(const fenString *functionResult,
-                      const fenString *expectedResult, char testNumber) {
+BOOL compareFenStrings(const fenString *functionResult,
+                       const fenString *expectedResult, char testNumber) {
   int areEqual = areFenStringsEqual(functionResult, expectedResult);
   if (!areEqual) {
     printf(RED "Error testing FEN string case: %c\n" RESET, testNumber);
@@ -100,9 +100,9 @@ int compareFenStrings(const fenString *functionResult,
     printFenString(expectedResult);
     printf("------------------- Function result ------------------------\n");
     printFenString(functionResult);
-    return 0;
+    return FALSE;
   }
-  return 1;
+  return TRUE;
 }
 
 piece createPiece(int bitIndex, int side, int type) {
@@ -110,15 +110,15 @@ piece createPiece(int bitIndex, int side, int type) {
   return result;
 }
 
-int arePieceListEqual(const pieceList *pl1, const pieceList *pl2) {
+BOOL arePieceListEqual(const pieceList *pl1, const pieceList *pl2) {
   for (int i = 0; i < NUMBEROFSQUARES; i++) {
     if (!(pl1->pieces[i] == pl2->pieces[i]))
-      return 0;
+      return FALSE;
   }
-  return 1;
+  return TRUE;
 }
 
-int areGameStatesEqual(const gameState *expected, const gameState *result) {
+BOOL areGameStatesEqual(const gameState *expected, const gameState *result) {
   return expected->playingSide == result->playingSide &&
          expected->castlingCode == result->castlingCode &&
          expected->halfMoveCounter == result->halfMoveCounter &&
@@ -217,11 +217,11 @@ void printFenString(const fenString *fen) {
   printf("}\n");
 }
 
-int compareIntPair(const intPair *a, const intPair *b) {
+BOOL compareIntPair(const intPair *a, const intPair *b) {
   return (a->first == b->first && a->second == b->second);
 }
 
-int areFenStringsEqual(const fenString *a, const fenString *b) {
+BOOL areFenStringsEqual(const fenString *a, const fenString *b) {
   if ((a->string == NULL || b->string == NULL)) {
     if (a->string != b->string) {
       return 0;

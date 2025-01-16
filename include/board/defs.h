@@ -5,6 +5,8 @@
 #include <stdint.h>
 #include <stdio.h>
 
+#define TRUE 1;
+#define FALSE 0;
 #define COLS 8
 #define ROWS 8
 #define NUMBEROFCOLORS 2
@@ -24,6 +26,8 @@
 #define countBits(bitboard) __builtin_popcountll(bitboard)
 #define fromBoardCordsToBitIndex(row, col) ((col) + ROWS * (row))
 #define getLSBIndex(bitboard) ((bitboard) ? __builtin_ctzll(bitboard) : -1)
+
+typedef int BOOL;
 
 typedef struct piece {
   int side;

@@ -10,26 +10,26 @@
 #define RESET "\x1b[0m"
 
 void showDiff(bitboard expected, bitboard result);
-int compareBitBoard(bitboard expectedResult, bitboard result, char testNumber,
-                    const char *functionName);
+BOOL compareBitBoard(bitboard expectedResult, bitboard result, char testNumber,
+                     const char *functionName);
 void printPieceStruct(const piece *piece);
-int comparePieces(const piece *expectedPiece, const piece *resultPiece,
-                  char testNumber);
+BOOL comparePieces(const piece *expectedPiece, const piece *resultPiece,
+                   char testNumber);
 piece createPiece(int bitIndex, int side, int type);
-int areGameStatesEqual(const gameState *expected, const gameState *result);
+BOOL areGameStatesEqual(const gameState *expected, const gameState *result);
 void printGameState(const gameState *state);
 gameState createGameState(int playingSide, int castlingCode,
                           int halfMoveCounter, int enPassantCode,
                           int fullMoveCounter, uint64_t zobristKey,
                           int phaseValue);
-int arePieceListEqual(const pieceList *pl1, const pieceList *pl2);
+BOOL arePieceListEqual(const pieceList *pl1, const pieceList *pl2);
 void printIntPair(const intPair *pair, const char *name);
 void printFenString(const fenString *fen);
-int compareIntPair(const intPair *a, const intPair *b);
-int areFenStringsEqual(const fenString *a, const fenString *b);
-int compareFenStrings(const fenString *functionResult,
-                      const fenString *expectedResult, char testNumber);
-int compareBitBoardLists(const bitBoardsList *bbl1, const bitBoardsList *bbl2,
-                         char testNumber, char *functionName,
-                         int expectedToFail);
+BOOL compareIntPair(const intPair *a, const intPair *b);
+BOOL areFenStringsEqual(const fenString *a, const fenString *b);
+BOOL compareFenStrings(const fenString *functionResult,
+                       const fenString *expectedResult, char testNumber);
+BOOL compareBitBoardLists(const bitBoardsList *bbl1, const bitBoardsList *bbl2,
+                          char testNumber, char *functionName,
+                          int expectedToFail);
 #endif

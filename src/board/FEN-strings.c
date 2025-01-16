@@ -103,7 +103,7 @@ static int checkCharInList(char val, const char *list, int listLen) {
   return found;
 }
 
-int checkValidFenStringPart2(const char *string, int start) {
+BOOL checkValidFenStringPart2(const char *string, int start) {
 
   char sideToMoveChar = string[start];
   int valid = checkCharInList(sideToMoveChar, FEN_STRING_VALID_SIDE_CHARACTERS,
@@ -112,12 +112,12 @@ int checkValidFenStringPart2(const char *string, int start) {
     printf("Error parsing character: %c at index: %d is not valid, should be "
            "w or b\n ",
            sideToMoveChar, start);
-    return 0;
+    return FALSE;
   }
-  return 1;
+  return TRUE;
 }
 
-int checkValidFenStringPart3(const char *string, int start, int end) {
+BOOL checkValidFenStringPart3(const char *string, int start, int end) {
   for (int i = start; i <= end; i++) {
     char val = string[i];
     int valid = checkCharInList(val, FEN_STRING_VALID_CASTLING_CHARACTERS,
@@ -129,15 +129,15 @@ int checkValidFenStringPart3(const char *string, int start, int end) {
         printf("%c ", FEN_STRING_VALID_CASTLING_CHARACTERS[j]);
       }
       printf("\n");
-      return 0;
+      return FALSE;
     }
   }
-  return 1;
+  return TRUE;
 }
 
 // TODO: extract the logic of taking a string a parse number to a util function
-int checkValidFenStringNumberVals(const char *string, int start, int end,
-                                  int limit) {
+BOOL checkValidFenStringNumberVals(const char *string, int start, int end,
+                                   int limit) {
   char numberStr[5];
   int c = 0;
   for (int i = start; i <= end; i++) {
@@ -151,7 +151,7 @@ int checkValidFenStringNumberVals(const char *string, int start, int end,
       printf(
           "Error parsing FEN string at index %d, %c should be a number [0-9]\n",
           i, val);
-      return 0;
+      return FALSE;
     }
   }
   numberStr[c] = '\0';
@@ -160,12 +160,12 @@ int checkValidFenStringNumberVals(const char *string, int start, int end,
     printf("Error parsing FEN string limit number is %d, provided "
            "number is %d\n",
            limit, number);
-    return 0;
+    return FALSE;
   }
-  return 1;
+  return TRUE;
 }
 
-int checkValidFenStringPart1(const char *string, int start, int end) {
+BOOL checkValidFenStringPart1(const char *string, int start, int end) {
   for (int i = start; i <= end; i++) {
     char val = string[i];
     int valid = checkCharInList(val, FEN_STRING_VALID_POSITION_CHARACTERS,
@@ -174,14 +174,14 @@ int checkValidFenStringPart1(const char *string, int start, int end) {
       printf("Error parsing character %c at index %d, valid characters are "
              "[aA-rR] [1-8] or [/]\n",
              val, i);
-      return 0;
+      return FALSE;
     }
   }
-  return 1;
+  return TRUE;
 }
 
-int checkValidFenString(const fenString *fenString) {
-  int nullValid, valid1, valid2, valid3, valid4, valid5, valid6 = 1;
+BOOL checkValidFenString(const fenString *fenString) {
+  BOOL nullValid, valid1, valid2, valid3, valid4, valid5, valid6 = 1;
   if (fenString == NULL || fenString->string == NULL) {
     nullValid = 0;
     printf("NULL pointer to FEN string\n");
@@ -216,7 +216,7 @@ void initBoardWithFenString(board *board, char *string, int stringLen) {
 
   fenString fenString;
   initFenString(string, stringLen, &fenString);
-  int valid = checkValidFenString(&fenString);
+  BOOL valid = checkValidFenString(&fenString);
   if (!valid) {
     printf("invalid FEN string \n");
     return;
