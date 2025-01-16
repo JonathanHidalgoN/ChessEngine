@@ -184,11 +184,27 @@ int testInitBitBoardWithFenStringC2() {
   return valid;
 }
 
+int testInitBitBoardWithFenStringC3() {
+  char *functionName = "initBitBoardListWithFenString";
+  int expectedToFail = 1;
+  int stringLen = 32;
+  char *string = "p6P/8/8/8/8/8/8/R6r w KQkq 1 5 8";
+  fenString fenString;
+  initFenString(string, stringLen, &fenString);
+  bitBoardsList result, expected;
+  cleanBitBoardList(&expected);
+  initBitBoardListWithFenString(&result, &fenString);
+  int valid = compareBitBoardLists(&expected, &result, '2', functionName,
+                                   expectedToFail);
+  return valid;
+}
+
 int testInitBitBoardWithFenString() {
   int c0 = testInitBitBoardWithFenStringC0();
   int c1 = testInitBitBoardWithFenStringC1();
   int c2 = testInitBitBoardWithFenStringC2();
-  return c0 && c1;
+  int c3 = testInitBitBoardWithFenStringC3();
+  return c0 && c1 && c2 && c3;
 }
 
 void testFenString() {
