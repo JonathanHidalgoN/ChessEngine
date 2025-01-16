@@ -209,7 +209,7 @@ static void assingPiece(int *boardSquare, int color, int pieceType,
                         bitBoardsList *bbl) {
   bitboard mask = 1ULL << *boardSquare;
   bbl->pieces[color][pieceType] |= mask;
-  boardSquare++;
+  (*boardSquare)++;
 }
 
 void initGameStateWithFenString(gameState *gameState, char *string,
@@ -229,7 +229,7 @@ void initBitBoardListWithFenString(bitBoardsList *bbl, fenString *fenString) {
   cleanBitBoardList(bbl);
   int boardSquare = 0;
   for (int i = fenString->piecesPositions.first;
-       i < fenString->piecesPositions.second; i++) {
+       i <= fenString->piecesPositions.second; i++) {
     switch (fenString->string[i]) {
     case 'p':
       assingPiece(&boardSquare, WHITE, PAWN, bbl);
