@@ -13,8 +13,6 @@ typedef struct gameState {
   int fullMoveCounter;
   uint64_t zobristKey;
   int phaseValue;
-  bitBoardsList bitBoardsList;
-  pieceList pieceList;
 } gameState;
 
 #endif // !GAME_STATE

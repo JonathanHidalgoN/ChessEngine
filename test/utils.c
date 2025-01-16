@@ -119,18 +119,13 @@ int arePieceListEqual(const pieceList *pl1, const pieceList *pl2) {
 }
 
 int areGameStatesEqual(const gameState *expected, const gameState *result) {
-  int colorWhereFailed = -1;
-  int pieceWhereFailed = -1;
   return expected->playingSide == result->playingSide &&
          expected->castlingCode == result->castlingCode &&
          expected->halfMoveCounter == result->halfMoveCounter &&
          expected->enPassantCode == result->enPassantCode &&
          expected->fullMoveCounter == result->fullMoveCounter &&
          expected->zobristKey == result->zobristKey &&
-         expected->phaseValue == result->phaseValue &&
-         areBitBoardListEqual(&expected->bitBoardsList, &result->bitBoardsList,
-                              &colorWhereFailed, &pieceWhereFailed) &&
-         arePieceListEqual(&expected->pieceList, &result->pieceList);
+         expected->phaseValue == result->phaseValue;
 }
 
 void printGameState(const gameState *state) {
@@ -145,12 +140,10 @@ void printGameState(const gameState *state) {
 gameState createGameState(int playingSide, int castlingCode,
                           int halfMoveCounter, int enPassantCode,
                           int fullMoveCounter, uint64_t zobristKey,
-                          int phaseValue, bitBoardsList bbl,
-                          pieceList pieceList) {
-  gameState result = {
-      playingSide,     castlingCode, halfMoveCounter, enPassantCode,
-      fullMoveCounter, zobristKey,   phaseValue,      bbl,
-      pieceList};
+                          int phaseValue) {
+  gameState result = {playingSide,   castlingCode,    halfMoveCounter,
+                      enPassantCode, fullMoveCounter, zobristKey,
+                      phaseValue};
   return result;
 }
 

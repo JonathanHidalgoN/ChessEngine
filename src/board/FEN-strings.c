@@ -212,8 +212,7 @@ static void assingPiece(int *boardSquare, int color, int pieceType,
   (*boardSquare)++;
 }
 
-void initGameStateWithFenString(gameState *gameState, char *string,
-                                int stringLen) {
+void initBoardWithFenString(board *board, char *string, int stringLen) {
 
   fenString fenString;
   initFenString(string, stringLen, &fenString);
@@ -222,7 +221,7 @@ void initGameStateWithFenString(gameState *gameState, char *string,
     printf("invalid FEN string \n");
     return;
   }
-  initBitBoardListWithFenString(&gameState->bitBoardsList, &fenString);
+  initBitBoardListWithFenString(&board->bitBoardsList, &fenString);
 }
 
 void initBitBoardListWithFenString(bitBoardsList *bbl, fenString *fenString) {

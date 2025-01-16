@@ -6,22 +6,17 @@
 // array inside, maybe integration test would be better for this
 
 int testPushIntoHistory() {
-  bitBoardsList bbl;
-  cleanBitBoardList(&bbl);
-  pieceList pieceList;
-  cleanPieceList(&pieceList);
-
   history history;
   cleanHistory(&history);
   // Test case 1: Pushing a state for WHITE
-  gameState testGameState = {WHITE, 1, 2, 3, 4, 1ULL, 5, bbl, pieceList};
+  gameState testGameState = {WHITE, 1, 2, 3, 4, 1ULL, 5};
   int expectedIndex = 0;
   pushIntoHistory(&history, &testGameState);
   if (!areGameStatesEqual(&testGameState, &history.states[expectedIndex])) {
     printf(RED "Error in pushIntoHistory function case 1\n" RESET);
     return 0;
   } // Test case 2: Pushing a state for BLACK
-  gameState testGameState2 = {BLACK, 2, 1, 0, 2, 12345ULL, 3, bbl, pieceList};
+  gameState testGameState2 = {BLACK, 2, 1, 0, 2, 12345ULL, 3};
   int expectedIndex2 = 1;
   pushIntoHistory(&history, &testGameState2);
   if (!areGameStatesEqual(&testGameState2, &history.states[expectedIndex2])) {
@@ -30,7 +25,7 @@ int testPushIntoHistory() {
   }
 
   // Test case 3: Handling an empty state (default initialization)
-  gameState testGameState3 = {0, 0, 0, 0, 0, 0ULL, 0, bbl, pieceList};
+  gameState testGameState3 = {0, 0, 0, 0, 0, 0ULL, 0};
   int expectedIndex3 = 2;
   pushIntoHistory(&history, &testGameState3);
   if (!areGameStatesEqual(&testGameState3, &history.states[expectedIndex3])) {
@@ -39,8 +34,7 @@ int testPushIntoHistory() {
   }
 
   // Test case 4: Large Zobrist Key
-  gameState testGameState4 = {WHITE, 10,  20,       5, 3, 0xFFFFFFFFFFFFFFFFULL,
-                              7,     bbl, pieceList};
+  gameState testGameState4 = {WHITE, 10, 20, 5, 3, 0xFFFFFFFFFFFFFFFFULL, 7};
   int expectedIndex4 = 3;
   pushIntoHistory(&history, &testGameState4);
   if (!areGameStatesEqual(&testGameState4, &history.states[expectedIndex4])) {
@@ -49,7 +43,7 @@ int testPushIntoHistory() {
   }
 
   // Test case 5: Handling repeated pushes of the same state
-  gameState testGameState5 = {WHITE, 1, 1, 1, 1, 67890ULL, 4, bbl, pieceList};
+  gameState testGameState5 = {WHITE, 1, 1, 1, 1, 67890ULL, 4};
   int expectedIndex5 = 4;
   pushIntoHistory(&history, &testGameState5);
   if (!areGameStatesEqual(&testGameState5, &history.states[expectedIndex5])) {
@@ -58,7 +52,7 @@ int testPushIntoHistory() {
   }
 
   // Test case 6: Edge case - Castling flags set to an extreme value
-  gameState testGameState6 = {BLACK, 0, 0, 0, 0xF, 99999ULL, 0, bbl, pieceList};
+  gameState testGameState6 = {BLACK, 0, 0, 0, 0xF, 99999ULL, 0};
   int expectedIndex6 = 5;
   pushIntoHistory(&history, &testGameState6);
   if (!areGameStatesEqual(&testGameState6, &history.states[expectedIndex6])) {
@@ -67,7 +61,7 @@ int testPushIntoHistory() {
   }
 
   // Test case 7: Zobrist Key collision scenario (same key, different states)
-  gameState testGameState7 = {WHITE, 3, 4, 5, 6, 12345ULL, 9, bbl, pieceList};
+  gameState testGameState7 = {WHITE, 3, 4, 5, 6, 12345ULL, 9};
   int expectedIndex7 = 6;
   pushIntoHistory(&history, &testGameState7);
   if (!areGameStatesEqual(&testGameState7, &history.states[expectedIndex7])) {
@@ -76,8 +70,7 @@ int testPushIntoHistory() {
   }
 
   // Test case 8: Push state after a large number of moves
-  gameState testGameState8 = {BLACK,    100, 50,  25,       1,
-                              54321ULL, 8,   bbl, pieceList};
+  gameState testGameState8 = {BLACK, 100, 50, 25, 1, 54321ULL, 8};
   int expectedIndex8 = 7;
   pushIntoHistory(&history, &testGameState8);
   if (!areGameStatesEqual(&testGameState8, &history.states[expectedIndex8])) {
@@ -89,14 +82,8 @@ int testPushIntoHistory() {
 
 int testPopFromHistory() {
   history history;
-  bitBoardsList bbl;
-  cleanBitBoardList(&bbl);
-  pieceList pieceList;
-  cleanPieceList(&pieceList);
-  cleanHistory(&history);
-
   // Test case 1: Normal case
-  gameState expectedGameState = {WHITE, 1, 2, 3, 4, 1ULL, 5, bbl, pieceList};
+  gameState expectedGameState = {WHITE, 1, 2, 3, 4, 1ULL, 5};
   int len = 10;
   history.len = len;
   int expectedLen = len - 1;
@@ -110,7 +97,7 @@ int testPopFromHistory() {
   // Test case 2: Edge case - Pop from a single-element history
   cleanHistory(&history);
   history.len = 1;
-  gameState expectedGameState2 = {WHITE, 1, 0, 0, 0, 1ULL, 0, bbl, pieceList};
+  gameState expectedGameState2 = {WHITE, 1, 0, 0, 0, 1ULL, 0};
   history.states[0] = expectedGameState2; // Single element
   int expectedLen2 = 0;
   gameState *resultGameState2 = popFromHistory(&history);
@@ -122,9 +109,9 @@ int testPopFromHistory() {
   // Test case 4: Multiple pops in sequence
   cleanHistory(&history);
   history.len = 3;
-  gameState expectedGameState4a = {WHITE, 1, 1, 1, 1, 1ULL, 1, bbl, pieceList};
-  gameState expectedGameState4b = {BLACK, 2, 2, 2, 2, 2ULL, 2, bbl, pieceList};
-  gameState expectedGameState4c = {WHITE, 3, 3, 3, 3, 3ULL, 3, bbl, pieceList};
+  gameState expectedGameState4a = {WHITE, 1, 1, 1, 1, 1ULL, 1};
+  gameState expectedGameState4b = {BLACK, 2, 2, 2, 2, 2ULL, 2};
+  gameState expectedGameState4c = {WHITE, 3, 3, 3, 3, 3ULL, 3};
   history.states[0] = expectedGameState4a;
   history.states[1] = expectedGameState4b;
   history.states[2] = expectedGameState4c;

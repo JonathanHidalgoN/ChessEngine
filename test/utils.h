@@ -21,8 +21,7 @@ void printGameState(const gameState *state);
 gameState createGameState(int playingSide, int castlingCode,
                           int halfMoveCounter, int enPassantCode,
                           int fullMoveCounter, uint64_t zobristKey,
-                          int phaseValue, bitBoardsList bbl,
-                          pieceList pieceList);
+                          int phaseValue);
 int arePieceListEqual(const pieceList *pl1, const pieceList *pl2);
 void printIntPair(const intPair *pair, const char *name);
 void printFenString(const fenString *fen);
