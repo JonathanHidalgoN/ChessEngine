@@ -29,7 +29,6 @@
 
 typedef struct board {
   bitBoardsList bitBoardsList;
-  int side;
   gameState gameState;
   history history;
   zobristRandoms zobristRandoms;
