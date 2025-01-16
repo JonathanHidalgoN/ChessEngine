@@ -139,7 +139,7 @@ int testInitBitBoardWithFenStringC0() {
   initFenString(string, stringLen, &fenString);
   bitBoardsList result, expected;
   cleanBitBoardList(&expected);
-  initBitBoardListWithFenString(&expected, &fenString);
+  initBitBoardListWithFenString(&result, &fenString);
   for (i = 0; i < NUMBEROFSQUARES; i++) {
     expected.pieces[WHITE][PAWN] |= BIT(i);
   }
