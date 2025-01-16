@@ -40,14 +40,23 @@ int areBitBoardListEqual(const bitBoardsList *expectedBBL,
 }
 
 int compareBitBoardLists(const bitBoardsList *bbl1, const bitBoardsList *bbl2,
-                         char testNumber, char *functionName) {
+                         char testNumber, char *functionName,
+                         int expectedToFail) {
   int colorWhereFailed = -1;
   int pieceWhereFailed = -1;
   int areEqual =
       areBitBoardListEqual(bbl1, bbl2, &colorWhereFailed, &pieceWhereFailed);
-  if (!areEqual) {
+  if (!areEqual && !expectedToFail) {
     printf(RED "Error in %s, color:%d, piece:%d expected equal bitBoardsList "
                "test number %c\n" RESET,
+           functionName, colorWhereFailed, pieceWhereFailed, testNumber);
+    showDiff(bbl1->pieces[colorWhereFailed][pieceWhereFailed],
+             bbl2->pieces[colorWhereFailed][pieceWhereFailed]);
+    return 0;
+  } else if (areEqual && expectedToFail) {
+    printf(RED
+           "Error in %s, color:%d, piece:%d expected different bitBoardsList "
+           "test number %c\n" RESET,
            functionName, colorWhereFailed, pieceWhereFailed, testNumber);
     showDiff(bbl1->pieces[colorWhereFailed][pieceWhereFailed],
              bbl2->pieces[colorWhereFailed][pieceWhereFailed]);

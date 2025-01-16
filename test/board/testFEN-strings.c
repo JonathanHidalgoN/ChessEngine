@@ -131,6 +131,7 @@ int testCheckValidFenString() {
 
 int testInitBitBoardWithFenStringC0() {
   int i;
+  int expectedToFail = 0;
   char *functionName = "initBitBoardListWithFenString";
   int stringLen = 88;
   char *string = "pppppppp/pppppppp/pppppppp/pppppppp/pppppppp/pppppppp/"
@@ -143,12 +144,14 @@ int testInitBitBoardWithFenStringC0() {
   for (i = 0; i < NUMBEROFSQUARES; i++) {
     expected.pieces[WHITE][PAWN] |= BIT(i);
   }
-  int valid = compareBitBoardLists(&expected, &result, '0', functionName);
+  int valid = compareBitBoardLists(&expected, &result, '0', functionName,
+                                   expectedToFail);
   return valid;
 }
 
 int testInitBitBoardWithFenStringC1() {
   char *functionName = "initBitBoardListWithFenString";
+  int expectedToFail = 0;
   int stringLen = 28;
   char *string = "8/8/8/8/8/8/"
                  "8/8 w KQkq 1 5 8";
@@ -157,13 +160,34 @@ int testInitBitBoardWithFenStringC1() {
   bitBoardsList result, expected;
   cleanBitBoardList(&expected);
   initBitBoardListWithFenString(&result, &fenString);
-  int valid = compareBitBoardLists(&expected, &result, '0', functionName);
+  int valid = compareBitBoardLists(&expected, &result, '1', functionName,
+                                   expectedToFail);
+  return valid;
+}
+
+int testInitBitBoardWithFenStringC2() {
+  char *functionName = "initBitBoardListWithFenString";
+  int expectedToFail = 0;
+  int stringLen = 32;
+  char *string = "p6P/8/8/8/8/8/8/R6r w KQkq 1 5 8";
+  fenString fenString;
+  initFenString(string, stringLen, &fenString);
+  bitBoardsList result, expected;
+  cleanBitBoardList(&expected);
+  initBitBoardListWithFenString(&result, &fenString);
+  expected.pieces[WHITE][PAWN] |= BIT(0);
+  expected.pieces[BLACK][PAWN] |= BIT(7);
+  expected.pieces[BLACK][ROOK] |= BIT(56);
+  expected.pieces[WHITE][ROOK] |= BIT(63);
+  int valid = compareBitBoardLists(&expected, &result, '2', functionName,
+                                   expectedToFail);
   return valid;
 }
 
 int testInitBitBoardWithFenString() {
   int c0 = testInitBitBoardWithFenStringC0();
   int c1 = testInitBitBoardWithFenStringC1();
+  int c2 = testInitBitBoardWithFenStringC2();
   return c0 && c1;
 }
 

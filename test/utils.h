@@ -31,5 +31,6 @@ int areFenStringsEqual(const fenString *a, const fenString *b);
 int compareFenStrings(const fenString *functionResult,
                       const fenString *expectedResult, char testNumber);
 int compareBitBoardLists(const bitBoardsList *bbl1, const bitBoardsList *bbl2,
-                         char testNumber, char *functionName);
+                         char testNumber, char *functionName,
+                         int expectedToFail);
 #endif
