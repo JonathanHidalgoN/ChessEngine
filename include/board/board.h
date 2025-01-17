@@ -21,7 +21,7 @@ void movePiece(board *board, int from, int to, int side, int piece);
 // NOTE: This functions could be in gameState.h but we need the zoobristRandoms,
 // from the board, maybe move those into gameState? I dont like that so thats
 // why these functtions are here
-void resetEnPassant(board *board);
+void changePassant(board *board, int passantCode);
 void changePlayingSide(board *board);
 void changeCastling(board *board, int castlingCode);
 //-------------------------------------------------------------------------------------------
