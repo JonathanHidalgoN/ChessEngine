@@ -23,5 +23,6 @@ void movePiece(board *board, int from, int to, int side, int piece);
 // why these functtions are here
 void resetEnPassant(board *board);
 void changePlayingSide(board *board);
+void changeCastling(board *board, int castlingCode);
 //-------------------------------------------------------------------------------------------
 #endif

@@ -36,3 +36,11 @@ void changePlayingSide(board *board) {
   board->gameState.zobristKey ^=
       board->zobristRandoms.sidesRandoms[board->gameState.playingSide];
 }
+
+void changeCastling(board *board, int castlingCode) {
+  board->gameState.zobristKey ^=
+      board->zobristRandoms.castlingRandoms[board->gameState.castlingCode];
+  board->gameState.castlingCode = castlingCode;
+  board->gameState.zobristKey ^=
+      board->zobristRandoms.castlingRandoms[board->gameState.castlingCode];
+}
