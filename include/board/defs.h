@@ -30,6 +30,7 @@
 #define DEBUGGING 0;
 
 typedef int BOOL;
+typedef int COLOR;
 
 typedef struct piece {
   int side;
