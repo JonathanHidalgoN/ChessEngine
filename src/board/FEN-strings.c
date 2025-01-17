@@ -213,7 +213,6 @@ static void assingPiece(int *boardSquare, int color, int pieceType,
 }
 
 void initBoardWithFenString(board *board, char *string, int stringLen) {
-
   fenString fenString;
   initFenString(string, stringLen, &fenString);
   BOOL valid = checkValidFenString(&fenString);
@@ -222,6 +221,7 @@ void initBoardWithFenString(board *board, char *string, int stringLen) {
     return;
   }
   initBitBoardListWithFenString(&board->bitBoardsList, &fenString);
+  board->gameState.playingSide = fenString.string[fenString.sideToMove];
 }
 
 void initBitBoardListWithFenString(bitBoardsList *bbl, fenString *fenString) {
