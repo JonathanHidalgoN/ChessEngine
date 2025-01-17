@@ -20,3 +20,11 @@ void movePiece(board *board, int from, int to, int side, int piece) {
   removePiece(board, from, side, piece);
   putPiece(board, to, side, piece);
 }
+
+void resetEnPassant(board *board) {
+  board->gameState.zobristKey ^=
+      board->zobristRandoms.passantRandoms[board->gameState.enPassantCode];
+  board->gameState.enPassantCode = NO_PASSANT;
+  board->gameState.zobristKey ^=
+      board->zobristRandoms.passantRandoms[board->gameState.enPassantCode];
+}

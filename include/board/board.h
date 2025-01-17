@@ -39,5 +39,5 @@ void removePiece(board *board, int square, int side, int piece);
 void putPiece(board *board, int square, int side, int piece);
 // NOTE: this do not eat the piece where its going
 void movePiece(board *board, int from, int to, int side, int piece);
-
+void resetEnPassant(board *board);
 #endif
