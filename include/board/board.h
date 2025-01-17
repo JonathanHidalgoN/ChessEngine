@@ -35,4 +35,6 @@ typedef struct board {
   pieceList pieceList;
 } board;
 
+void removePiece(board *board, int square, int side, int piece);
+
 #endif
