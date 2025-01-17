@@ -1,12 +1,12 @@
 CC = gcc
 CFLAGS = -Wall -Wextra -Iinclude
 
-SRC =src/board/bitBoard.c src/board/FEN-strings.c src/board/boardEncoding.c src/board/history.c src/board/pieceList.c src/board/board.c src/moveGeneration/attacks.c src/random.c src/moveGeneration/moveGeneration.c  main.c
+SRC = src/board/bitBoard.c src/board/FEN-strings.c src/board/boardEncoding.c src/board/history.c src/board/pieceList.c src/board/board.c src/moveGeneration/attacks.c src/random.c src/moveGeneration/moveGeneration.c main.c
 
 # Add debug
 ifeq ($(MAKECMDGOALS),debug)
-	SRC +=test/board/testFEN-strings.c test/board/testBoardEncoding.c test/board/testPieceList.c test/board/testBoard.c test/moveGeneration/testAttacks.c test/moveGeneration/testMoveGeneration.c test/utils.c test/board/testHistory.c
-    CFLAGS += -g -O0
+    SRC += test/board/testFEN-strings.c test/board/testBoardEncoding.c test/board/testPieceList.c test/board/testBoard.c test/moveGeneration/testAttacks.c test/moveGeneration/testMoveGeneration.c test/utils.c test/board/testHistory.c
+    CFLAGS += -g -O0 -DDEBUGGING=1
 endif
 
 BUILD_DIR = build

@@ -27,6 +27,8 @@
 #define fromBoardCordsToBitIndex(row, col) ((col) + ROWS * (row))
 #define getLSBIndex(bitboard) ((bitboard) ? __builtin_ctzll(bitboard) : -1)
 
+#define DEBUGGING 0;
+
 typedef int BOOL;
 
 typedef struct piece {
