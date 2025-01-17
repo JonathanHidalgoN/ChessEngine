@@ -16,7 +16,7 @@ void putPiece(board *board, int square, int side, int piece) {
       board->zobristRandoms.pieceRandoms[square][side][piece];
 }
 
-void movePiece(board *board, int square, int side, int piece) {
-  removePiece(board, square, side, piece);
-  putPiece(board, square, side, piece);
+void movePiece(board *board, int from, int to, int side, int piece) {
+  removePiece(board, from, side, piece);
+  putPiece(board, to, side, piece);
 }
