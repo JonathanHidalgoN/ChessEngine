@@ -19,6 +19,26 @@
 #define NKEYSFORSIDES 2
 #define NKEYSFORPASSANT 17
 
+enum PASSANT_KEYS {
+  NO_PASSANT,
+  W1,
+  W2,
+  W3,
+  W4,
+  W5,
+  W6,
+  W7,
+  W8,
+  B1,
+  B2,
+  B3,
+  B4,
+  B5,
+  B6,
+  B7,
+  B8
+};
+
 typedef struct zobristRandoms {
   // uint64_t pieceRandoms[NKEYSFORPIECES];
   uint64_t pieceRandoms[NUMBEROFSQUARES][NUMBEROFCOLORS]
