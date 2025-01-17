@@ -28,3 +28,11 @@ void resetEnPassant(board *board) {
   board->gameState.zobristKey ^=
       board->zobristRandoms.passantRandoms[board->gameState.enPassantCode];
 }
+
+void changePlayingSide(board *board) {
+  board->gameState.zobristKey ^=
+      board->zobristRandoms.sidesRandoms[board->gameState.playingSide];
+  board->gameState.playingSide ^= 1;
+  board->gameState.zobristKey ^=
+      board->zobristRandoms.sidesRandoms[board->gameState.playingSide];
+}
