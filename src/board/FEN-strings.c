@@ -212,7 +212,6 @@ static void assingPiece(int *boardSquare, int color, int pieceType,
   (*boardSquare)++;
 }
 
-// TODO: ADD OTHER FIELDS TO FEN STRING AND TEST THIS
 void initBoardWithFenString(board *board, char *string, int stringLen) {
   fenString fenString;
   initFenString(string, stringLen, &fenString);
@@ -222,7 +221,16 @@ void initBoardWithFenString(board *board, char *string, int stringLen) {
     return;
   }
   initBitBoardListWithFenString(&board->bitBoardsList, &fenString);
-  board->gameState.playingSide = fenString.string[fenString.sideToMove];
+  board->gameState.playingSide = getSideFromFenString(&fenString);
+}
+
+COLOR getSideFromFenString(fenString *fenString) {
+  char side = fenString->string[fenString->sideToMove];
+  if (side == 'w') {
+    return WHITE;
+  } else {
+    return BLACK;
+  }
 }
 
 void initBitBoardListWithFenString(bitBoardsList *bbl, fenString *fenString) {

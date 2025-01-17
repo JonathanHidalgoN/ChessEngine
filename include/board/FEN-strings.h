@@ -46,4 +46,5 @@ int checkValidFenStringNumberVals(const char *string, int lowIndex,
 int checkValidFenString(const fenString *fenString);
 void initBitBoardListWithFenString(bitBoardsList *bbl, fenString *fenString);
 void initBoardWithFenString(board *board, char *string, int stringLen);
+COLOR getSideFromFenString(fenString *fenString);
 #endif // FEN_STRINGS
