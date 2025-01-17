@@ -37,5 +37,6 @@ typedef struct board {
 
 void removePiece(board *board, int square, int side, int piece);
 void putPiece(board *board, int square, int side, int piece);
+void movePiece(board *board, int square, int side, int piece);
 
 #endif
