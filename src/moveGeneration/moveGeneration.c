@@ -14,14 +14,6 @@ bitboard computePawnForwardMove(int bitIndex, int side) {
   return move;
 }
 
-bitboard computeSideBitBoard(int side, const bitBoardsList *board) {
-  // TODO: This should be cache and compute only when neccesary
-  bitboard result = 0ULL;
-  for (int i = 0; i < NUMBEROFDIFFERENTPIECES; i++)
-    result |= board->pieces[side][i];
-  return result;
-}
-
 piece findPieceByBitIndex(int bitIndex, const bitBoardsList *board) {
   // TODO: Union with something to represent not found
   struct piece newPiece;

@@ -32,4 +32,5 @@ void placePieceRepresentationIntoBoardString(bitboard bb, char *br,
   Print the bitBoardsList
  */
 void printChessBoard(bitBoardsList *bitBoardsList);
+bitboard computeSideBitBoard(int side, const bitBoardsList *board);
 #endif // !BITBOARD

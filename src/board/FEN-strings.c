@@ -212,6 +212,7 @@ static void assingPiece(int *boardSquare, int color, int pieceType,
   (*boardSquare)++;
 }
 
+// TODO: ADD OTHER FIELDS TO FEN STRING AND TEST THIS
 void initBoardWithFenString(board *board, char *string, int stringLen) {
   fenString fenString;
   initFenString(string, stringLen, &fenString);

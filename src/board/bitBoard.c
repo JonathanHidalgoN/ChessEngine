@@ -1,4 +1,5 @@
 #include "../../include/board/bitBoard.h"
+
 void printBitboard(bitboard bb) {
   int i, j;
   printf("\n");
@@ -99,6 +100,13 @@ void placePieceRepresentationIntoBoardString(bitboard bb, char *br,
       br[LASTBIT - i] = symbol;
     }
   }
+}
+
+bitboard computeSideBitBoard(int side, const bitBoardsList *board) {
+  bitboard result = 0ULL;
+  for (int i = 0; i < NUMBEROFDIFFERENTPIECES; i++)
+    result |= board->pieces[side][i];
+  return result;
 }
 
 void printChessBoard(bitBoardsList *bitBoardsList) {
