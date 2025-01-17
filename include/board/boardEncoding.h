@@ -20,7 +20,9 @@
 #define NKEYSFORPASSANT 17
 
 typedef struct zobristRandoms {
-  uint64_t pieceRandoms[NKEYSFORPIECES];
+  // uint64_t pieceRandoms[NKEYSFORPIECES];
+  uint64_t pieceRandoms[NUMBEROFSQUARES][NUMBEROFCOLORS]
+                       [NUMBEROFDIFFERENTPIECES];
   uint64_t castlingRandoms[NKEYSFORCASTLING];
   uint64_t sidesRandoms[NKEYSFORSIDES];
   uint64_t passantRandoms[NKEYSFORPASSANT];

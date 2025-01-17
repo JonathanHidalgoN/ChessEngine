@@ -11,12 +11,17 @@ static void fillRandomArray(uint64_t *array, int size, uint64_t *state) {
 }
 
 void fillZobristRandoms(zobristRandoms *randoms) {
-  fillRandomArray(randoms->pieceRandoms, NKEYSFORPIECES, &ZOBRIST_RANDOM_STATE);
   fillRandomArray(randoms->castlingRandoms, NKEYSFORCASTLING,
                   &ZOBRIST_RANDOM_STATE);
   fillRandomArray(randoms->sidesRandoms, NKEYSFORSIDES, &ZOBRIST_RANDOM_STATE);
   fillRandomArray(randoms->passantRandoms, NKEYSFORPASSANT,
                   &ZOBRIST_RANDOM_STATE);
+  for (int i = 0; i < NUMBEROFSQUARES; i++) {
+    for (int j = 0; j < NUMBEROFCOLORS; j++) {
+      fillRandomArray(randoms->pieceRandoms[i][j], NUMBEROFDIFFERENTPIECES,
+                      &ZOBRIST_RANDOM_STATE);
+    }
+  }
 }
 
 uint64_t computeZobristFromBoard(zobristRandoms *randoms,
@@ -30,8 +35,7 @@ uint64_t computeZobristFromBoard(zobristRandoms *randoms,
       while (bb) {
         int k = __builtin_ctzll(bb);
         bb &= bb - 1;
-        int index = k + NUMBEROFSQUARES * (j + NUMBEROFDIFFERENTPIECES * i);
-        key ^= randoms->pieceRandoms[index];
+        key ^= randoms->pieceRandoms[k][i][j];
       }
     }
   }
