@@ -19,7 +19,7 @@
 #define NKEYSFORSIDES 2
 #define NKEYSFORPASSANT 17
 
-enum PASSANT_KEYS {
+typedef enum {
   NO_PASSANT,
   W1,
   W2,
@@ -37,9 +37,9 @@ enum PASSANT_KEYS {
   B6,
   B7,
   B8
-};
+} PASSANT_KEYS;
 
-enum CASTLING_KEYS {
+typedef enum {
   NO_CASTLING,
   WHITE_KINGSIDE,
   WHITE_QUEENSIDE,
@@ -54,7 +54,7 @@ enum CASTLING_KEYS {
   WHITE_BOTH_BLACK_KINGSIDE,
   WHITE_BOTH_BLACK_QUEENSIDE,
   BOTH_ALL
-};
+} CASTLING_KEYS;
 
 typedef struct zobristRandoms {
   uint64_t pieceRandoms[NUMBEROFSQUARES][NUMBEROFCOLORS]
