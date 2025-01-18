@@ -199,6 +199,21 @@ int testInitBitBoardWithFenStringC3() {
   return valid;
 }
 
+BOOL testGetSideFromFenString() {
+  const char *FIELD_NAME = "SIDE";
+  const char *FUNCTION_NAME = "getSideFromFenString";
+  COLOR expectedSide = WHITE;
+  BOOL expectedToFail = FALSE;
+  int stringLen = 32;
+  char *string = "p6P/8/8/8/8/8/8/R6r w KQkq 1 5 8";
+  fenString fenString;
+  initFenString(string, stringLen, &fenString);
+  COLOR result = getSideFromFenString(&fenString);
+  BOOL c0 = compareIntNumbers(expectedSide, result, FUNCTION_NAME, FIELD_NAME,
+                              expectedToFail);
+  return c0;
+}
+
 int testInitBitBoardWithFenString() {
   int c0 = testInitBitBoardWithFenStringC0();
   int c1 = testInitBitBoardWithFenStringC1();
@@ -211,6 +226,7 @@ void testFenString() {
   int resultTestInitFenString = testInitFenString();
   int resultCheckValidFenString = testCheckValidFenString();
   int resultTestIniBitBoardWithFenString = testInitBitBoardWithFenString();
+  int resultTestGetSideFromFenString = testGetSideFromFenString();
   if (resultTestInitFenString && resultCheckValidFenString &&
       resultTestIniBitBoardWithFenString) {
     printf(GREEN "Tested FEN string successfully\n" RESET);
