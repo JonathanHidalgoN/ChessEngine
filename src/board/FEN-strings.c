@@ -379,6 +379,4 @@ void initBitBoardListWithFenString(bitBoardsList *bbl, fenString *fenString) {
       break;
     }
   }
-  printf("Ended bitBoardsList init with fen string, square count is %d\n",
-         boardSquare);
 }
