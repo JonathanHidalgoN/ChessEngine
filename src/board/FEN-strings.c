@@ -222,6 +222,7 @@ void initBoardWithFenString(board *board, char *string, int stringLen) {
   }
   initBitBoardListWithFenString(&board->bitBoardsList, &fenString);
   board->gameState.playingSide = getSideFromFenString(&fenString);
+  board->gameState.castlingCode = getCastlingCodeFromFenString(&fenString);
 }
 
 COLOR getSideFromFenString(fenString *fenString) {
@@ -230,6 +231,64 @@ COLOR getSideFromFenString(fenString *fenString) {
     return WHITE;
   } else {
     return BLACK;
+  }
+}
+
+CASTLING_KEYS getCastlingCodeFromFenString(const fenString *fenString) {
+  BOOL whiteKingside = FALSE;
+  BOOL whiteQueenside = FALSE;
+  BOOL blackKingside = FALSE;
+  BOOL blackQueenside = FALSE;
+
+  for (int i = fenString->castling.first; i <= fenString->castling.second;
+       i++) {
+    switch (fenString->string[i]) {
+    case 'K':
+      whiteKingside = TRUE;
+      break;
+    case 'Q':
+      whiteQueenside = TRUE;
+      break;
+    case 'k':
+      blackKingside = TRUE;
+      break;
+    case 'q':
+      blackQueenside = TRUE;
+      break;
+    }
+  }
+
+  if (whiteKingside && whiteQueenside && blackKingside && blackQueenside) {
+    return BOTH_ALL;
+  } else if (whiteKingside && whiteQueenside && blackKingside) {
+    return WHITE_BOTH_BLACK_KINGSIDE;
+  } else if (whiteKingside && whiteQueenside && blackQueenside) {
+    return WHITE_BOTH_BLACK_KINGSIDE;
+  } else if (whiteKingside && whiteQueenside && blackKingside &&
+             !blackQueenside) {
+    return WHITE_BOTH_BLACK_QUEENSIDE;
+  } else if (whiteKingside && whiteQueenside) {
+    return WHITE_BOTH;
+  } else if (blackKingside && blackQueenside) {
+    return BLACK_BOTH;
+  } else if (whiteKingside && blackKingside) {
+    return WHITE_KINGSIDE_BLACK_KINGSIDE;
+  } else if (whiteKingside && blackQueenside) {
+    return WHITE_KINGSIDE_BLACK_QUEENSIDE;
+  } else if (whiteQueenside && blackKingside) {
+    return WHITE_QUEENSIDE_BLACK_KINGSIDE;
+  } else if (whiteQueenside && blackQueenside) {
+    return WHITE_QUEENSIDE_BLACK_QUEENSIDE;
+  } else if (whiteKingside) {
+    return WHITE_KINGSIDE;
+  } else if (whiteQueenside) {
+    return WHITE_QUEENSIDE;
+  } else if (blackKingside) {
+    return BLACK_KINGSIDE;
+  } else if (blackQueenside) {
+    return BLACK_QUEENSIDE;
+  } else {
+    return NO_CASTLING;
   }
 }
 
