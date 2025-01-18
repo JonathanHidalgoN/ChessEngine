@@ -48,4 +48,6 @@ void initBitBoardListWithFenString(bitBoardsList *bbl, fenString *fenString);
 void initBoardWithFenString(board *board, char *string, int stringLen);
 COLOR getSideFromFenString(fenString *fenString);
 CASTLING_KEYS getCastlingCodeFromFenString(const fenString *fenString);
+int getHalfMovesFromFenString(const fenString *fenString);
+int getFullMovesFromFenString(const fenString *fenString);
 #endif // FEN_STRINGS

@@ -225,6 +225,8 @@ void initBoardWithFenString(board *board, char *string, int stringLen) {
   initBitBoardListWithFenString(&board->bitBoardsList, &fenString);
   board->gameState.playingSide = getSideFromFenString(&fenString);
   board->gameState.castlingCode = getCastlingCodeFromFenString(&fenString);
+  board->gameState.halfMoveCounter = getHalfMovesFromFenString(&fenString);
+  board->gameState.fullMoveCounter = getFullMovesFromFenString(&fenString);
 }
 
 static int parseIntFromString(const char *string, int from, int to) {
@@ -244,6 +246,16 @@ PASSANT_KEYS getPassantCodeFromFenString(const fenString *fenString) {
   // AS LONG AS THE PASSANT_KEYS ENUM IS IN ORDER!
   return parseIntFromString(fenString->string, fenString->passant.first,
                             fenString->passant.second);
+}
+
+int getHalfMovesFromFenString(const fenString *fenString) {
+  return parseIntFromString(fenString->string, fenString->halfMove.first,
+                            fenString->halfMove.second);
+}
+
+int getFullMovesFromFenString(const fenString *fenString) {
+  return parseIntFromString(fenString->string, fenString->fullMove.first,
+                            fenString->fullMove.second);
 }
 
 COLOR getSideFromFenString(fenString *fenString) {
