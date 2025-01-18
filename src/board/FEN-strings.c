@@ -235,6 +235,17 @@ static int parseIntFromString(const char *string, int from, int to) {
   return atoi(subString);
 }
 
+PASSANT_KEYS getPassantCodeFromFenString(const fenString *fenString) {
+  if (fenString->string[fenString->passant.first] == FEN_STRING_NO_VALUE) {
+    return NO_PASSANT;
+  }
+  // NOTE: Here we use the fact that in the FEN string passant section
+  // 1 means that the white pawn at the H column can passant THIS WILL ONLY WORK
+  // AS LONG AS THE PASSANT_KEYS ENUM IS IN ORDER!
+  return parseIntFromString(fenString->string, fenString->passant.first,
+                            fenString->passant.second);
+}
+
 COLOR getSideFromFenString(fenString *fenString) {
   char side = fenString->string[fenString->sideToMove];
   if (side == 'w') {
