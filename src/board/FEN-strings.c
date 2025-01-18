@@ -3,6 +3,7 @@
 #include <string.h>
 // TODO : When testing for invalid fen string the message is print, maybe move
 // it because when test are run everything is fine but still print to console
+// TODO : CHANGE ALL STRING ITERATION TO USE THE STRING TERMINATION?
 // NOTE: I dont like the fact that we are first checking the fen string to see
 // it is valid and then we are again checking it to parse it to a game state, I
 // wont refactor this for now because it is not performance critial but the work
@@ -220,9 +221,18 @@ void initBoardWithFenString(board *board, char *string, int stringLen) {
     printf("invalid FEN string \n");
     return;
   }
+  // TODO : CHANGE ZOOBRIST KEY
   initBitBoardListWithFenString(&board->bitBoardsList, &fenString);
   board->gameState.playingSide = getSideFromFenString(&fenString);
   board->gameState.castlingCode = getCastlingCodeFromFenString(&fenString);
+}
+
+static int parseIntFromString(const char *string, int from, int to) {
+  char subString[to - from + 1];
+  for (int i = from, j = 0; i <= to; i++, j++) {
+    subString[j] = string[i];
+  }
+  return atoi(subString);
 }
 
 COLOR getSideFromFenString(fenString *fenString) {
