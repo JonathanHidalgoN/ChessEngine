@@ -2,14 +2,15 @@
 #define GAME_STATE
 
 #include "bitBoard.h"
+#include "boardEncoding.h"
 #include "defs.h"
 #include "pieceList.h"
 
 typedef struct gameState {
-  int playingSide;
-  int castlingCode;
+  COLOR playingSide;
+  CASTLING_KEYS castlingCode;
   int halfMoveCounter;
-  int enPassantCode;
+  PASSANT_KEYS enPassantCode;
   int fullMoveCounter;
   uint64_t zobristKey;
   int phaseValue;
