@@ -105,6 +105,24 @@ BOOL compareFenStrings(const fenString *functionResult,
   return TRUE;
 }
 
+BOOL compareIntNumbers(int expected, int result, const char *functionName,
+                       const char *fieldName, BOOL expectedToFail) {
+  if (expected != result && !expectedToFail) {
+    printf(
+        RED
+        "Error in function %s in %s equality, expected %d, result %d\n" RESET,
+        functionName, fieldName, expected, result);
+    return 0;
+  } else if (expected == result && expectedToFail) {
+    printf(
+        RED
+        "Error in function %s in %s inequality, expected %d, result %d\n" RESET,
+        functionName, fieldName, expected, result);
+    return 0;
+  }
+  return 1;
+}
+
 piece createPiece(int bitIndex, int side, int type) {
   piece result = {side, type, bitIndex};
   return result;

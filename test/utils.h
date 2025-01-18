@@ -32,4 +32,6 @@ BOOL compareFenStrings(const fenString *functionResult,
 BOOL compareBitBoardLists(const bitBoardsList *bbl1, const bitBoardsList *bbl2,
                           char testNumber, char *functionName,
                           int expectedToFail);
+BOOL compareIntNumbers(int expected, int result, const char *functionName,
+                       const char *fieldName, BOOL expectedToFail);
 #endif
