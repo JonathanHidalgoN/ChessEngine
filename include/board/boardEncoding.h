@@ -63,8 +63,9 @@ typedef struct zobristRandoms {
 } zobristRandoms;
 
 void fillZobristRandoms(zobristRandoms *randoms);
-uint64_t computeZobristFromBoard(zobristRandoms *randoms,
-                                 bitBoardsList *bitBoardsList, int side,
-                                 int castlingCode, int passantCode);
+uint64_t computeZobristFromState(zobristRandoms *randoms,
+                                 bitBoardsList *bitBoardsList, COLOR side,
+                                 CASTLING_KEYS castlingCode,
+                                 PASSANT_KEYS passantCode);
 
 #endif // !BOARD_ENCODING_H
