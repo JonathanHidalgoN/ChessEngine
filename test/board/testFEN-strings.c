@@ -255,6 +255,77 @@ BOOL testGetSideFromFenString() {
   return c0 && c1 && c2 && c3 && c4 && c5;
 }
 
+int testGetCastlingCodeFromFenString() {
+  const char *FIELD_NAME = "castling code";
+  const char *FUNCTION_NAME = "getCastlingCodeFromFenString";
+  CASTLING_KEYS expectedCastlingKey = BOTH_ALL;
+  BOOL expectedToFail = FALSE;
+  int stringLen = 32;
+  char *string = "p6P/8/8/8/8/8/8/R6r w KQkq 1 5 8";
+  fenString fenString;
+  initFenString(string, stringLen, &fenString);
+  CASTLING_KEYS result = getCastlingCodeFromFenString(&fenString);
+  BOOL c0 = compareIntNumbers(expectedCastlingKey, result, FUNCTION_NAME,
+                              FIELD_NAME, expectedToFail);
+  expectedCastlingKey = BOTH_ALL;
+  expectedToFail = FALSE;
+  stringLen = 35;
+  string = "p6P/p7/p7/p8/8/8/8/R6r w KQkq 1 5 8";
+  initFenString(string, stringLen, &fenString);
+  result = getCastlingCodeFromFenString(&fenString);
+  BOOL c1 = compareIntNumbers(expectedCastlingKey, result, FUNCTION_NAME,
+                              FIELD_NAME, expectedToFail);
+  expectedCastlingKey = NO_CASTLING;
+  expectedToFail = FALSE;
+  stringLen = 35;
+  string = "p6P/p7/p7/p8/8/8/8/R6r w ---- 1 5 8";
+  initFenString(string, stringLen, &fenString);
+  result = getCastlingCodeFromFenString(&fenString);
+  BOOL c2 = compareIntNumbers(expectedCastlingKey, result, FUNCTION_NAME,
+                              FIELD_NAME, expectedToFail);
+  expectedCastlingKey = WHITE_KINGSIDE;
+  expectedToFail = FALSE;
+  stringLen = 35;
+  string = "p6P/p7/p7/p8/8/8/8/R6r w K--- 1 5 8";
+  initFenString(string, stringLen, &fenString);
+  result = getCastlingCodeFromFenString(&fenString);
+  BOOL c3 = compareIntNumbers(expectedCastlingKey, result, FUNCTION_NAME,
+                              FIELD_NAME, expectedToFail);
+  expectedCastlingKey = WHITE_BOTH_BLACK_QUEENSIDE;
+  expectedToFail = FALSE;
+  stringLen = 35;
+  string = "p6P/p7/p7/p8/8/8/8/R6r w KQ-q 1 5 8";
+  initFenString(string, stringLen, &fenString);
+  result = getCastlingCodeFromFenString(&fenString);
+  BOOL c4 = compareIntNumbers(expectedCastlingKey, result, FUNCTION_NAME,
+                              FIELD_NAME, expectedToFail);
+  expectedCastlingKey = BLACK_BOTH;
+  expectedToFail = FALSE;
+  stringLen = 35;
+  string = "p6P/p7/p7/p8/8/8/8/R6r w --kq 1 5 8";
+  initFenString(string, stringLen, &fenString);
+  result = getCastlingCodeFromFenString(&fenString);
+  BOOL c5 = compareIntNumbers(expectedCastlingKey, result, FUNCTION_NAME,
+                              FIELD_NAME, expectedToFail);
+  expectedCastlingKey = BLACK_BOTH;
+  expectedToFail = TRUE;
+  stringLen = 35;
+  string = "p6P/p7/p7/p8/8/8/8/R6r w KQ-- 1 5 8";
+  initFenString(string, stringLen, &fenString);
+  result = getCastlingCodeFromFenString(&fenString);
+  BOOL c6 = compareIntNumbers(expectedCastlingKey, result, FUNCTION_NAME,
+                              FIELD_NAME, expectedToFail);
+  expectedCastlingKey = BLACK_BOTH;
+  expectedToFail = TRUE;
+  stringLen = 35;
+  string = "p6P/p7/p7/p8/8/8/8/R6r b KQkq 1 5 8";
+  initFenString(string, stringLen, &fenString);
+  result = getCastlingCodeFromFenString(&fenString);
+  BOOL c7 = compareIntNumbers(expectedCastlingKey, result, FUNCTION_NAME,
+                              FIELD_NAME, expectedToFail);
+  return c0 && c1 && c2 && c4 && c3 && c5 && c6 && c7;
+}
+
 int testInitBitBoardWithFenString() {
   int c0 = testInitBitBoardWithFenStringC0();
   int c1 = testInitBitBoardWithFenStringC1();
@@ -268,8 +339,10 @@ void testFenString() {
   int resultCheckValidFenString = testCheckValidFenString();
   int resultTestIniBitBoardWithFenString = testInitBitBoardWithFenString();
   int resultTestGetSideFromFenString = testGetSideFromFenString();
+  int resultTestGetCastlingCode = testGetCastlingCodeFromFenString();
   if (resultTestInitFenString && resultCheckValidFenString &&
-      resultTestIniBitBoardWithFenString && resultTestGetSideFromFenString) {
+      resultTestIniBitBoardWithFenString && resultTestGetSideFromFenString &&
+      resultTestGetCastlingCode) {
     printf(GREEN "Tested FEN string successfully\n" RESET);
   }
 }
