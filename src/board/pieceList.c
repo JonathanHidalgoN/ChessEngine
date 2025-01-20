@@ -20,12 +20,3 @@ void cleanPieceList(pieceList *pieceList) {
     pieceList->pieces[i] = EMPTY;
   }
 }
-
-void printPieceList(pieceList *pieceList) {
-  // TODO: add format
-  for (int i = NUMBEROFSQUARES - 1; i >= 0; i--) {
-    int pieceType = pieceList->pieces[i];
-    printf("%d ", pieceType);
-  }
-  printf("\n");
-}

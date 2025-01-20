@@ -49,4 +49,5 @@ BOOL areZobristRandomsEqual(const zobristRandoms *expected,
 BOOL compareZobristRandoms(const zobristRandoms *expected,
                            const zobristRandoms *result, char testNumber,
                            const char *functionName, BOOL expectedToFail);
+void printPieceList(const pieceList *pieceList);
 #endif

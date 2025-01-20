@@ -302,3 +302,24 @@ BOOL areFenStringsEqual(const fenString *a, const fenString *b) {
 
   return 1;
 }
+
+// BOOL comparePieceList(const pieceList *expected, const pieceList *result,
+//                       char testNumber, const char *functionName,
+//                       BOOL expectedToFail) {
+//
+//   BOOL areEqual = arePieceListEqual(expected, result);
+//   if (!areEqual && !expectedToFail) {
+//     printf(RED "Error in function %s, expected equality, test case %c. "
+//                "Expected result:",
+//            functionName, testNumber);
+//   }
+// }
+//
+
+void printPieceList(const pieceList *pieceList) {
+  for (int i = NUMBEROFSQUARES - 1; i >= 0; i--) {
+    int pieceType = pieceList->pieces[i];
+    printf("%d ", pieceType);
+  }
+  printf("\n");
+}
