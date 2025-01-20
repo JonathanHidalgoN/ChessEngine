@@ -235,7 +235,7 @@ void printFenString(const fenString *fen) {
   printf("}\n");
 }
 
-BOOL compareIntPair(const intPair *a, const intPair *b) {
+BOOL areIntPairEqual(const intPair *a, const intPair *b) {
   return (a->first == b->first && a->second == b->second);
 }
 
@@ -252,7 +252,7 @@ BOOL areFenStringsEqual(const fenString *a, const fenString *b) {
     return 0;
   }
 
-  if (!compareIntPair(&a->piecesPositions, &b->piecesPositions)) {
+  if (!areIntPairEqual(&a->piecesPositions, &b->piecesPositions)) {
     return 0;
   }
 
@@ -260,19 +260,19 @@ BOOL areFenStringsEqual(const fenString *a, const fenString *b) {
     return 0;
   }
 
-  if (!compareIntPair(&a->castling, &b->castling)) {
+  if (!areIntPairEqual(&a->castling, &b->castling)) {
     return 0;
   }
 
-  if (!compareIntPair(&a->passant, &b->passant)) {
+  if (!areIntPairEqual(&a->passant, &b->passant)) {
     return 0;
   }
 
-  if (!compareIntPair(&a->halfMove, &b->halfMove)) {
+  if (!areIntPairEqual(&a->halfMove, &b->halfMove)) {
     return 0;
   }
 
-  if (!compareIntPair(&a->fullMove, &b->fullMove)) {
+  if (!areIntPairEqual(&a->fullMove, &b->fullMove)) {
     return 0;
   }
 

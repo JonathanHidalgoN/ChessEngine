@@ -25,7 +25,7 @@ gameState createGameState(int playingSide, int castlingCode,
 BOOL arePieceListEqual(const pieceList *pl1, const pieceList *pl2);
 void printIntPair(const intPair *pair, const char *name);
 void printFenString(const fenString *fen);
-BOOL compareIntPair(const intPair *a, const intPair *b);
+BOOL areIntPairEqual(const intPair *a, const intPair *b);
 BOOL areFenStringsEqual(const fenString *a, const fenString *b);
 BOOL compareFenStrings(const fenString *functionResult,
                        const fenString *expectedResult, char testNumber);
