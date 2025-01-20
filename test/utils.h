@@ -34,4 +34,17 @@ BOOL compareBitBoardLists(const bitBoardsList *bbl1, const bitBoardsList *bbl2,
                           int expectedToFail);
 BOOL compareIntNumbers(int expected, int result, const char *functionName,
                        const char *fieldName, BOOL expectedToFail);
+BOOL areBoardsEqual(const board *expected, const board *result);
+BOOL comparePieceList(const pieceList *expected, const pieceList *result,
+                      char testNumber, const char *functionName,
+                      BOOL expectedToFail);
+BOOL areHistoryEqual(const history *expected, const history *result);
+BOOL compareHistory(const history *expected, const history *result,
+                    char testNumber, const char *functionName,
+                    BOOL expectedToFail);
+BOOL areZobristRandomsEqual(const zobristRandoms *expected,
+                            const zobristRandoms *result);
+BOOL compareZobristRandoms(const zobristRandoms *expected,
+                           const zobristRandoms *result, char testNumber,
+                           const char *functionName, BOOL expectedToFail);
 #endif
