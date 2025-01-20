@@ -52,14 +52,14 @@ void changeCastling(board *board, int castlingCode) {
 // }
 
 void cleanGameState(board *board) {
-  board->gameState.zobristKey ^=
-      board->zobristRandoms.sidesRandoms[board->gameState.playingSide];
   board->gameState.playingSide = WHITE;
-  board->gameState.zobristKey ^=
-      board->zobristRandoms.sidesRandoms[board->gameState.playingSide];
-  changeCastling(board, NO_CASTLING);
-  changePassant(board, NO_PASSANT);
+  board->gameState.castlingCode = NO_CASTLING;
   board->gameState.halfMoveCounter = 0;
   board->gameState.fullMoveCounter = 0;
+  board->gameState.enPassantCode = NO_PASSANT;
   board->gameState.phaseValue = 0;
+  board->gameState.zobristKey = computeZobristFromState(
+      &board->zobristRandoms, &board->bitBoardsList,
+      board->gameState.playingSide, board->gameState.castlingCode,
+      board->gameState.enPassantCode);
 }
