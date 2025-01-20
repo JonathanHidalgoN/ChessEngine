@@ -50,4 +50,6 @@ BOOL compareZobristRandoms(const zobristRandoms *expected,
                            const zobristRandoms *result, char testNumber,
                            const char *functionName, BOOL expectedToFail);
 void printPieceList(const pieceList *pieceList);
+BOOL areInt64ListEqual(const uint64_t *l1, const uint64_t *l2, int len,
+                       int *idx);
 #endif

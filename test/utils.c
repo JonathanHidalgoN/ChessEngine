@@ -1,5 +1,6 @@
 #include "utils.h"
 #include "test.h"
+#include <stdint.h>
 #include <stdio.h>
 
 void showDiff(bitboard expected, bitboard result) {
@@ -389,4 +390,20 @@ BOOL compareHistory(const history *expected, const history *result,
     return FALSE;
   }
   return TRUE;
+}
+
+BOOL areInt64ListEqual(const uint64_t *l1, const uint64_t *l2, int len,
+                       int *idx) {
+  for (int i = 0; i < len; i++) {
+    if (l1[i] != l2[i]) {
+      *idx = i;
+      return FALSE;
+    }
+  }
+  return TRUE;
+}
+
+BOOL areZobristRandomsEqual(const zobristRandoms *expected,
+                            const zobristRandoms *result) {
+  return FALSE;
 }
