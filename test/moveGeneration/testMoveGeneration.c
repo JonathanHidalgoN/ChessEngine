@@ -3,6 +3,7 @@
 
 int testComputeSideBitBoard() {
   int side = WHITE;
+  BOOL expectedToFail = FALSE;
   bitboard expectedResult = 0ULL;
   bitBoardsList board;
   char *name = "computeSideBitBoard";
@@ -10,11 +11,11 @@ int testComputeSideBitBoard() {
 
   // Board with no pieces should give 0 for white and black
   bitboard result0 = computeSideBitBoard(side, &board);
-  int c0 = compareBitBoard(expectedResult, result0, '0', name);
+  int c0 = compareBitBoard(expectedResult, result0, '0', name, expectedToFail);
 
   side = BLACK;
   bitboard result1 = computeSideBitBoard(side, &board);
-  int c1 = compareBitBoard(expectedResult, result1, '1', name);
+  int c1 = compareBitBoard(expectedResult, result1, '1', name, expectedToFail);
 
   // Test with pieces
   board.pieces[BLACK][PAWN] = BIT(0);
@@ -25,25 +26,25 @@ int testComputeSideBitBoard() {
   // White should return 0
   side = WHITE;
   bitboard result2 = computeSideBitBoard(side, &board);
-  int c2 = compareBitBoard(expectedResult, result2, '2', name);
+  int c2 = compareBitBoard(expectedResult, result2, '2', name, expectedToFail);
 
   // BLACK should not return 0
   side = BLACK;
   expectedResult = BIT(0) + BIT(1) + BIT(2) + BIT(3);
   bitboard result3 = computeSideBitBoard(side, &board);
-  int c3 = compareBitBoard(expectedResult, result3, '3', name);
+  int c3 = compareBitBoard(expectedResult, result3, '3', name, expectedToFail);
 
   side = WHITE;
   board.pieces[WHITE][KNIGHT] = BIT(10) + BIT(11);
   board.pieces[WHITE][KING] = BIT(44);
   expectedResult = BIT(10) + BIT(11) + BIT(44);
   bitboard result4 = computeSideBitBoard(side, &board);
-  int c4 = compareBitBoard(expectedResult, result4, '4', name);
+  int c4 = compareBitBoard(expectedResult, result4, '4', name, expectedToFail);
 
   board.pieces[WHITE][KNIGHT] = 0ULL;
   expectedResult = BIT(44);
   bitboard result5 = computeSideBitBoard(side, &board);
-  int c5 = compareBitBoard(expectedResult, result5, '5', name);
+  int c5 = compareBitBoard(expectedResult, result5, '5', name, expectedToFail);
 
   return c1 && c0 && c2 && c3 && c4 && c5;
 }
@@ -51,6 +52,8 @@ int testComputeSideBitBoard() {
 int testFindPieceByIndex() {
   bitBoardsList board;
   initBitBoardsListStandarChess(&board);
+  BOOL expectedToFail = FALSE;
+  const char *functionName = "findPieceByBitIndex";
   piece functionResult, expectedResult;
   // Test for Pawns(8 because we have 8 pawns, 48 is bitIndex where black pawns
   // start)
@@ -60,7 +63,8 @@ int testFindPieceByIndex() {
   for (int i = 0, j = 8 + i; i < 8; i++) {
     expectedResult.bitIndex = j;
     functionResult = findPieceByBitIndex(expectedResult.bitIndex, &board);
-    c0 = c0 && comparePieces(&expectedResult, &functionResult, '0');
+    c0 = c0 && comparePieces(&expectedResult, &functionResult, '0',
+                             functionName, expectedToFail);
   }
   expectedResult.type = PAWN;
   expectedResult.side = BLACK;
@@ -68,82 +72,95 @@ int testFindPieceByIndex() {
   for (int i = 0, j = i + 48; i < 8; i++) {
     expectedResult.bitIndex = j;
     functionResult = findPieceByBitIndex(expectedResult.bitIndex, &board);
-    c1 = c1 && comparePieces(&expectedResult, &functionResult, '1');
+    c1 = c1 && comparePieces(&expectedResult, &functionResult, '1',
+                             functionName, expectedToFail);
   }
   // Rooks tests
   expectedResult.type = ROOK;
   expectedResult.side = WHITE;
   expectedResult.bitIndex = 7;
   functionResult = findPieceByBitIndex(expectedResult.bitIndex, &board);
-  int c2 = comparePieces(&expectedResult, &functionResult, '2');
+  int c2 = comparePieces(&expectedResult, &functionResult, '2', functionName,
+                         expectedToFail);
   expectedResult.type = ROOK;
   expectedResult.side = BLACK;
   expectedResult.bitIndex = 56;
   functionResult = findPieceByBitIndex(expectedResult.bitIndex, &board);
-  int c3 = comparePieces(&expectedResult, &functionResult, '3');
+  int c3 = comparePieces(&expectedResult, &functionResult, '3', functionName,
+                         expectedToFail);
   expectedResult.type = ROOK;
   expectedResult.side = WHITE;
   expectedResult.bitIndex = 0;
   functionResult = findPieceByBitIndex(expectedResult.bitIndex, &board);
-  int c4 = comparePieces(&expectedResult, &functionResult, '4');
+  int c4 = comparePieces(&expectedResult, &functionResult, '4', functionName,
+                         expectedToFail);
 
   expectedResult.type = ROOK;
   expectedResult.side = BLACK;
   expectedResult.bitIndex = 63;
   functionResult = findPieceByBitIndex(expectedResult.bitIndex, &board);
-  int c5 = comparePieces(&expectedResult, &functionResult, '5');
+  int c5 = comparePieces(&expectedResult, &functionResult, '5', functionName,
+                         expectedToFail);
 
   // Knights tests
   expectedResult.type = KNIGHT;
   expectedResult.side = WHITE;
   expectedResult.bitIndex = 1;
   functionResult = findPieceByBitIndex(expectedResult.bitIndex, &board);
-  int c6 = comparePieces(&expectedResult, &functionResult, '6');
+  int c6 = comparePieces(&expectedResult, &functionResult, '6', functionName,
+                         expectedToFail);
 
   expectedResult.type = KNIGHT;
   expectedResult.side = BLACK;
   expectedResult.bitIndex = 62;
   functionResult = findPieceByBitIndex(expectedResult.bitIndex, &board);
-  int c7 = comparePieces(&expectedResult, &functionResult, '7');
+  int c7 = comparePieces(&expectedResult, &functionResult, '7', functionName,
+                         expectedToFail);
 
   // Bishops tests
   expectedResult.type = BISHOP;
   expectedResult.side = WHITE;
   expectedResult.bitIndex = 2;
   functionResult = findPieceByBitIndex(expectedResult.bitIndex, &board);
-  int c8 = comparePieces(&expectedResult, &functionResult, '8');
+  int c8 = comparePieces(&expectedResult, &functionResult, '8', functionName,
+                         expectedToFail);
 
   expectedResult.type = BISHOP;
   expectedResult.side = BLACK;
   expectedResult.bitIndex = 61;
   functionResult = findPieceByBitIndex(expectedResult.bitIndex, &board);
-  int c9 = comparePieces(&expectedResult, &functionResult, '9');
+  int c9 = comparePieces(&expectedResult, &functionResult, '9', functionName,
+                         expectedToFail);
 
   // Queens tests
   expectedResult.type = QUEEN;
   expectedResult.side = WHITE;
   expectedResult.bitIndex = 3;
   functionResult = findPieceByBitIndex(expectedResult.bitIndex, &board);
-  int c10 = comparePieces(&expectedResult, &functionResult, 'a');
+  int c10 = comparePieces(&expectedResult, &functionResult, 'a', functionName,
+                          expectedToFail);
 
   expectedResult.type = QUEEN;
   expectedResult.side = BLACK;
   expectedResult.bitIndex = 59;
   functionResult = findPieceByBitIndex(expectedResult.bitIndex, &board);
-  int c11 = comparePieces(&expectedResult, &functionResult, 'b');
+  int c11 = comparePieces(&expectedResult, &functionResult, 'b', functionName,
+                          expectedToFail);
 
   // Kings tests
   expectedResult.type = KING;
   expectedResult.side = WHITE;
   expectedResult.bitIndex = 4;
   functionResult = findPieceByBitIndex(expectedResult.bitIndex, &board);
-  int c12 = comparePieces(&expectedResult, &functionResult, 'c');
+  int c12 = comparePieces(&expectedResult, &functionResult, 'c', functionName,
+                          expectedToFail);
 
   expectedResult.type = KING;
   expectedResult.side = BLACK;
   expectedResult.bitIndex = 60;
   functionResult = findPieceByBitIndex(expectedResult.bitIndex, &board);
-  int c13 = comparePieces(&expectedResult, &functionResult, 'd');
+  int c13 = comparePieces(&expectedResult, &functionResult, 'd', functionName,
+                          expectedToFail);
   return c0 && c1 && c2 && c3 && c4 && c5 && c6 && c7 && c8 && c9 && c10 &&
          c11 && c12 && c13;
 }
@@ -152,6 +169,7 @@ int testPieceLegalMoves(piece *piece, bitboard expectedResult,
                         bitBoardsList *board, char testNumber) {
   bitboard result;
   char *functionName;
+  BOOL expectedToFail = FALSE;
   result = computeLegalMoves(piece->bitIndex, board);
   switch (piece->type) {
   case PAWN:
@@ -172,7 +190,8 @@ int testPieceLegalMoves(piece *piece, bitboard expectedResult,
   default:
     break;
   }
-  return compareBitBoard(expectedResult, result, testNumber, functionName);
+  return compareBitBoard(expectedResult, result, testNumber, functionName,
+                         expectedToFail);
 }
 
 static int testPawnLegalMove(piece *testPawn, bitBoardsList *blockers,
