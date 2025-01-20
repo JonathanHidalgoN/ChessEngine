@@ -405,5 +405,24 @@ BOOL areInt64ListEqual(const uint64_t *l1, const uint64_t *l2, int len,
 
 BOOL areZobristRandomsEqual(const zobristRandoms *expected,
                             const zobristRandoms *result) {
-  return FALSE;
+  int idx = -1;
+  BOOL eq1, eq2, eq3, eq4;
+  eq1 = areInt64ListEqual(expected->castlingRandoms, result->castlingRandoms,
+                          NKEYSFORCASTLING, &idx);
+  eq2 = areInt64ListEqual(expected->sidesRandoms, result->sidesRandoms,
+                          NUMBEROFCOLORS, &idx);
+  eq3 = areInt64ListEqual(expected->passantRandoms, result->passantRandoms,
+                          NKEYSFORPASSANT, &idx);
+  eq4 = TRUE;
+  for (int i = 0; i < NUMBEROFSQUARES; i++) {
+    for (int j = 0; j < NUMBEROFCOLORS; j++) {
+      eq4 = eq4 && areInt64ListEqual(expected->pieceRandoms[i][j],
+                                     result->pieceRandoms[i][j],
+                                     NUMBEROFDIFFERENTPIECES, &idx);
+      if (!eq4)
+        return FALSE;
+    }
+  }
+
+  return eq1 && eq2 && eq3 && eq4;
 }
