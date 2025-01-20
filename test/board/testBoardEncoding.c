@@ -11,10 +11,10 @@ int testComputeZobristC1(zobristRandoms *randoms) {
   int passantCode = 0;
   bbl.pieces[WHITE][PAWN] = BIT(0);
   expectedKey =
-      computeZobristFromBoard(randoms, &bbl, side, castlingCode, passantCode);
+      computeZobristFromState(randoms, &bbl, side, castlingCode, passantCode);
   side = BLACK;
   resultKey =
-      computeZobristFromBoard(randoms, &bbl, side, castlingCode, passantCode);
+      computeZobristFromState(randoms, &bbl, side, castlingCode, passantCode);
   if (expectedKey == resultKey) {
     printf("Error in computeZobristFromBoard c1");
     return 0;
