@@ -24,5 +24,7 @@ void movePiece(board *board, int from, int to, int side, int piece);
 void changePassant(board *board, int passantCode);
 void changePlayingSide(board *board);
 void changeCastling(board *board, int castlingCode);
+void cleanGameState(board *board);
 //-------------------------------------------------------------------------------------------
+// void cleanBoard(board *board);
 #endif

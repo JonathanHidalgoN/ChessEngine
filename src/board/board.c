@@ -44,3 +44,22 @@ void changeCastling(board *board, int castlingCode) {
   board->gameState.zobristKey ^=
       board->zobristRandoms.castlingRandoms[board->gameState.castlingCode];
 }
+
+// void initBoard(board *board) {
+//   cleanBitBoardList(&board->bitBoardsList);
+//   cleanPieceList(&board->pieceList);
+//   cleanHistory(&board->history);
+// }
+
+void cleanGameState(board *board) {
+  board->gameState.zobristKey ^=
+      board->zobristRandoms.sidesRandoms[board->gameState.playingSide];
+  board->gameState.playingSide = WHITE;
+  board->gameState.zobristKey ^=
+      board->zobristRandoms.sidesRandoms[board->gameState.playingSide];
+  changeCastling(board, NO_CASTLING);
+  changePassant(board, NO_PASSANT);
+  board->gameState.halfMoveCounter = 0;
+  board->gameState.fullMoveCounter = 0;
+  board->gameState.phaseValue = 0;
+}
