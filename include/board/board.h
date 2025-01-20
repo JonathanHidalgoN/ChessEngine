@@ -27,4 +27,5 @@ void changeCastling(board *board, int castlingCode);
 void cleanGameState(board *board);
 //-------------------------------------------------------------------------------------------
 void initBoard(board *board);
+void cleanBoard(board *board);
 #endif

@@ -47,6 +47,10 @@ void changeCastling(board *board, int castlingCode) {
 
 void initBoard(board *board) {
   fillZobristRandoms(&board->zobristRandoms);
+  cleanBoard(board);
+}
+
+void cleanBoard(board *board) {
   cleanBitBoardList(&board->bitBoardsList);
   cleanPieceList(&board->pieceList);
   cleanHistory(&board->history);
