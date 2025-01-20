@@ -14,11 +14,16 @@ void showDiff(bitboard expected, bitboard result) {
 }
 
 BOOL compareBitBoard(bitboard expectedResult, bitboard result, char testNumber,
-                     const char *functionName) {
+                     const char *functionName, BOOL expectedToFail) {
 
-  if (result != expectedResult) {
+  if (result != expectedResult && !expectedToFail) {
     printf(RED "Error in function %s, test case %c \n" RESET, functionName,
            testNumber);
+    showDiff(expectedResult, result);
+    return FALSE;
+  } else if (result == expectedResult && expectedToFail) {
+    printf(RED "Error in function %s expected to fail, test case %c \n" RESET,
+           functionName, testNumber);
     showDiff(expectedResult, result);
     return FALSE;
   }
@@ -41,7 +46,7 @@ BOOL areBitBoardListEqual(const bitBoardsList *expectedBBL,
 
 BOOL compareBitBoardLists(const bitBoardsList *bbl1, const bitBoardsList *bbl2,
                           char testNumber, char *functionName,
-                          int expectedToFail) {
+                          BOOL expectedToFail) {
   int colorWhereFailed = -1;
   int pieceWhereFailed = -1;
   int areEqual =
@@ -77,11 +82,20 @@ void printPieceStruct(const piece *piece) {
 }
 
 BOOL comparePieces(const piece *expectedPiece, const piece *resultPiece,
-                   char testNumber) {
+                   char testNumber, const char *functionName,
+                   BOOL expectedToFail) {
   int areEqual = arePiecesEqual(expectedPiece, resultPiece);
-  if (!areEqual) {
-    printf(RED "Error in findPieceByBitIndex function case %c\n" RESET,
+  if (!areEqual && !expectedToFail) {
+    printf(RED "Error in %s function case %c\n" RESET, functionName,
            testNumber);
+    printf("Expected piece: ");
+    printPieceStruct(expectedPiece);
+    printf("Actual value: ");
+    printPieceStruct(resultPiece);
+    return 0;
+  } else if (areEqual && expectedToFail) {
+    printf(RED "Error in %s, expected to fail function case %c\n" RESET,
+           functionName, testNumber);
     printf("Expected piece: ");
     printPieceStruct(expectedPiece);
     printf("Actual value: ");
@@ -91,15 +105,26 @@ BOOL comparePieces(const piece *expectedPiece, const piece *resultPiece,
   return 1;
 }
 
-BOOL compareFenStrings(const fenString *functionResult,
-                       const fenString *expectedResult, char testNumber) {
-  int areEqual = areFenStringsEqual(functionResult, expectedResult);
-  if (!areEqual) {
-    printf(RED "Error testing FEN string case: %c\n" RESET, testNumber);
+BOOL compareFenStrings(const fenString *expected, const fenString *result,
+                       char testNumber, const char *functionName,
+                       BOOL expectedToFail) {
+  int areEqual = areFenStringsEqual(expected, result);
+  if (!areEqual && !expectedToFail) {
+    printf(RED "Error testing FEN string function %s, case: %c\n" RESET,
+           functionName, testNumber);
     printf("------------------- Expected result ------------------------\n");
-    printFenString(expectedResult);
+    printFenString(expected);
     printf("------------------- Function result ------------------------\n");
-    printFenString(functionResult);
+    printFenString(result);
+    return FALSE;
+  } else if (!areEqual && !expectedToFail) {
+    printf(RED "Error testing FEN string, expected inequality, function %s, "
+               "case: %c\n" RESET,
+           functionName, testNumber);
+    printf("------------------- Expected result ------------------------\n");
+    printFenString(expected);
+    printf("------------------- Function result ------------------------\n");
+    printFenString(result);
     return FALSE;
   }
   return TRUE;
@@ -114,10 +139,9 @@ BOOL compareIntNumbers(int expected, int result, const char *functionName,
         functionName, fieldName, expected, result);
     return 0;
   } else if (expected == result && expectedToFail) {
-    printf(
-        RED
-        "Error in function %s in %s inequality, expected %d, result %d\n" RESET,
-        functionName, fieldName, expected, result);
+    printf(RED "Error in function %s in %s inequality, expected %d, result "
+               "%d\n" RESET,
+           functionName, fieldName, expected, result);
     return 0;
   }
   return 1;

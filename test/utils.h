@@ -11,10 +11,11 @@
 
 void showDiff(bitboard expected, bitboard result);
 BOOL compareBitBoard(bitboard expectedResult, bitboard result, char testNumber,
-                     const char *functionName);
+                     const char *functionName, BOOL expectedToFail);
 void printPieceStruct(const piece *piece);
 BOOL comparePieces(const piece *expectedPiece, const piece *resultPiece,
-                   char testNumber);
+                   char testNumber, const char *functionName,
+                   BOOL expectedToFail);
 piece createPiece(int bitIndex, int side, int type);
 BOOL areGameStatesEqual(const gameState *expected, const gameState *result);
 void printGameState(const gameState *state);
@@ -27,11 +28,12 @@ void printIntPair(const intPair *pair, const char *name);
 void printFenString(const fenString *fen);
 BOOL areIntPairEqual(const intPair *a, const intPair *b);
 BOOL areFenStringsEqual(const fenString *a, const fenString *b);
-BOOL compareFenStrings(const fenString *functionResult,
-                       const fenString *expectedResult, char testNumber);
+BOOL compareFenStrings(const fenString *expected, const fenString *resutl,
+                       char testNumber, const char *functionName,
+                       BOOL expectedToFail);
 BOOL compareBitBoardLists(const bitBoardsList *bbl1, const bitBoardsList *bbl2,
                           char testNumber, char *functionName,
-                          int expectedToFail);
+                          BOOL expectedToFail);
 BOOL compareIntNumbers(int expected, int result, const char *functionName,
                        const char *fieldName, BOOL expectedToFail);
 BOOL areBoardsEqual(const board *expected, const board *result);
