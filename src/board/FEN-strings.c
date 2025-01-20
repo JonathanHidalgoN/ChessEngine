@@ -296,7 +296,7 @@ CASTLING_KEYS getCastlingCodeFromFenString(const fenString *fenString) {
   } else if (whiteKingside && whiteQueenside && blackKingside) {
     return WHITE_BOTH_BLACK_KINGSIDE;
   } else if (whiteKingside && whiteQueenside && blackQueenside) {
-    return WHITE_BOTH_BLACK_KINGSIDE;
+    return WHITE_BOTH_BLACK_QUEENSIDE;
   } else if (whiteKingside && whiteQueenside && blackKingside &&
              !blackQueenside) {
     return WHITE_BOTH_BLACK_QUEENSIDE;
