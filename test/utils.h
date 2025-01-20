@@ -40,7 +40,7 @@ BOOL areBoardsEqual(const board *expected, const board *result);
 BOOL comparePieceList(const pieceList *expected, const pieceList *result,
                       char testNumber, const char *functionName,
                       BOOL expectedToFail);
-BOOL areHistoryEqual(const history *expected, const history *result);
+BOOL areHistoryEqual(const history *expected, const history *result, int *idx);
 BOOL compareHistory(const history *expected, const history *result,
                     char testNumber, const char *functionName,
                     BOOL expectedToFail);
