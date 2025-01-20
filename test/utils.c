@@ -336,3 +336,19 @@ void printPieceList(const pieceList *pieceList) {
   }
   printf("\n");
 }
+
+BOOL areHistoryEqual(const history *expected, const history *result) {
+  // TODO: THIS TEST USES THE ARRAY OF THE HISTORY NO THE POP FUNCTION
+  // BECAUSE THE CONST, CHANGE THIS
+  if (expected->len != result->len) {
+    return FALSE;
+  }
+  gameState gs1, gs2;
+  for (int i = 0; i < expected->len; i++) {
+    BOOL areEqual =
+        areGameStatesEqual(&expected->states[i], &result->states[i]);
+    if (!areEqual)
+      return FALSE;
+  }
+  return TRUE;
+}
