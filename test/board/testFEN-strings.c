@@ -328,7 +328,7 @@ int testGetCastlingCodeFromFenString() {
 
 int testGetHalfMovesFromFenString() {
   const char *FIELD_NAME = "half moves";
-  const char *FUNCTION_NAME = "testGetHalfMovesFromFenString";
+  const char *FUNCTION_NAME = "getHalfMovesFromFenString";
   int expected = 5;
   BOOL expectedToFail = FALSE;
   int stringLen = 32;
@@ -389,6 +389,69 @@ int testGetHalfMovesFromFenString() {
   return c0 && c1 && c2 && c3 && c4 && c5 && c6;
 }
 
+int testGetFullMovesFromFenString() {
+  const char *FIELD_NAME = "full moves";
+  const char *FUNCTION_NAME = "getFullMovesFromFenString";
+  int expected = 8;
+  BOOL expectedToFail = FALSE;
+  int stringLen = 32;
+  char *string = "p6P/8/8/8/8/8/8/R6r w KQkq 1 5 8";
+  fenString fenString;
+  initFenString(string, stringLen, &fenString);
+  int result = getFullMovesFromFenString(&fenString);
+  BOOL c0 = compareIntNumbers(expected, result, FUNCTION_NAME, FIELD_NAME,
+                              expectedToFail);
+  expected = 10;
+  expectedToFail = FALSE;
+  stringLen = 33;
+  string = "p6P/8/8/8/8/8/8/R6r w KQkq 1 5 10";
+  initFenString(string, stringLen, &fenString);
+  result = getFullMovesFromFenString(&fenString);
+  BOOL c1 = compareIntNumbers(expected, result, FUNCTION_NAME, FIELD_NAME,
+                              expectedToFail);
+  expected = 12;
+  expectedToFail = FALSE;
+  stringLen = 36;
+  string = "pppp5P/8/8/8/8/8/8/R6r w --kq 1 8 12";
+  initFenString(string, stringLen, &fenString);
+  result = getFullMovesFromFenString(&fenString);
+  BOOL c2 = compareIntNumbers(expected, result, FUNCTION_NAME, FIELD_NAME,
+                              expectedToFail);
+  expected = 1;
+  expectedToFail = FALSE;
+  stringLen = 33;
+  string = "p6P/8/8/8/8/8/8/R6r w KQkq 1 12 1";
+  initFenString(string, stringLen, &fenString);
+  result = getFullMovesFromFenString(&fenString);
+  BOOL c3 = compareIntNumbers(expected, result, FUNCTION_NAME, FIELD_NAME,
+                              expectedToFail);
+  expected = 44;
+  expectedToFail = FALSE;
+  stringLen = 32;
+  string = "p7/8/8/8/8/8/8/R6r w KQkq 1 4 44";
+  initFenString(string, stringLen, &fenString);
+  result = getFullMovesFromFenString(&fenString);
+  BOOL c4 = compareIntNumbers(expected, result, FUNCTION_NAME, FIELD_NAME,
+                              expectedToFail);
+  expected = 5;
+  expectedToFail = TRUE;
+  stringLen = 32;
+  string = "p6P/8/8/8/8/8/8/R6r w KQkq 1 6 8";
+  initFenString(string, stringLen, &fenString);
+  result = getFullMovesFromFenString(&fenString);
+  BOOL c5 = compareIntNumbers(expected, result, FUNCTION_NAME, FIELD_NAME,
+                              expectedToFail);
+  expected = 5;
+  expectedToFail = TRUE;
+  stringLen = 33;
+  string = "p6P/8/8/8/8/8/8/R6r b KQkq 1 10 1";
+  initFenString(string, stringLen, &fenString);
+  result = getFullMovesFromFenString(&fenString);
+  BOOL c6 = compareIntNumbers(expected, result, FUNCTION_NAME, FIELD_NAME,
+                              expectedToFail);
+  return c0 && c1 && c2 && c3 && c4 && c5 && c6;
+}
+
 int testInitBitBoardWithFenString() {
   int c0 = testInitBitBoardWithFenStringC0();
   int c1 = testInitBitBoardWithFenStringC1();
@@ -404,9 +467,11 @@ void testFenString() {
   int resultTestGetSideFromFenString = testGetSideFromFenString();
   int resultTestGetCastlingCode = testGetCastlingCodeFromFenString();
   int resultTestHalfMovesFenString = testGetHalfMovesFromFenString();
+  int resultTestGetFullMovesFromFenString = testGetFullMovesFromFenString();
   if (resultTestInitFenString && resultCheckValidFenString &&
       resultTestIniBitBoardWithFenString && resultTestGetSideFromFenString &&
-      resultTestGetCastlingCode && resultTestHalfMovesFenString) {
+      resultTestGetCastlingCode && resultTestHalfMovesFenString &&
+      resultTestGetFullMovesFromFenString) {
     printf(GREEN "Tested FEN string successfully\n" RESET);
   }
 }
