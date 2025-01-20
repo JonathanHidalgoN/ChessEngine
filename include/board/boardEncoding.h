@@ -14,7 +14,6 @@
 #include <stdint.h>
 
 #define NKEYSFORCASTLING 16
-#define NKEYSFORSIDES 2
 #define NKEYSFORPASSANT 17
 
 typedef enum {
@@ -58,7 +57,7 @@ typedef struct zobristRandoms {
   uint64_t pieceRandoms[NUMBEROFSQUARES][NUMBEROFCOLORS]
                        [NUMBEROFDIFFERENTPIECES];
   uint64_t castlingRandoms[NKEYSFORCASTLING];
-  uint64_t sidesRandoms[NKEYSFORSIDES];
+  uint64_t sidesRandoms[NUMBEROFCOLORS];
   uint64_t passantRandoms[NKEYSFORPASSANT];
 } zobristRandoms;
 
