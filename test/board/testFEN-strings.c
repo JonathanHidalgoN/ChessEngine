@@ -211,7 +211,48 @@ BOOL testGetSideFromFenString() {
   COLOR result = getSideFromFenString(&fenString);
   BOOL c0 = compareIntNumbers(expectedSide, result, FUNCTION_NAME, FIELD_NAME,
                               expectedToFail);
-  return c0;
+  expectedSide = WHITE;
+  expectedToFail = FALSE;
+  stringLen = 35;
+  string = "p6P/p7/8/8/8/8/8/R6r w KQkq 1 10 10";
+  initFenString(string, stringLen, &fenString);
+  result = getSideFromFenString(&fenString);
+  BOOL c1 = compareIntNumbers(expectedSide, result, FUNCTION_NAME, FIELD_NAME,
+                              expectedToFail);
+  expectedSide = BLACK;
+  expectedToFail = FALSE;
+  stringLen = 35;
+  string = "p6P/p7/8/8/8/8/8/R6r b KQkq 1 10 10";
+  initFenString(string, stringLen, &fenString);
+  result = getSideFromFenString(&fenString);
+  BOOL c2 = compareIntNumbers(expectedSide, result, FUNCTION_NAME, FIELD_NAME,
+                              expectedToFail);
+  expectedSide = BLACK;
+  expectedToFail = FALSE;
+  stringLen = 38;
+  string = "pppp3P/p7/8/8/8/8/8/R6r b KQkq 1 10 10";
+  initFenString(string, stringLen, &fenString);
+  result = getSideFromFenString(&fenString);
+  BOOL c3 = compareIntNumbers(expectedSide, result, FUNCTION_NAME, FIELD_NAME,
+                              expectedToFail);
+  expectedSide = BLACK;
+  expectedToFail = TRUE;
+  stringLen = 38;
+  string = "pppp3P/p7/8/8/8/8/8/R6r w KQkq 1 10 10";
+  initFenString(string, stringLen, &fenString);
+  result = getSideFromFenString(&fenString);
+  BOOL c4 = compareIntNumbers(expectedSide, result, FUNCTION_NAME, FIELD_NAME,
+                              expectedToFail);
+  expectedSide = WHITE;
+  expectedToFail = TRUE;
+  stringLen = 35;
+  string = "p6P/p7/8/8/8/8/8/R6r b KQkq 1 10 10";
+  initFenString(string, stringLen, &fenString);
+  result = getSideFromFenString(&fenString);
+  BOOL c5 = compareIntNumbers(expectedSide, result, FUNCTION_NAME, FIELD_NAME,
+                              expectedToFail);
+
+  return c0 && c1 && c2 && c3 && c4 && c5;
 }
 
 int testInitBitBoardWithFenString() {
@@ -228,7 +269,7 @@ void testFenString() {
   int resultTestIniBitBoardWithFenString = testInitBitBoardWithFenString();
   int resultTestGetSideFromFenString = testGetSideFromFenString();
   if (resultTestInitFenString && resultCheckValidFenString &&
-      resultTestIniBitBoardWithFenString) {
+      resultTestIniBitBoardWithFenString && resultTestGetSideFromFenString) {
     printf(GREEN "Tested FEN string successfully\n" RESET);
   }
 }
