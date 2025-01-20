@@ -79,6 +79,8 @@ int testCheckValidFenString() {
   initFenString(validString, stringLen, &result);
   int c3 = testCaseCheckValidFenString(&result, expectingValid, '3');
 
+  printf(YELLOW "--------Error messages from now until limit are "
+                "expected--------\n" RESET);
   // Add invalid char "z" to get invalid FEN string
   expectingValid = 0;
   stringLen = 87;
@@ -125,7 +127,8 @@ int testCheckValidFenString() {
                 "PPPPPPPP/RNBQKBNR s KQkq 14 50 800";
   initFenString(validString, stringLen, &result);
   int c9 = testCaseCheckValidFenString(&result, expectingValid, '9');
-
+  printf(YELLOW "---------------------LIMIT------------------------------------"
+                "---\n" RESET);
   return c8 && c0 && c1 && c2 && c3 && c4 && c5 && c6 && c7 && c9;
 }
 
