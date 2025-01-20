@@ -337,10 +337,11 @@ void printPieceList(const pieceList *pieceList) {
   printf("\n");
 }
 
-BOOL areHistoryEqual(const history *expected, const history *result) {
+BOOL areHistoryEqual(const history *expected, const history *result, int *idx) {
   // TODO: THIS TEST USES THE ARRAY OF THE HISTORY NO THE POP FUNCTION
   // BECAUSE THE CONST, CHANGE THIS
   if (expected->len != result->len) {
+    *idx = -1;
     return FALSE;
   }
   gameState gs1, gs2;
@@ -348,7 +349,44 @@ BOOL areHistoryEqual(const history *expected, const history *result) {
     BOOL areEqual =
         areGameStatesEqual(&expected->states[i], &result->states[i]);
     if (!areEqual)
-      return FALSE;
+      *idx = i;
+    return FALSE;
+  }
+  return TRUE;
+}
+
+BOOL compareHistory(const history *expected, const history *result,
+                    char testNumber, const char *functionName,
+                    BOOL expectedToFail) {
+  int idx = -2;
+  BOOL areEqual = areHistoryEqual(expected, result, &idx);
+  if (!areEqual && !expectedToFail) {
+    if (idx == -2) {
+      printf(RED "Error in function %s, test case %d, expected equal lenghts, "
+                 "expected: %d, result: %d\n" RESET,
+             functionName, testNumber, result->len, expected->len);
+    }
+    printf(RED "Error in function %s, test case %d, expected equality, "
+               "eexpected: \n" RESET,
+           functionName, testNumber);
+    printGameState(&expected->states[idx]);
+    printf(RED "Result: \n" RESET);
+    printGameState(&result->states[idx]);
+    return FALSE;
+  } else if (!areEqual && !expectedToFail) {
+    if (idx == -2) {
+      printf(RED
+             "Error in function %s, test case %d, expected inequal lenghts, "
+             "expected: %d, result: %d\n" RESET,
+             functionName, testNumber, result->len, expected->len);
+    }
+    printf(RED "Error in function %s, test case %d, expected inequality, "
+               "eexpected: \n" RESET,
+           functionName, testNumber);
+    printGameState(&expected->states[idx]);
+    printf(RED "Result: \n" RESET);
+    printGameState(&result->states[idx]);
+    return FALSE;
   }
   return TRUE;
 }
