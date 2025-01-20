@@ -45,11 +45,13 @@ void changeCastling(board *board, int castlingCode) {
       board->zobristRandoms.castlingRandoms[board->gameState.castlingCode];
 }
 
-// void initBoard(board *board) {
-//   cleanBitBoardList(&board->bitBoardsList);
-//   cleanPieceList(&board->pieceList);
-//   cleanHistory(&board->history);
-// }
+void initBoard(board *board) {
+  fillZobristRandoms(&board->zobristRandoms);
+  cleanBitBoardList(&board->bitBoardsList);
+  cleanPieceList(&board->pieceList);
+  cleanHistory(&board->history);
+  cleanGameState(board);
+}
 
 void cleanGameState(board *board) {
   board->gameState.playingSide = WHITE;
