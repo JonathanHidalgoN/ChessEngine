@@ -10,6 +10,7 @@ int testPieceAttack(piece *piece, bitboard expectedResult, char testNumber,
                     bitboard blockers) {
   bitboard result;
   char *functionName;
+  BOOL expectedToFail = FALSE;
   switch (piece->type) {
   case PAWN:
     result = computePawnAttack(piece->bitIndex, piece->side);
@@ -34,7 +35,8 @@ int testPieceAttack(piece *piece, bitboard expectedResult, char testNumber,
   default:
     break;
   }
-  return compareBitBoard(expectedResult, result, testNumber, functionName);
+  return compareBitBoard(expectedResult, result, testNumber, functionName,
+                         expectedToFail);
 }
 
 int testBishopAttacks() {
