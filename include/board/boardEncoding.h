@@ -13,8 +13,6 @@
 #include "defs.h"
 #include <stdint.h>
 
-#define NKEYSFORPIECES                                                         \
-  (NUMBEROFSQUARES * NUMBEROFDIFFERENTPIECES * NUMBEROFCOLORS)
 #define NKEYSFORCASTLING 16
 #define NKEYSFORSIDES 2
 #define NKEYSFORPASSANT 17
