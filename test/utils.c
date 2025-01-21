@@ -443,3 +443,37 @@ BOOL compareZobristRandoms(const zobristRandoms *expected,
   }
   return TRUE;
 }
+
+// BOOL areBoardsEqual(const board *expected, const board *result) {
+//   BOOL expectedToFail = FALSE;
+//   BOOL areBBLEqual =
+//       compareBitBoardLists(&expected->bitBoardsList, &result->bitBoardsList,
+//                            '-', "compareBoard", expectedToFail);
+//     BOOL areGSEqual = compareGa(&expected->bitBoardsList,
+//     &result->bitBoardsList,
+//                            '-', "compareBoard", expectedToFail);
+// }
+
+BOOL compareGameStates(const gameState *expected, const gameState *result,
+                       const char *functionName, char testNumber,
+                       BOOL expectedToFail) {
+  BOOL areEqual = areGameStatesEqual(expected, result);
+  if (!areEqual && !expectedToFail) {
+    printf(RED "Error in function %s test case %c, expected equality, "
+               "expected:\n" RESET,
+           functionName, testNumber);
+    printGameState(expected);
+    printf(RED "Result" RESET);
+    printGameState(result);
+    return FALSE;
+  } else if (areEqual && expectedToFail) {
+    printf(RED "Error in function %s test case %c, expected inequality, "
+               "expected:\n" RESET,
+           functionName, testNumber);
+    printGameState(expected);
+    printf(RED "Result" RESET);
+    printGameState(result);
+    return FALSE;
+  }
+  return TRUE;
+}

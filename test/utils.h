@@ -52,4 +52,7 @@ BOOL compareZobristRandoms(const zobristRandoms *expected,
 void printPieceList(const pieceList *pieceList);
 BOOL areInt64ListEqual(const uint64_t *l1, const uint64_t *l2, int len,
                        int *idx);
+BOOL compareGameStates(const gameState *expected, const gameState *result,
+                       const char *functionName, char testNumber,
+                       BOOL expectedToFail);
 #endif
