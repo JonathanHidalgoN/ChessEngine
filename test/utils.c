@@ -47,7 +47,7 @@ BOOL areBitBoardListEqual(const bitBoardsList *expectedBBL,
 }
 
 BOOL compareBitBoardLists(const bitBoardsList *bbl1, const bitBoardsList *bbl2,
-                          char testNumber, char *functionName,
+                          char testNumber, const char *functionName,
                           BOOL expectedToFail) {
   int colorWhereFailed = -1;
   int pieceWhereFailed = -1;
@@ -444,15 +444,38 @@ BOOL compareZobristRandoms(const zobristRandoms *expected,
   return TRUE;
 }
 
-// BOOL areBoardsEqual(const board *expected, const board *result) {
-//   BOOL expectedToFail = FALSE;
-//   BOOL areBBLEqual =
-//       compareBitBoardLists(&expected->bitBoardsList, &result->bitBoardsList,
-//                            '-', "compareBoard", expectedToFail);
-//     BOOL areGSEqual = compareGa(&expected->bitBoardsList,
-//     &result->bitBoardsList,
-//                            '-', "compareBoard", expectedToFail);
-// }
+BOOL compareBoards(const board *expected, const board *result,
+                   const char *functionName, char testNumber,
+                   int expectedToFail) {
+  printf(YELLOW
+         "--------------------COMPARING BOARDS-------------------------");
+  BOOL areBBLEqual =
+      compareBitBoardLists(&expected->bitBoardsList, &result->bitBoardsList,
+                           '-', functionName, expectedToFail);
+  BOOL areGSEqual = compareGameStates(&expected->gameState, &result->gameState,
+                                      functionName, '-', expectedToFail);
+  BOOL areHistoryEqual = compareHistory(&expected->history, &result->history,
+                                        '-', functionName, expectedToFail);
+  BOOL areZobristRandomsEqual =
+      compareZobristRandoms(&expected->zobristRandoms, &result->zobristRandoms,
+                            '-', functionName, expectedToFail);
+  BOOL arePieceListEqual =
+      comparePieceList(&expected->pieceList, &result->pieceList, '-',
+                       functionName, expectedToFail);
+  BOOL valid = areBBLEqual && areBBLEqual && areHistoryEqual &&
+               areZobristRandomsEqual && arePieceListEqual;
+  if (!valid && !expectedToFail) {
+    printf(RED
+           "Error comparing boards in %s, test number %c, expected equality\n",
+           functionName, testNumber);
+  } else if (valid && expectedToFail) {
+    printf(RED
+           "Erro comparing boards in %s, test number %c, expected inequality\n",
+           functionName, testNumber);
+  }
+  printf("--------------------BOARDS COMP END-------------------------" RESET);
+  return valid;
+}
 
 BOOL compareGameStates(const gameState *expected, const gameState *result,
                        const char *functionName, char testNumber,

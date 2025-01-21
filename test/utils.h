@@ -32,7 +32,7 @@ BOOL compareFenStrings(const fenString *expected, const fenString *resutl,
                        char testNumber, const char *functionName,
                        BOOL expectedToFail);
 BOOL compareBitBoardLists(const bitBoardsList *bbl1, const bitBoardsList *bbl2,
-                          char testNumber, char *functionName,
+                          char testNumber, const char *functionName,
                           BOOL expectedToFail);
 BOOL compareIntNumbers(int expected, int result, const char *functionName,
                        const char *fieldName, BOOL expectedToFail);
