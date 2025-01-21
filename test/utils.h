@@ -45,7 +45,7 @@ BOOL compareHistory(const history *expected, const history *result,
                     char testNumber, const char *functionName,
                     BOOL expectedToFail);
 BOOL areZobristRandomsEqual(const zobristRandoms *expected,
-                            const zobristRandoms *result);
+                            const zobristRandoms *result, int *idx);
 BOOL compareZobristRandoms(const zobristRandoms *expected,
                            const zobristRandoms *result, char testNumber,
                            const char *functionName, BOOL expectedToFail);
