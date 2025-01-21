@@ -428,4 +428,18 @@ BOOL areZobristRandomsEqual(const zobristRandoms *expected,
 
 BOOL compareZobristRandoms(const zobristRandoms *expected,
                            const zobristRandoms *result, char testNumber,
-                           const char *functionName, BOOL expectedToFail) {}
+                           const char *functionName, BOOL expectedToFail) {
+  int idxWhereFailed = -1;
+  BOOL areEqual = areZobristRandomsEqual(expected, result, &idxWhereFailed);
+  if (!areEqual && !expectedToFail) {
+    printf(RED "Error in function %s, test case %c, expected equality\n" RESET,
+           functionName, testNumber);
+    return FALSE;
+  } else if (areEqual && expectedToFail) {
+    printf(RED
+           "Error in function %s, test case %c, expected inequality\n" RESET,
+           functionName, testNumber);
+    return FALSE;
+  }
+  return TRUE;
+}
