@@ -13,7 +13,7 @@ static void fillRandomArray(uint64_t *array, int size, uint64_t *state) {
 void fillZobristRandoms(zobristRandoms *randoms) {
   fillRandomArray(randoms->castlingRandoms, NKEYSFORCASTLING,
                   &ZOBRIST_RANDOM_STATE);
-  fillRandomArray(randoms->sidesRandoms, NKEYSFORSIDES, &ZOBRIST_RANDOM_STATE);
+  fillRandomArray(randoms->sidesRandoms, NUMBEROFCOLORS, &ZOBRIST_RANDOM_STATE);
   fillRandomArray(randoms->passantRandoms, NKEYSFORPASSANT,
                   &ZOBRIST_RANDOM_STATE);
   for (int i = 0; i < NUMBEROFSQUARES; i++) {
