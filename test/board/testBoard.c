@@ -73,20 +73,28 @@ static void matchBoardsToTest(board *board1, board *board2) {
   board2->zobristRandoms = zobrist;
 }
 
-// static BOOL testRemovePiece() {
-//   const char *FUNCTION_NAME = "removePiece";
-//   BOOL expectedToFail = FALSE;
-//   board result, expected;
-//   matchBoardsToTest(&result, &expected);
-//   return FALSE;
-// }
+static BOOL testRemovePiece() {
+  const char *FUNCTION_NAME = "removePiece";
+  BOOL expectedToFail = FALSE;
+  board result, expected;
+  matchBoardsToTest(&result, &expected);
+  // Add a two pawns to remove one
+  putPiece(&result, 0, WHITE, PAWN);
+  putPiece(&result, 1, WHITE, PAWN);
+  removePiece(&result, 1, WHITE, PAWN);
+  putPiece(&expected, 0, WHITE, PAWN);
+  BOOL c0 =
+      compareBoards(&expected, &result, FUNCTION_NAME, '0', expectedToFail);
+  return c0;
+}
 
 void testBoard() {
   BOOL resultTestPlaceBitValue = testPlaceBitValue();
   BOOL resultTestCleanGameState = testCleanGameState();
   BOOL resultTestInitBoard = testInitBoard();
+  BOOL resultTestRemovePiece = testRemovePiece();
   if (resultTestPlaceBitValue && resultTestCleanGameState &&
-      resultTestInitBoard) {
+      resultTestInitBoard && resultTestRemovePiece) {
     printf(GREEN "Tested board sucessfully \n" RESET);
   }
 }
