@@ -312,19 +312,19 @@ bool comparePieceList(const pieceList *expected, const pieceList *result,
   bool areEqual = arePieceListEqual(expected, result);
   if (!areEqual && !expectedToFail) {
     printf(RED "Error in function %s, expected equal piece list, test case %c. "
-               "Expected result:" RESET,
+               "Expected result:\n" RESET,
            functionName, testNumber);
     printPieceList(expected);
-    printf(RED "-----------------Result----------------------" RESET);
+    printf(RED "-----------------Result----------------------\n" RESET);
     printPieceList(result);
     return false;
   } else if (areEqual && expectedToFail) {
     printf(RED
            "Error in function %s, expected different piece list, test case %c. "
-           "Expected result:" RESET,
+           "Expected result:\n" RESET,
            functionName, testNumber);
     printPieceList(expected);
-    printf(RED "-----------------Result----------------------" RESET);
+    printf(RED "-----------------Result----------------------\n" RESET);
     printPieceList(result);
     return false;
   }
