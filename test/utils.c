@@ -345,7 +345,6 @@ BOOL areHistoryEqual(const history *expected, const history *result, int *idx) {
     *idx = -1;
     return FALSE;
   }
-  gameState gs1, gs2;
   for (int i = 0; i < expected->len; i++) {
     BOOL areEqual =
         areGameStatesEqual(&expected->states[i], &result->states[i]);
@@ -462,16 +461,17 @@ BOOL compareBoards(const board *expected, const board *result,
   BOOL arePieceListEqual =
       comparePieceList(&expected->pieceList, &result->pieceList, '-',
                        functionName, expectedToFail);
-  BOOL valid = areBBLEqual && areBBLEqual && areHistoryEqual &&
+  BOOL valid = areGSEqual && areBBLEqual && areHistoryEqual &&
                areZobristRandomsEqual && arePieceListEqual;
   if (!valid && !expectedToFail) {
     printf(RED
            "Error comparing boards in %s, test number %c, expected equality\n",
            functionName, testNumber);
   } else if (valid && expectedToFail) {
-    printf(RED
-           "Erro comparing boards in %s, test number %c, expected inequality\n",
-           functionName, testNumber);
+    printf(
+        RED
+        "Error comparing boards in %s, test number %c, expected inequality\n",
+        functionName, testNumber);
   }
   printf("--------------------BOARDS COMP END-------------------------" RESET);
   return valid;
