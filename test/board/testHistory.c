@@ -143,8 +143,8 @@ static BOOL testPopFromHistory() {
 }
 
 void testHistory() {
-  int testPushIntoHistoryResult = testPushIntoHistory();
-  int testPopFromHistoryResult = testPopFromHistory();
+  BOOL testPushIntoHistoryResult = testPushIntoHistory();
+  BOOL testPopFromHistoryResult = testPopFromHistory();
   if (testPopFromHistoryResult && testPushIntoHistoryResult) {
     printf(GREEN "Tested history successfully \n" RESET);
   }
