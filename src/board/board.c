@@ -1,16 +1,14 @@
 #include "../../include/board/board.h"
 
 void removePiece(board *board, int square, int side, int piece) {
-  bitboard mask = ~(1ULL << square);
-  board->bitBoardsList.pieces[side][piece] &= mask;
+  placeBitValue(square, 0, &board->bitBoardsList.pieces[side][piece]);
   board->pieceList.pieces[square] = EMPTY;
   board->gameState.zobristKey ^=
       board->zobristRandoms.pieceRandoms[square][side][piece];
 }
 
 void putPiece(board *board, int square, int side, int piece) {
-  bitboard mask = 1ULL << square;
-  board->bitBoardsList.pieces[side][piece] |= mask;
+  placeBitValue(square, 1, &board->bitBoardsList.pieces[side][piece]);
   board->pieceList.pieces[square] = piece;
   board->gameState.zobristKey ^=
       board->zobristRandoms.pieceRandoms[square][side][piece];
