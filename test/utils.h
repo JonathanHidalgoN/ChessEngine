@@ -9,25 +9,62 @@
 #define BLUE "\x1b[34m"
 #define RESET "\x1b[0m"
 
-void showDiff(bitboard expected, bitboard result);
-BOOL compareBitBoard(bitboard expectedResult, bitboard result, char testNumber,
-                     const char *functionName, BOOL expectedToFail);
+/*
+ * NOTE: This file has a lot of functions used for testing.
+ * COMPARE FUNCTIONS : Given two data types, expected and result
+ * this function will check if those are equal, depending of this and other
+ * argument called expected to fail the function will return false or true and
+ * print an message to output with some information.
+ * -
+ * ARE EQUAL: Testing requieres a lot of comparison between custom types,
+ * this functions are responsible for that, return true when expected and result
+ * are equal, some functions also require pointers to int, this is when the type
+ * has an array so we can know the index where it failed(it can fail in multiple
+ * index but functions return in the first one).
+ * -
+ * GENERAL FUNCTIONS : Those functions are just to save some time, for example
+ * to print custom data types to output or maybe init some structures faster
+ */
+
+// GENERAL FUNCTIONS
 void printPieceStruct(const piece *piece);
-BOOL comparePieces(const piece *expectedPiece, const piece *resultPiece,
-                   char testNumber, const char *functionName,
-                   BOOL expectedToFail);
-piece createPiece(int bitIndex, int side, int type);
-BOOL areGameStatesEqual(const gameState *expected, const gameState *result);
 void printGameState(const gameState *state);
+void printFenString(const fenString *fen);
+void printIntPair(const intPair *pair, const char *name);
+void printPieceList(const pieceList *pieceList);
+/**
+ * This function is used a lot, comparing bitboards is really usefull, when
+ * they are not equal, just call this function and will print to output
+ * both bitboards with some formatting
+ */
+void showDiff(bitboard expected, bitboard result);
 gameState createGameState(int playingSide, int castlingCode,
                           int halfMoveCounter, int enPassantCode,
                           int fullMoveCounter, uint64_t zobristKey,
                           int phaseValue);
+piece createPiece(int bitIndex, int side, int type);
+// ARE EQUAL FUNCTIONA
+BOOL areGameStatesEqual(const gameState *expected, const gameState *result);
 BOOL arePieceListEqual(const pieceList *pl1, const pieceList *pl2);
-void printIntPair(const intPair *pair, const char *name);
-void printFenString(const fenString *fen);
 BOOL areIntPairEqual(const intPair *a, const intPair *b);
 BOOL areFenStringsEqual(const fenString *a, const fenString *b);
+BOOL areHistoryEqual(const history *expected, const history *result, int *idx);
+BOOL areZobristRandomsEqual(const zobristRandoms *expected,
+                            const zobristRandoms *result, int *idx);
+BOOL areInt64ListEqual(const uint64_t *l1, const uint64_t *l2, int len,
+                       int *idx);
+// COMPARE FUNCTIONS
+BOOL compareGameStates(const gameState *expected, const gameState *result,
+                       const char *functionName, char testNumber,
+                       BOOL expectedToFail);
+BOOL compareBoards(const board *expected, const board *result,
+                   const char *functionName, char testNumber,
+                   BOOL expectedToFail);
+BOOL compareBitBoard(bitboard expectedResult, bitboard result, char testNumber,
+                     const char *functionName, BOOL expectedToFail);
+BOOL comparePieces(const piece *expectedPiece, const piece *resultPiece,
+                   char testNumber, const char *functionName,
+                   BOOL expectedToFail);
 BOOL compareFenStrings(const fenString *expected, const fenString *resutl,
                        char testNumber, const char *functionName,
                        BOOL expectedToFail);
@@ -39,22 +76,10 @@ BOOL compareIntNumbers(int expected, int result, const char *functionName,
 BOOL comparePieceList(const pieceList *expected, const pieceList *result,
                       char testNumber, const char *functionName,
                       BOOL expectedToFail);
-BOOL areHistoryEqual(const history *expected, const history *result, int *idx);
 BOOL compareHistory(const history *expected, const history *result,
                     char testNumber, const char *functionName,
                     BOOL expectedToFail);
-BOOL areZobristRandomsEqual(const zobristRandoms *expected,
-                            const zobristRandoms *result, int *idx);
 BOOL compareZobristRandoms(const zobristRandoms *expected,
                            const zobristRandoms *result, char testNumber,
                            const char *functionName, BOOL expectedToFail);
-void printPieceList(const pieceList *pieceList);
-BOOL areInt64ListEqual(const uint64_t *l1, const uint64_t *l2, int len,
-                       int *idx);
-BOOL compareGameStates(const gameState *expected, const gameState *result,
-                       const char *functionName, char testNumber,
-                       BOOL expectedToFail);
-BOOL compareBoards(const board *expected, const board *result,
-                   const char *functionName, char testNumber,
-                   BOOL expectedToFail);
 #endif
