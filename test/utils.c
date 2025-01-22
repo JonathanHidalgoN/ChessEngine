@@ -311,7 +311,7 @@ BOOL comparePieceList(const pieceList *expected, const pieceList *result,
 
   BOOL areEqual = arePieceListEqual(expected, result);
   if (!areEqual && !expectedToFail) {
-    printf(RED "Error in function %s, expected equality, test case %c. "
+    printf(RED "Error in function %s, expected equal piece list, test case %c. "
                "Expected result:" RESET,
            functionName, testNumber);
     printPieceList(expected);
@@ -319,8 +319,9 @@ BOOL comparePieceList(const pieceList *expected, const pieceList *result,
     printPieceList(result);
     return FALSE;
   } else if (areEqual && expectedToFail) {
-    printf(RED "Error in function %s, expected inequality, test case %c. "
-               "Expected result:" RESET,
+    printf(RED
+           "Error in function %s, expected different piece list, test case %c. "
+           "Expected result:" RESET,
            functionName, testNumber);
     printPieceList(expected);
     printf(RED "-----------------Result----------------------" RESET);
@@ -431,12 +432,13 @@ BOOL compareZobristRandoms(const zobristRandoms *expected,
   int idxWhereFailed = -1;
   BOOL areEqual = areZobristRandomsEqual(expected, result, &idxWhereFailed);
   if (!areEqual && !expectedToFail) {
-    printf(RED "Error in function %s, test case %c, expected equality\n" RESET,
+    printf(RED "Error in function %s, test case %c, expected equal zobrist "
+               "randoms\n" RESET,
            functionName, testNumber);
     return FALSE;
   } else if (areEqual && expectedToFail) {
-    printf(RED
-           "Error in function %s, test case %c, expected inequality\n" RESET,
+    printf(RED "Error in function %s, test case %c, expected different zobrist "
+               "randoms\n" RESET,
            functionName, testNumber);
     return FALSE;
   }
@@ -475,6 +477,7 @@ BOOL compareBoards(const board *expected, const board *result,
         functionName, testNumber);
   }
   printf(
+      YELLOW
       "--------------------BOARDS COMP END-------------------------\n" RESET);
   return valid;
 }
@@ -484,7 +487,7 @@ BOOL compareGameStates(const gameState *expected, const gameState *result,
                        BOOL expectedToFail) {
   BOOL areEqual = areGameStatesEqual(expected, result);
   if (!areEqual && !expectedToFail) {
-    printf(RED "Error in function %s test case %c, expected equality, "
+    printf(RED "Error in function %s test case %c, expected equal game states, "
                "expected:\n" RESET,
            functionName, testNumber);
     printGameState(expected);
@@ -492,8 +495,9 @@ BOOL compareGameStates(const gameState *expected, const gameState *result,
     printGameState(result);
     return FALSE;
   } else if (areEqual && expectedToFail) {
-    printf(RED "Error in function %s test case %c, expected inequality, "
-               "expected:\n" RESET,
+    printf(RED
+           "Error in function %s test case %c, expected different game states, "
+           "expected:\n" RESET,
            functionName, testNumber);
     printGameState(expected);
     printf(RED "Result" RESET);
