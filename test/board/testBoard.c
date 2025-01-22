@@ -29,9 +29,36 @@ int testPlaceBitValue() {
   return 1;
 }
 
+BOOL testCleanGameState() {
+  const char *FUNCTION_NAME = "cleanGameState";
+  // Zobrist keys will be tested alone
+  const uint64_t ZOBRIST_KEY = 0ULL;
+  BOOL expectedToFail = FALSE;
+  board result;
+  gameState expectGS = {WHITE, NO_CASTLING, 0, NO_PASSANT, 0, ZOBRIST_KEY, 0};
+  cleanGameState(&result);
+  result.gameState.zobristKey = ZOBRIST_KEY;
+  BOOL c0 = compareGameStates(&expectGS, &result.gameState, FUNCTION_NAME, '0',
+                              expectedToFail);
+  return c0;
+}
+
+// int testInitBoard() {
+//   const char *FUNCTION_NAME = "initBoard";
+//   BOOL expectedToFail = FALSE;
+//   board result, expected;
+//   fillZobristRandoms(&expected.zobristRandoms);
+//   cleanBitBoardList(&expected.bitBoardsList);
+//   cleanGameState(&expected);
+//   cleanPieceList(&expected.pieceList);
+//   cleanHistory(&expected.history);
+//   initBoard(&result);
+// }
+
 void testBoard() {
-  int resultTestPlaceBitValue = testPlaceBitValue();
-  if (resultTestPlaceBitValue) {
+  BOOL resultTestPlaceBitValue = testPlaceBitValue();
+  BOOL resultTestCleanGameState = testCleanGameState();
+  if (resultTestPlaceBitValue && resultTestCleanGameState) {
     printf(GREEN "Tested board sucessfully \n" RESET);
   }
 }
