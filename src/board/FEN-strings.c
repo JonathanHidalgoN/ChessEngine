@@ -230,10 +230,11 @@ void initBoardWithFenString(board *board, char *string, int stringLen) {
 }
 
 static int parseIntFromString(const char *string, int from, int to) {
-  char subString[to - from + 1];
+  char subString[to - from + 2]; // +1 for null terminator, +1 for length
   for (int i = from, j = 0; i <= to; i++, j++) {
     subString[j] = string[i];
   }
+  subString[to - from + 1] = '\0';
   return atoi(subString);
 }
 
