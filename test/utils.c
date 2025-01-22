@@ -450,26 +450,34 @@ bool compareBoards(const board *expected, const board *result,
                    bool expectedToFail) {
   printf(YELLOW
          "--------------------COMPARING BOARDS-------------------------\n");
+  if (expectedToFail)
+    printf(YELLOW "----------------ERROR MESSAGES FROM NOW UNTIL LIMIT ARE "
+                  "EXPECTED------------------------\n" RESET);
   bool areBBLEqual =
       compareBitBoardLists(&expected->bitBoardsList, &result->bitBoardsList,
-                           testNumber, functionName, expectedToFail);
+                           testNumber, functionName, false);
   bool areGSEqual = compareGameStates(&expected->gameState, &result->gameState,
-                                      functionName, testNumber, expectedToFail);
-  bool areHistoryEqual =
-      compareHistory(&expected->history, &result->history, testNumber,
-                     functionName, expectedToFail);
+                                      functionName, testNumber, false);
+  bool areHistoryEqual = compareHistory(&expected->history, &result->history,
+                                        testNumber, functionName, false);
   bool areZobristRandomsEqual =
       compareZobristRandoms(&expected->zobristRandoms, &result->zobristRandoms,
-                            testNumber, functionName, expectedToFail);
+                            testNumber, functionName, false);
   bool arePieceListEqual =
       comparePieceList(&expected->pieceList, &result->pieceList, testNumber,
-                       functionName, expectedToFail);
+                       functionName, false);
+  if (expectedToFail)
+    printf(YELLOW "------------------------LIMIT-------------------------------"
+                  "-----\n" RESET);
   bool valid = areGSEqual && areBBLEqual && areHistoryEqual &&
                areZobristRandomsEqual && arePieceListEqual;
   printf(
       YELLOW
       "--------------------BOARDS COMP END-------------------------\n" RESET);
-  return valid;
+  if (!expectedToFail)
+    return valid;
+  else
+    return !valid;
 }
 
 bool compareGameStates(const gameState *expected, const gameState *result,
