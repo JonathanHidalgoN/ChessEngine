@@ -36,7 +36,6 @@ BOOL compareBitBoardLists(const bitBoardsList *bbl1, const bitBoardsList *bbl2,
                           BOOL expectedToFail);
 BOOL compareIntNumbers(int expected, int result, const char *functionName,
                        const char *fieldName, BOOL expectedToFail);
-BOOL areBoardsEqual(const board *expected, const board *result);
 BOOL comparePieceList(const pieceList *expected, const pieceList *result,
                       char testNumber, const char *functionName,
                       BOOL expectedToFail);
@@ -55,4 +54,7 @@ BOOL areInt64ListEqual(const uint64_t *l1, const uint64_t *l2, int len,
 BOOL compareGameStates(const gameState *expected, const gameState *result,
                        const char *functionName, char testNumber,
                        BOOL expectedToFail);
+BOOL compareBoards(const board *expected, const board *result,
+                   const char *functionName, char testNumber,
+                   BOOL expectedToFail);
 #endif
