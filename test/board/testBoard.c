@@ -131,13 +131,51 @@ static bool testRemovePiece() {
   return c0 && c1 && c2 && c3;
 }
 
+static bool testPutPiece() {
+  const char *FUNCTION_NAME = "putPiece";
+  bool expectedToFail = false;
+  board result, expected;
+  matchBoardsToTest(&result, &expected);
+  putPiece(&expected, 0, COLOR_WHITE, PIECE_PAWN);
+  putPiece(&result, 0, COLOR_WHITE, PIECE_PAWN);
+  bool c0 =
+      compareBoards(&expected, &result, FUNCTION_NAME, '0', expectedToFail);
+
+  matchBoardsToTest(&result, &expected);
+  putPiece(&expected, 0, COLOR_WHITE, PIECE_PAWN);
+  putPiece(&expected, 1, COLOR_BLACK, PIECE_ROOK);
+  putPiece(&result, 0, COLOR_WHITE, PIECE_PAWN);
+  putPiece(&result, 1, COLOR_BLACK, PIECE_ROOK);
+  bool c1 =
+      compareBoards(&expected, &result, FUNCTION_NAME, '1', expectedToFail);
+
+  matchBoardsToTest(&result, &expected);
+  putPiece(&expected, 0, COLOR_WHITE, PIECE_PAWN);
+  putPiece(&result, 0, COLOR_WHITE, PIECE_PAWN);
+  putPiece(&expected, 0, COLOR_WHITE, PIECE_ROOK); // Overwrite with a rook
+  putPiece(&result, 0, COLOR_WHITE, PIECE_ROOK);   // Overwrite
+  bool c2 =
+      compareBoards(&expected, &result, FUNCTION_NAME, '2', expectedToFail);
+
+  expectedToFail = true;
+  matchBoardsToTest(&result, &expected);
+  putPiece(&expected, 0, COLOR_WHITE, PIECE_PAWN);
+  putPiece(&result, 0, COLOR_WHITE, PIECE_PAWN);
+  putPiece(&result, 1, COLOR_BLACK, PIECE_ROOK); // Extra piece in `result`
+  bool c3 =
+      compareBoards(&expected, &result, FUNCTION_NAME, '3', expectedToFail);
+
+  return c0 && c1 && c2 && c3;
+}
+
 void testBoard() {
   bool resultTestPlaceBitValue = testPlaceBitValue();
   bool resultTestCleanGameState = testCleanGameState();
   bool resultTestInitBoard = testInitBoard();
   bool resultTestRemovePiece = testRemovePiece();
+  bool resultTestPutPiece = testPutPiece();
   if (resultTestPlaceBitValue && resultTestCleanGameState &&
-      resultTestInitBoard && resultTestRemovePiece) {
+      resultTestInitBoard && resultTestRemovePiece && resultTestPutPiece) {
     printf(GREEN "Tested board sucessfully \n" RESET);
   }
 }
