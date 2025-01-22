@@ -43,22 +43,32 @@ BOOL testCleanGameState() {
   return c0;
 }
 
-// int testInitBoard() {
-//   const char *FUNCTION_NAME = "initBoard";
-//   BOOL expectedToFail = FALSE;
-//   board result, expected;
-//   fillZobristRandoms(&expected.zobristRandoms);
-//   cleanBitBoardList(&expected.bitBoardsList);
-//   cleanGameState(&expected);
-//   cleanPieceList(&expected.pieceList);
-//   cleanHistory(&expected.history);
-//   initBoard(&result);
-// }
+int testInitBoard() {
+  const char *FUNCTION_NAME = "initBoard";
+  BOOL expectedToFail = FALSE;
+  board result, expected;
+  initBoard(&result);
+  // Have to use this or reset state used to compute random zobrist
+  expected.zobristRandoms = result.zobristRandoms;
+  cleanBitBoardList(&expected.bitBoardsList);
+  cleanPieceList(&expected.pieceList);
+  cleanHistory(&expected.history);
+  cleanGameState(&expected);
+  expected.gameState.zobristKey = computeZobristFromState(
+      &expected.zobristRandoms, &expected.bitBoardsList,
+      expected.gameState.playingSide, expected.gameState.castlingCode,
+      expected.gameState.enPassantCode);
+  BOOL c0 =
+      compareBoards(&expected, &result, FUNCTION_NAME, '0', expectedToFail);
+  return c0;
+}
 
 void testBoard() {
   BOOL resultTestPlaceBitValue = testPlaceBitValue();
   BOOL resultTestCleanGameState = testCleanGameState();
-  if (resultTestPlaceBitValue && resultTestCleanGameState) {
+  BOOL resultTestInitBoard = testInitBoard();
+  if (resultTestPlaceBitValue && resultTestCleanGameState &&
+      resultTestInitBoard) {
     printf(GREEN "Tested board sucessfully \n" RESET);
   }
 }
