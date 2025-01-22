@@ -174,32 +174,32 @@ static bool testChangePassant() {
   bool expectedToFail = false;
   board result, expected;
   matchBoardsToTest(&result, &expected);
-  changePassant(&result, BLACK_KINGSIDE);
-  changePassant(&result, BLACK_BOTH);
+  changePassant(&result, W1);
+  changePassant(&result, B8);
   changePassant(&result, NO_PASSANT);
   changePassant(&expected, NO_PASSANT);
   bool c0 =
       compareBoards(&expected, &result, FUNCTION_NAME, '0', expectedToFail);
   matchBoardsToTest(&result, &expected);
-  changePassant(&result, BLACK_KINGSIDE);
-  changePassant(&result, BLACK_BOTH);
-  changePassant(&expected, BLACK_BOTH);
+  changePassant(&result, B7);
+  changePassant(&result, B1);
+  changePassant(&expected, B1);
   bool c1 =
       compareBoards(&expected, &result, FUNCTION_NAME, '2', expectedToFail);
   matchBoardsToTest(&result, &expected);
-  changePassant(&result, BLACK_KINGSIDE);
-  changePassant(&result, BLACK_BOTH);
-  changePassant(&result, WHITE_BOTH_BLACK_KINGSIDE);
-  changePassant(&result, BLACK_BOTH);
-  changePassant(&expected, BLACK_BOTH);
+  changePassant(&result, B1);
+  changePassant(&result, W1);
+  changePassant(&result, B2);
+  changePassant(&result, B6);
+  changePassant(&expected, B6);
   bool c2 =
       compareBoards(&expected, &result, FUNCTION_NAME, '2', expectedToFail);
   expectedToFail = true;
   matchBoardsToTest(&result, &expected);
-  changePassant(&result, BLACK_KINGSIDE);
-  changePassant(&result, BLACK_BOTH);
-  changePassant(&result, WHITE_BOTH_BLACK_KINGSIDE);
-  changePassant(&expected, BLACK_BOTH);
+  changePassant(&result, B1);
+  changePassant(&result, B2);
+  changePassant(&result, B3);
+  changePassant(&expected, B4);
   bool c3 =
       compareBoards(&expected, &result, FUNCTION_NAME, '3', expectedToFail);
   return c0 && c1 && c2 && c3;
@@ -225,6 +225,42 @@ static bool testChangePlayingSide() {
   return c0 && c1;
 }
 
+static bool testChangeCastling() {
+  const char *FUNCTION_NAME = "changeCastling";
+  bool expectedToFail = false;
+  board result, expected;
+  matchBoardsToTest(&result, &expected);
+  changeCastling(&result, BLACK_KINGSIDE);
+  changeCastling(&result, BLACK_BOTH);
+  changeCastling(&result, NO_PASSANT);
+  changeCastling(&expected, NO_PASSANT);
+  bool c0 =
+      compareBoards(&expected, &result, FUNCTION_NAME, '0', expectedToFail);
+  matchBoardsToTest(&result, &expected);
+  changeCastling(&result, BLACK_KINGSIDE);
+  changeCastling(&result, BLACK_BOTH);
+  changeCastling(&expected, BLACK_BOTH);
+  bool c1 =
+      compareBoards(&expected, &result, FUNCTION_NAME, '2', expectedToFail);
+  matchBoardsToTest(&result, &expected);
+  changeCastling(&result, BLACK_KINGSIDE);
+  changeCastling(&result, BLACK_BOTH);
+  changeCastling(&result, WHITE_BOTH_BLACK_KINGSIDE);
+  changeCastling(&result, BLACK_BOTH);
+  changeCastling(&expected, BLACK_BOTH);
+  bool c2 =
+      compareBoards(&expected, &result, FUNCTION_NAME, '2', expectedToFail);
+  expectedToFail = true;
+  matchBoardsToTest(&result, &expected);
+  changeCastling(&result, BLACK_KINGSIDE);
+  changeCastling(&result, BLACK_BOTH);
+  changeCastling(&result, WHITE_BOTH_BLACK_KINGSIDE);
+  changeCastling(&expected, BLACK_BOTH);
+  bool c3 =
+      compareBoards(&expected, &result, FUNCTION_NAME, '3', expectedToFail);
+  return c0 && c1 && c2 && c3;
+}
+
 void testBoard() {
   bool resultTestPlaceBitValue = testPlaceBitValue();
   bool resultTestCleanGameState = testCleanGameState();
@@ -233,9 +269,11 @@ void testBoard() {
   bool resultTestPutPiece = testPutPiece();
   bool resultTestChangePlayingSide = testChangePlayingSide();
   bool resultTestChangePassant = testChangePassant();
+  bool resultTestChangeCastling = testChangeCastling();
   if (resultTestPlaceBitValue && resultTestCleanGameState &&
       resultTestInitBoard && resultTestRemovePiece && resultTestPutPiece &&
-      resultTestChangePassant && resultTestChangePlayingSide) {
+      resultTestChangePassant && resultTestChangePlayingSide &&
+      resultTestChangeCastling) {
     printf(GREEN "Tested board sucessfully \n" RESET);
   }
 }
