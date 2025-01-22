@@ -466,16 +466,6 @@ BOOL compareBoards(const board *expected, const board *result,
                        functionName, expectedToFail);
   BOOL valid = areGSEqual && areBBLEqual && areHistoryEqual &&
                areZobristRandomsEqual && arePieceListEqual;
-  if (!valid && !expectedToFail) {
-    printf(RED
-           "Error comparing boards in %s, test number %c, expected equality\n",
-           functionName, testNumber);
-  } else if (valid && expectedToFail) {
-    printf(
-        RED
-        "Error comparing boards in %s, test number %c, expected inequality\n",
-        functionName, testNumber);
-  }
   printf(
       YELLOW
       "--------------------BOARDS COMP END-------------------------\n" RESET);
