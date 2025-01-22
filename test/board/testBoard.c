@@ -49,6 +49,7 @@ static BOOL testInitBoard() {
   board result, expected;
   initBoard(&result);
   // Have to use this or reset state used to compute random zobrist
+  // can't use matchBoardsToTest because call to initBoard function
   expected.zobristRandoms = result.zobristRandoms;
   cleanBitBoardList(&expected.bitBoardsList);
   cleanPieceList(&expected.pieceList);
@@ -62,6 +63,23 @@ static BOOL testInitBoard() {
       compareBoards(&expected, &result, FUNCTION_NAME, '0', expectedToFail);
   return c0;
 }
+
+static void matchBoardsToTest(board *board1, board *board2) {
+  zobristRandoms zobrist;
+  fillZobristRandoms(&zobrist);
+  initBoard(board1);
+  initBoard(board2);
+  board1->zobristRandoms = zobrist;
+  board2->zobristRandoms = zobrist;
+}
+
+// static BOOL testRemovePiece() {
+//   const char *FUNCTION_NAME = "removePiece";
+//   BOOL expectedToFail = FALSE;
+//   board result, expected;
+//   matchBoardsToTest(&result, &expected);
+//   return FALSE;
+// }
 
 void testBoard() {
   BOOL resultTestPlaceBitValue = testPlaceBitValue();
