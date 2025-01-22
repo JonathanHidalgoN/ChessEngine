@@ -445,21 +445,22 @@ BOOL compareZobristRandoms(const zobristRandoms *expected,
 
 BOOL compareBoards(const board *expected, const board *result,
                    const char *functionName, char testNumber,
-                   int expectedToFail) {
+                   BOOL expectedToFail) {
   printf(YELLOW
-         "--------------------COMPARING BOARDS-------------------------");
+         "--------------------COMPARING BOARDS-------------------------\n");
   BOOL areBBLEqual =
       compareBitBoardLists(&expected->bitBoardsList, &result->bitBoardsList,
-                           '-', functionName, expectedToFail);
+                           testNumber, functionName, expectedToFail);
   BOOL areGSEqual = compareGameStates(&expected->gameState, &result->gameState,
-                                      functionName, '-', expectedToFail);
-  BOOL areHistoryEqual = compareHistory(&expected->history, &result->history,
-                                        '-', functionName, expectedToFail);
+                                      functionName, testNumber, expectedToFail);
+  BOOL areHistoryEqual =
+      compareHistory(&expected->history, &result->history, testNumber,
+                     functionName, expectedToFail);
   BOOL areZobristRandomsEqual =
       compareZobristRandoms(&expected->zobristRandoms, &result->zobristRandoms,
-                            '-', functionName, expectedToFail);
+                            testNumber, functionName, expectedToFail);
   BOOL arePieceListEqual =
-      comparePieceList(&expected->pieceList, &result->pieceList, '-',
+      comparePieceList(&expected->pieceList, &result->pieceList, testNumber,
                        functionName, expectedToFail);
   BOOL valid = areGSEqual && areBBLEqual && areHistoryEqual &&
                areZobristRandomsEqual && arePieceListEqual;
@@ -473,7 +474,8 @@ BOOL compareBoards(const board *expected, const board *result,
         "Error comparing boards in %s, test number %c, expected inequality\n",
         functionName, testNumber);
   }
-  printf("--------------------BOARDS COMP END-------------------------" RESET);
+  printf(
+      "--------------------BOARDS COMP END-------------------------\n" RESET);
   return valid;
 }
 
@@ -486,7 +488,7 @@ BOOL compareGameStates(const gameState *expected, const gameState *result,
                "expected:\n" RESET,
            functionName, testNumber);
     printGameState(expected);
-    printf(RED "Result" RESET);
+    printf(RED "Result\n" RESET);
     printGameState(result);
     return FALSE;
   } else if (areEqual && expectedToFail) {
