@@ -170,7 +170,7 @@ static bool testPutPiece() {
 }
 
 static bool testChangePassant() {
-  const char *FUNCTION_NAME = "putPiece";
+  const char *FUNCTION_NAME = "changePassant";
   bool expectedToFail = false;
   board result, expected;
   matchBoardsToTest(&result, &expected);
@@ -205,16 +205,37 @@ static bool testChangePassant() {
   return c0 && c1 && c2 && c3;
 }
 
+static bool testChangePlayingSide() {
+  const char *FUNCTION_NAME = "changePlayingSide";
+  bool expectedToFail = false;
+  board result, expected;
+  // Expected playing side is white
+  matchBoardsToTest(&result, &expected);
+  changePlayingSide(&result);
+  changePlayingSide(&result);
+  bool c0 =
+      compareBoards(&expected, &result, FUNCTION_NAME, '0', expectedToFail);
+  expectedToFail = true;
+  matchBoardsToTest(&result, &expected);
+  changePlayingSide(&result);
+  changePlayingSide(&result);
+  changePlayingSide(&result);
+  bool c1 =
+      compareBoards(&expected, &result, FUNCTION_NAME, '0', expectedToFail);
+  return c0 && c1;
+}
+
 void testBoard() {
   bool resultTestPlaceBitValue = testPlaceBitValue();
   bool resultTestCleanGameState = testCleanGameState();
   bool resultTestInitBoard = testInitBoard();
   bool resultTestRemovePiece = testRemovePiece();
   bool resultTestPutPiece = testPutPiece();
+  bool resultTestChangePlayingSide = testChangePlayingSide();
   bool resultTestChangePassant = testChangePassant();
   if (resultTestPlaceBitValue && resultTestCleanGameState &&
       resultTestInitBoard && resultTestRemovePiece && resultTestPutPiece &&
-      resultTestChangePassant) {
+      resultTestChangePassant && resultTestChangePlayingSide) {
     printf(GREEN "Tested board sucessfully \n" RESET);
   }
 }
