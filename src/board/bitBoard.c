@@ -48,47 +48,47 @@ void initBitBoardsListStandarChess(bitBoardsList *bitBoardsList) {
 
   for (i = 0; i < COLS; i++) {
     placeBitValue(fromBoardCordsToBitIndex(1, i), 1,
-                  &bitBoardsList->pieces[WHITE][PAWN]); // Modify directly
+                  &bitBoardsList->pieces[COLOR_WHITE][PIECE_PAWN]); // Modify directly
     placeBitValue(fromBoardCordsToBitIndex(6, i), 1,
-                  &bitBoardsList->pieces[BLACK][PAWN]); // Modify directly
+                  &bitBoardsList->pieces[COLOR_BLACK][PIECE_PAWN]); // Modify directly
   }
 
   placeBitValue(fromBoardCordsToBitIndex(0, 0), 1,
-                &bitBoardsList->pieces[WHITE][ROOK]);
+                &bitBoardsList->pieces[COLOR_WHITE][PIECE_ROOK]);
   placeBitValue(fromBoardCordsToBitIndex(0, 7), 1,
-                &bitBoardsList->pieces[WHITE][ROOK]);
+                &bitBoardsList->pieces[COLOR_WHITE][PIECE_ROOK]);
   placeBitValue(fromBoardCordsToBitIndex(7, 0), 1,
-                &bitBoardsList->pieces[BLACK][ROOK]);
+                &bitBoardsList->pieces[COLOR_BLACK][PIECE_ROOK]);
   placeBitValue(fromBoardCordsToBitIndex(7, 7), 1,
-                &bitBoardsList->pieces[BLACK][ROOK]);
+                &bitBoardsList->pieces[COLOR_BLACK][PIECE_ROOK]);
 
   placeBitValue(fromBoardCordsToBitIndex(0, 1), 1,
-                &bitBoardsList->pieces[WHITE][KNIGHT]);
+                &bitBoardsList->pieces[COLOR_WHITE][PIECE_KNIGHT]);
   placeBitValue(fromBoardCordsToBitIndex(0, 6), 1,
-                &bitBoardsList->pieces[WHITE][KNIGHT]);
+                &bitBoardsList->pieces[COLOR_WHITE][PIECE_KNIGHT]);
   placeBitValue(fromBoardCordsToBitIndex(7, 1), 1,
-                &bitBoardsList->pieces[BLACK][KNIGHT]);
+                &bitBoardsList->pieces[COLOR_BLACK][PIECE_KNIGHT]);
   placeBitValue(fromBoardCordsToBitIndex(7, 6), 1,
-                &bitBoardsList->pieces[BLACK][KNIGHT]);
+                &bitBoardsList->pieces[COLOR_BLACK][PIECE_KNIGHT]);
 
   placeBitValue(fromBoardCordsToBitIndex(0, 2), 1,
-                &bitBoardsList->pieces[WHITE][BISHOP]);
+                &bitBoardsList->pieces[COLOR_WHITE][PIECE_BISHOP]);
   placeBitValue(fromBoardCordsToBitIndex(0, 5), 1,
-                &bitBoardsList->pieces[WHITE][BISHOP]);
+                &bitBoardsList->pieces[COLOR_WHITE][PIECE_BISHOP]);
   placeBitValue(fromBoardCordsToBitIndex(7, 2), 1,
-                &bitBoardsList->pieces[BLACK][BISHOP]);
+                &bitBoardsList->pieces[COLOR_BLACK][PIECE_BISHOP]);
   placeBitValue(fromBoardCordsToBitIndex(7, 5), 1,
-                &bitBoardsList->pieces[BLACK][BISHOP]);
+                &bitBoardsList->pieces[COLOR_BLACK][PIECE_BISHOP]);
 
   placeBitValue(fromBoardCordsToBitIndex(0, 3), 1,
-                &bitBoardsList->pieces[WHITE][QUEEN]);
+                &bitBoardsList->pieces[COLOR_WHITE][PIECE_QUEEN]);
   placeBitValue(fromBoardCordsToBitIndex(7, 3), 1,
-                &bitBoardsList->pieces[BLACK][QUEEN]);
+                &bitBoardsList->pieces[COLOR_BLACK][PIECE_QUEEN]);
 
   placeBitValue(fromBoardCordsToBitIndex(0, 4), 1,
-                &bitBoardsList->pieces[WHITE][KING]);
+                &bitBoardsList->pieces[COLOR_WHITE][PIECE_KING]);
   placeBitValue(fromBoardCordsToBitIndex(7, 4), 1,
-                &bitBoardsList->pieces[BLACK][KING]);
+                &bitBoardsList->pieces[COLOR_BLACK][PIECE_KING]);
 }
 
 void placePieceRepresentationIntoBoardString(bitboard bb, char *br,
@@ -118,29 +118,29 @@ void printChessBoard(bitBoardsList *bitBoardsList) {
   for (i = 0; i < numberOfCharsInBoard; i++) {
     boardRepresentation[i] = '.';
   }
-  placePieceRepresentationIntoBoardString(bitBoardsList->pieces[WHITE][PAWN],
+  placePieceRepresentationIntoBoardString(bitBoardsList->pieces[COLOR_WHITE][PIECE_PAWN],
                                           boardRepresentation, 'P');
-  placePieceRepresentationIntoBoardString(bitBoardsList->pieces[WHITE][KNIGHT],
+  placePieceRepresentationIntoBoardString(bitBoardsList->pieces[COLOR_WHITE][PIECE_KNIGHT],
                                           boardRepresentation, 'T');
-  placePieceRepresentationIntoBoardString(bitBoardsList->pieces[WHITE][QUEEN],
+  placePieceRepresentationIntoBoardString(bitBoardsList->pieces[COLOR_WHITE][PIECE_QUEEN],
                                           boardRepresentation, 'Q');
-  placePieceRepresentationIntoBoardString(bitBoardsList->pieces[WHITE][KING],
+  placePieceRepresentationIntoBoardString(bitBoardsList->pieces[COLOR_WHITE][PIECE_KING],
                                           boardRepresentation, 'K');
-  placePieceRepresentationIntoBoardString(bitBoardsList->pieces[WHITE][ROOK],
+  placePieceRepresentationIntoBoardString(bitBoardsList->pieces[COLOR_WHITE][PIECE_ROOK],
                                           boardRepresentation, 'R');
-  placePieceRepresentationIntoBoardString(bitBoardsList->pieces[WHITE][BISHOP],
+  placePieceRepresentationIntoBoardString(bitBoardsList->pieces[COLOR_WHITE][PIECE_BISHOP],
                                           boardRepresentation, 'B');
-  placePieceRepresentationIntoBoardString(bitBoardsList->pieces[BLACK][PAWN],
+  placePieceRepresentationIntoBoardString(bitBoardsList->pieces[COLOR_BLACK][PIECE_PAWN],
                                           boardRepresentation, 'p');
-  placePieceRepresentationIntoBoardString(bitBoardsList->pieces[BLACK][KNIGHT],
+  placePieceRepresentationIntoBoardString(bitBoardsList->pieces[COLOR_BLACK][PIECE_KNIGHT],
                                           boardRepresentation, 't');
-  placePieceRepresentationIntoBoardString(bitBoardsList->pieces[BLACK][QUEEN],
+  placePieceRepresentationIntoBoardString(bitBoardsList->pieces[COLOR_BLACK][PIECE_QUEEN],
                                           boardRepresentation, 'q');
-  placePieceRepresentationIntoBoardString(bitBoardsList->pieces[BLACK][KING],
+  placePieceRepresentationIntoBoardString(bitBoardsList->pieces[COLOR_BLACK][PIECE_KING],
                                           boardRepresentation, 'k');
-  placePieceRepresentationIntoBoardString(bitBoardsList->pieces[BLACK][ROOK],
+  placePieceRepresentationIntoBoardString(bitBoardsList->pieces[COLOR_BLACK][PIECE_ROOK],
                                           boardRepresentation, 'r');
-  placePieceRepresentationIntoBoardString(bitBoardsList->pieces[BLACK][BISHOP],
+  placePieceRepresentationIntoBoardString(bitBoardsList->pieces[COLOR_BLACK][PIECE_BISHOP],
                                           boardRepresentation, 'b');
   for (i = 0; i < COLS; i++) {
     printf("%d | ", ROWS - i - 1);

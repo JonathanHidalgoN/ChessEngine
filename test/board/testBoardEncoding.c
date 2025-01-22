@@ -2,17 +2,17 @@
 #include "../test.h"
 #include <stdint.h>
 
-static BOOL testComputeZobristC1(zobristRandoms *randoms) {
+static bool testComputeZobristC1(zobristRandoms *randoms) {
   uint64_t expectedKey, resultKey;
   bitBoardsList bbl;
   cleanBitBoardList(&bbl);
-  int side = WHITE;
+  int side = COLOR_WHITE;
   int castlingCode = 0;
   int passantCode = 0;
-  bbl.pieces[WHITE][PAWN] = BIT(0);
+  bbl.pieces[COLOR_WHITE][PIECE_PAWN] = BIT(0);
   expectedKey =
       computeZobristFromState(randoms, &bbl, side, castlingCode, passantCode);
-  side = BLACK;
+  side = COLOR_BLACK;
   resultKey =
       computeZobristFromState(randoms, &bbl, side, castlingCode, passantCode);
   if (expectedKey == resultKey) {
@@ -25,7 +25,7 @@ static BOOL testComputeZobristC1(zobristRandoms *randoms) {
 void testZobristGeneration() {
   zobristRandoms randoms;
   fillZobristRandoms(&randoms);
-  BOOL resultC1 = testComputeZobristC1(&randoms);
+  bool resultC1 = testComputeZobristC1(&randoms);
   if (resultC1) {
     printf(GREEN "Tested zobrist keys successfully\n" RESET);
   }

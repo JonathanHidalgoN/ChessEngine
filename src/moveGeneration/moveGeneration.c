@@ -45,7 +45,7 @@ bitboard computeLegalMoves(int bitIndex, const bitBoardsList *board) {
   // Add castling, mate, passang pawn,
   alyBitBoard = computeSideBitBoard(piece.side, board);
   switch (piece.type) {
-  case PAWN:
+  case PIECE_PAWN:
     // Why didn't I add the forward move in the pawn attack function?
     // I am making this chess engine myself but sometimes I get stuck,
     // a tutorial I was following did the attack and move in different
@@ -54,17 +54,17 @@ bitboard computeLegalMoves(int bitIndex, const bitBoardsList *board) {
                   computePawnAttack(bitIndex, piece.side)) &
                  ~alyBitBoard;
     break;
-  case KING:
+  case PIECE_KING:
     legalMoves = computePawnAttack(bitIndex, piece.side) & ~alyBitBoard;
     break;
-  case KNIGHT:
+  case PIECE_KNIGHT:
     legalMoves = computePawnAttack(bitIndex, piece.side) & ~alyBitBoard;
     break;
-  case ROOK:
+  case PIECE_ROOK:
     generalBitBoard = computeSideBitBoard(!piece.side, board) | alyBitBoard;
     legalMoves = computeRookAttack(bitIndex, generalBitBoard) & ~alyBitBoard;
     break;
-  case BISHOP:
+  case PIECE_BISHOP:
     generalBitBoard = computeSideBitBoard(!piece.side, board) | alyBitBoard;
     legalMoves = computeBishopAttack(bitIndex, generalBitBoard) & ~alyBitBoard;
     break;

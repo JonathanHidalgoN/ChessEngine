@@ -44,42 +44,42 @@ gameState createGameState(int playingSide, int castlingCode,
                           int phaseValue);
 piece createPiece(int bitIndex, int side, int type);
 // ARE EQUAL FUNCTIONA
-BOOL areGameStatesEqual(const gameState *expected, const gameState *result);
-BOOL arePieceListEqual(const pieceList *pl1, const pieceList *pl2);
-BOOL areIntPairEqual(const intPair *a, const intPair *b);
-BOOL areFenStringsEqual(const fenString *a, const fenString *b);
-BOOL areHistoryEqual(const history *expected, const history *result, int *idx);
-BOOL areZobristRandomsEqual(const zobristRandoms *expected,
+bool areGameStatesEqual(const gameState *expected, const gameState *result);
+bool arePieceListEqual(const pieceList *pl1, const pieceList *pl2);
+bool areIntPairEqual(const intPair *a, const intPair *b);
+bool areFenStringsEqual(const fenString *a, const fenString *b);
+bool areHistoryEqual(const history *expected, const history *result, int *idx);
+bool areZobristRandomsEqual(const zobristRandoms *expected,
                             const zobristRandoms *result, int *idx);
-BOOL areInt64ListEqual(const uint64_t *l1, const uint64_t *l2, int len,
+bool areInt64ListEqual(const uint64_t *l1, const uint64_t *l2, int len,
                        int *idx);
 // COMPARE FUNCTIONS
-BOOL compareGameStates(const gameState *expected, const gameState *result,
+bool compareGameStates(const gameState *expected, const gameState *result,
                        const char *functionName, char testNumber,
-                       BOOL expectedToFail);
-BOOL compareBoards(const board *expected, const board *result,
+                       bool expectedToFail);
+bool compareBoards(const board *expected, const board *result,
                    const char *functionName, char testNumber,
-                   BOOL expectedToFail);
-BOOL compareBitBoard(bitboard expectedResult, bitboard result, char testNumber,
-                     const char *functionName, BOOL expectedToFail);
-BOOL comparePieces(const piece *expectedPiece, const piece *resultPiece,
+                   bool expectedToFail);
+bool compareBitBoard(bitboard expectedResult, bitboard result, char testNumber,
+                     const char *functionName, bool expectedToFail);
+bool comparePieces(const piece *expectedPiece, const piece *resultPiece,
                    char testNumber, const char *functionName,
-                   BOOL expectedToFail);
-BOOL compareFenStrings(const fenString *expected, const fenString *resutl,
+                   bool expectedToFail);
+bool compareFenStrings(const fenString *expected, const fenString *resutl,
                        char testNumber, const char *functionName,
-                       BOOL expectedToFail);
-BOOL compareBitBoardLists(const bitBoardsList *bbl1, const bitBoardsList *bbl2,
+                       bool expectedToFail);
+bool compareBitBoardLists(const bitBoardsList *bbl1, const bitBoardsList *bbl2,
                           char testNumber, const char *functionName,
-                          BOOL expectedToFail);
-BOOL compareIntNumbers(int expected, int result, const char *functionName,
-                       const char *fieldName, BOOL expectedToFail);
-BOOL comparePieceList(const pieceList *expected, const pieceList *result,
+                          bool expectedToFail);
+bool compareIntNumbers(int expected, int result, const char *functionName,
+                       const char *fieldName, bool expectedToFail);
+bool comparePieceList(const pieceList *expected, const pieceList *result,
                       char testNumber, const char *functionName,
-                      BOOL expectedToFail);
-BOOL compareHistory(const history *expected, const history *result,
+                      bool expectedToFail);
+bool compareHistory(const history *expected, const history *result,
                     char testNumber, const char *functionName,
-                    BOOL expectedToFail);
-BOOL compareZobristRandoms(const zobristRandoms *expected,
+                    bool expectedToFail);
+bool compareZobristRandoms(const zobristRandoms *expected,
                            const zobristRandoms *result, char testNumber,
-                           const char *functionName, BOOL expectedToFail);
+                           const char *functionName, bool expectedToFail);
 #endif

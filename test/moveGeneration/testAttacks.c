@@ -6,29 +6,29 @@
 // help me a lot to change the calls from the individual test functions to
 // this one
 //----------------------------------------------------------------------------------------
-static BOOL testPieceAttack(piece *piece, bitboard expectedResult,
+static bool testPieceAttack(piece *piece, bitboard expectedResult,
                             char testNumber, bitboard blockers) {
   bitboard result;
   char *functionName;
-  BOOL expectedToFail = FALSE;
+  bool expectedToFail = false;
   switch (piece->type) {
-  case PAWN:
+  case PIECE_PAWN:
     result = computePawnAttack(piece->bitIndex, piece->side);
     functionName = "computePawnAttack";
     break;
-  case KING:
+  case PIECE_KING:
     result = computeKingAttack(piece->bitIndex);
     functionName = "computeKingAttack";
     break;
-  case KNIGHT:
+  case PIECE_KNIGHT:
     result = computeKnightAttack(piece->bitIndex);
     functionName = "computeKnightAttack";
     break;
-  case ROOK:
+  case PIECE_ROOK:
     result = computeRookAttack(piece->bitIndex, blockers);
     functionName = "computeRookAttack";
     break;
-  case BISHOP:
+  case PIECE_BISHOP:
     result = computeBishopAttack(piece->bitIndex, blockers);
     functionName = "computeBishopAttack";
     break;
@@ -39,9 +39,9 @@ static BOOL testPieceAttack(piece *piece, bitboard expectedResult,
                          expectedToFail);
 }
 
-static BOOL testBishopAttacks() {
+static bool testBishopAttacks() {
   // Create a bishop piece struct - color doesn't matter for bishops
-  piece bishopPiece = {WHITE, BISHOP, 0};
+  piece bishopPiece = {COLOR_WHITE, PIECE_BISHOP, 0};
   // empty board
   bitboard blockers = 0ULL;
 
@@ -91,9 +91,9 @@ static BOOL testBishopAttacks() {
   return c0 && c1 && c2 && c3 && c4 && c5 && c6 && c7 && c8;
 }
 
-static BOOL testRookAttacks() {
+static bool testRookAttacks() {
   // Create a rook piece struct - color doesn't matter for rooks
-  piece rookPiece = {WHITE, ROOK, 0};
+  piece rookPiece = {COLOR_WHITE, PIECE_ROOK, 0};
   // empty board
   bitboard blockers = 0ULL;
 
@@ -153,54 +153,54 @@ static BOOL testRookAttacks() {
   return c0 && c1 && c2 && c3 && c4 && c5 && c6 && c7 && c8 && c9 && c10;
 }
 
-static BOOL testPawnAttacks() {
+static bool testPawnAttacks() {
   // Create a pawn piece struct - we'll update the side and position for each
   // test
-  piece pawnPiece = {WHITE, PAWN, 0};
+  piece pawnPiece = {COLOR_WHITE, PIECE_PAWN, 0};
   // Pawns don't use blockers, so we'll keep it as 0
   bitboard blockers = 0ULL;
 
   // Test case 0 - black pawn at position 9
   pawnPiece.bitIndex = 9;
-  pawnPiece.side = BLACK;
+  pawnPiece.side = COLOR_BLACK;
   int c0 = testPieceAttack(&pawnPiece, BIT(0) + BIT(2), '0', blockers);
 
   // Test case 1 - black pawn at position 1 (edge case)
   pawnPiece.bitIndex = 1;
-  pawnPiece.side = BLACK;
+  pawnPiece.side = COLOR_BLACK;
   int c1 = testPieceAttack(&pawnPiece, 0, '1', blockers);
 
   // Test case 2 - white pawn at position 0 (edge case)
   pawnPiece.bitIndex = 0;
-  pawnPiece.side = WHITE;
+  pawnPiece.side = COLOR_WHITE;
   int c2 = testPieceAttack(&pawnPiece, BIT(9), '2', blockers);
 
   // Test case 3 - white pawn at position 7 (edge case)
   pawnPiece.bitIndex = 7;
-  pawnPiece.side = WHITE;
+  pawnPiece.side = COLOR_WHITE;
   int c3 = testPieceAttack(&pawnPiece, BIT(14), '3', blockers);
 
   // Test case 4 - black pawn at position 56
   pawnPiece.bitIndex = 56;
-  pawnPiece.side = BLACK;
+  pawnPiece.side = COLOR_BLACK;
   int c4 = testPieceAttack(&pawnPiece, BIT(49), '4', blockers);
 
   // Test case 5 - black pawn at position 63
   pawnPiece.bitIndex = 63;
-  pawnPiece.side = BLACK;
+  pawnPiece.side = COLOR_BLACK;
   int c5 = testPieceAttack(&pawnPiece, BIT(54), '5', blockers);
 
   // Test case 6 - white pawn at position 54
   pawnPiece.bitIndex = 54;
-  pawnPiece.side = WHITE;
+  pawnPiece.side = COLOR_WHITE;
   int c6 = testPieceAttack(&pawnPiece, BIT(63) + BIT(61), '6', blockers);
 
   return c1 && c0 && c3 && c2 && c4 && c5 && c6;
 }
 
-static BOOL testKnightAttacks() {
+static bool testKnightAttacks() {
   // Create a knight piece struct - color doesn't matter for knights
-  piece knightPiece = {WHITE, KNIGHT, 0};
+  piece knightPiece = {COLOR_WHITE, PIECE_KNIGHT, 0};
   // Knights don't use blockers
   bitboard blockers = 0ULL;
 
@@ -223,9 +223,9 @@ static BOOL testKnightAttacks() {
   return c0 && c1 && c2 && c3;
 }
 
-static BOOL testKingAttacks() {
+static bool testKingAttacks() {
   // Create a king piece struct - color doesn't matter for king movement
-  piece kingPiece = {WHITE, KING, 0};
+  piece kingPiece = {COLOR_WHITE, PIECE_KING, 0};
   // Kings don't use blockers
   bitboard blockers = 0ULL;
 
@@ -252,11 +252,11 @@ static BOOL testKingAttacks() {
 }
 
 void testAttacks() {
-  BOOL resultTestPawnAttack = testPawnAttacks();
-  BOOL resultTestKnightAttack = testKnightAttacks();
-  BOOL resultTestKingAttack = testKingAttacks();
-  BOOL resultTestRookAttack = testRookAttacks();
-  BOOL resultTestBishopAttack = testBishopAttacks();
+  bool resultTestPawnAttack = testPawnAttacks();
+  bool resultTestKnightAttack = testKnightAttacks();
+  bool resultTestKingAttack = testKingAttacks();
+  bool resultTestRookAttack = testRookAttacks();
+  bool resultTestBishopAttack = testBishopAttacks();
   if (resultTestPawnAttack && resultTestKnightAttack && resultTestKingAttack &&
       resultTestRookAttack && resultTestBishopAttack) {
     printf(GREEN "Tested attacks successfully \n" RESET);

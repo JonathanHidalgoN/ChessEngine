@@ -1,10 +1,10 @@
 #include "../test.h"
 #include <stdio.h>
 
-static BOOL testInitFenString() {
+static bool testInitFenString() {
   int stringLen = 56;
   const char *FUNCTION_NAME = "initFenString";
-  BOOL expectedToFail = FALSE;
+  bool expectedToFail = false;
   char *validString =
       "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
   fenString functionResult;
@@ -40,7 +40,7 @@ static BOOL testInitFenString() {
   return c1 && c2 && c3 && c4;
 }
 
-static BOOL testCaseCheckValidFenString(fenString *fenString,
+static bool testCaseCheckValidFenString(fenString *fenString,
                                         int expectingValid, char testNumber) {
   int valid = checkValidFenString(fenString);
   if (expectingValid && !valid) {
@@ -57,7 +57,7 @@ static BOOL testCaseCheckValidFenString(fenString *fenString,
   return 1;
 }
 
-static BOOL testCheckValidFenString() {
+static bool testCheckValidFenString() {
   int expectingValid = 1;
   int stringLen = 56;
   char *validString =
@@ -138,7 +138,7 @@ static BOOL testCheckValidFenString() {
   return c8 && c0 && c1 && c2 && c3 && c4 && c5 && c6 && c7 && c9;
 }
 
-static BOOL testInitBitBoardWithFenStringC0() {
+static bool testInitBitBoardWithFenStringC0() {
   int i;
   int expectedToFail = 0;
   char *functionName = "initBitBoardListWithFenString";
@@ -151,14 +151,14 @@ static BOOL testInitBitBoardWithFenStringC0() {
   cleanBitBoardList(&expected);
   initBitBoardListWithFenString(&result, &fenString);
   for (i = 0; i < NUMBEROFSQUARES; i++) {
-    expected.pieces[WHITE][PAWN] |= BIT(i);
+    expected.pieces[COLOR_WHITE][PIECE_PAWN] |= BIT(i);
   }
   int valid = compareBitBoardLists(&expected, &result, '0', functionName,
                                    expectedToFail);
   return valid;
 }
 
-static BOOL testInitBitBoardWithFenStringC1() {
+static bool testInitBitBoardWithFenStringC1() {
   char *functionName = "initBitBoardListWithFenString";
   int expectedToFail = 0;
   int stringLen = 28;
@@ -174,7 +174,7 @@ static BOOL testInitBitBoardWithFenStringC1() {
   return valid;
 }
 
-static BOOL testInitBitBoardWithFenStringC2() {
+static bool testInitBitBoardWithFenStringC2() {
   char *functionName = "initBitBoardListWithFenString";
   int expectedToFail = 0;
   int stringLen = 32;
@@ -184,16 +184,16 @@ static BOOL testInitBitBoardWithFenStringC2() {
   bitBoardsList result, expected;
   cleanBitBoardList(&expected);
   initBitBoardListWithFenString(&result, &fenString);
-  expected.pieces[WHITE][PAWN] |= BIT(0);
-  expected.pieces[BLACK][PAWN] |= BIT(7);
-  expected.pieces[BLACK][ROOK] |= BIT(56);
-  expected.pieces[WHITE][ROOK] |= BIT(63);
+  expected.pieces[COLOR_WHITE][PIECE_PAWN] |= BIT(0);
+  expected.pieces[COLOR_BLACK][PIECE_PAWN] |= BIT(7);
+  expected.pieces[COLOR_BLACK][PIECE_ROOK] |= BIT(56);
+  expected.pieces[COLOR_WHITE][PIECE_ROOK] |= BIT(63);
   int valid = compareBitBoardLists(&expected, &result, '2', functionName,
                                    expectedToFail);
   return valid;
 }
 
-static BOOL testInitBitBoardWithFenStringC3() {
+static bool testInitBitBoardWithFenStringC3() {
   char *functionName = "initBitBoardListWithFenString";
   int expectedToFail = 1;
   int stringLen = 32;
@@ -208,260 +208,260 @@ static BOOL testInitBitBoardWithFenStringC3() {
   return valid;
 }
 
-static BOOL testGetSideFromFenString() {
+static bool testGetSideFromFenString() {
   const char *FIELD_NAME = "SIDE";
   const char *FUNCTION_NAME = "getSideFromFenString";
-  COLOR expectedSide = WHITE;
-  BOOL expectedToFail = FALSE;
+  COLOR expectedSide = COLOR_WHITE;
+  bool expectedToFail = false;
   int stringLen = 32;
   char *string = "p6P/8/8/8/8/8/8/R6r w KQkq 1 5 8";
   fenString fenString;
   initFenString(string, stringLen, &fenString);
   COLOR result = getSideFromFenString(&fenString);
-  BOOL c0 = compareIntNumbers(expectedSide, result, FUNCTION_NAME, FIELD_NAME,
+  bool c0 = compareIntNumbers(expectedSide, result, FUNCTION_NAME, FIELD_NAME,
                               expectedToFail);
-  expectedSide = WHITE;
-  expectedToFail = FALSE;
+  expectedSide = COLOR_WHITE;
+  expectedToFail = false;
   stringLen = 35;
   string = "p6P/p7/8/8/8/8/8/R6r w KQkq 1 10 10";
   initFenString(string, stringLen, &fenString);
   result = getSideFromFenString(&fenString);
-  BOOL c1 = compareIntNumbers(expectedSide, result, FUNCTION_NAME, FIELD_NAME,
+  bool c1 = compareIntNumbers(expectedSide, result, FUNCTION_NAME, FIELD_NAME,
                               expectedToFail);
-  expectedSide = BLACK;
-  expectedToFail = FALSE;
+  expectedSide = COLOR_BLACK;
+  expectedToFail = false;
   stringLen = 35;
   string = "p6P/p7/8/8/8/8/8/R6r b KQkq 1 10 10";
   initFenString(string, stringLen, &fenString);
   result = getSideFromFenString(&fenString);
-  BOOL c2 = compareIntNumbers(expectedSide, result, FUNCTION_NAME, FIELD_NAME,
+  bool c2 = compareIntNumbers(expectedSide, result, FUNCTION_NAME, FIELD_NAME,
                               expectedToFail);
-  expectedSide = BLACK;
-  expectedToFail = FALSE;
+  expectedSide = COLOR_BLACK;
+  expectedToFail = false;
   stringLen = 38;
   string = "pppp3P/p7/8/8/8/8/8/R6r b KQkq 1 10 10";
   initFenString(string, stringLen, &fenString);
   result = getSideFromFenString(&fenString);
-  BOOL c3 = compareIntNumbers(expectedSide, result, FUNCTION_NAME, FIELD_NAME,
+  bool c3 = compareIntNumbers(expectedSide, result, FUNCTION_NAME, FIELD_NAME,
                               expectedToFail);
-  expectedSide = BLACK;
-  expectedToFail = TRUE;
+  expectedSide = COLOR_BLACK;
+  expectedToFail = true;
   stringLen = 38;
   string = "pppp3P/p7/8/8/8/8/8/R6r w KQkq 1 10 10";
   initFenString(string, stringLen, &fenString);
   result = getSideFromFenString(&fenString);
-  BOOL c4 = compareIntNumbers(expectedSide, result, FUNCTION_NAME, FIELD_NAME,
+  bool c4 = compareIntNumbers(expectedSide, result, FUNCTION_NAME, FIELD_NAME,
                               expectedToFail);
-  expectedSide = WHITE;
-  expectedToFail = TRUE;
+  expectedSide = COLOR_WHITE;
+  expectedToFail = true;
   stringLen = 35;
   string = "p6P/p7/8/8/8/8/8/R6r b KQkq 1 10 10";
   initFenString(string, stringLen, &fenString);
   result = getSideFromFenString(&fenString);
-  BOOL c5 = compareIntNumbers(expectedSide, result, FUNCTION_NAME, FIELD_NAME,
+  bool c5 = compareIntNumbers(expectedSide, result, FUNCTION_NAME, FIELD_NAME,
                               expectedToFail);
 
   return c0 && c1 && c2 && c3 && c4 && c5;
 }
 
-static BOOL testGetCastlingCodeFromFenString() {
+static bool testGetCastlingCodeFromFenString() {
   const char *FIELD_NAME = "castling code";
   const char *FUNCTION_NAME = "getCastlingCodeFromFenString";
   CASTLING_KEYS expectedCastlingKey = BOTH_ALL;
-  BOOL expectedToFail = FALSE;
+  bool expectedToFail = false;
   int stringLen = 32;
   char *string = "p6P/8/8/8/8/8/8/R6r w KQkq 1 5 8";
   fenString fenString;
   initFenString(string, stringLen, &fenString);
   CASTLING_KEYS result = getCastlingCodeFromFenString(&fenString);
-  BOOL c0 = compareIntNumbers(expectedCastlingKey, result, FUNCTION_NAME,
+  bool c0 = compareIntNumbers(expectedCastlingKey, result, FUNCTION_NAME,
                               FIELD_NAME, expectedToFail);
   expectedCastlingKey = BOTH_ALL;
-  expectedToFail = FALSE;
+  expectedToFail = false;
   stringLen = 35;
   string = "p6P/p7/p7/p8/8/8/8/R6r w KQkq 1 5 8";
   initFenString(string, stringLen, &fenString);
   result = getCastlingCodeFromFenString(&fenString);
-  BOOL c1 = compareIntNumbers(expectedCastlingKey, result, FUNCTION_NAME,
+  bool c1 = compareIntNumbers(expectedCastlingKey, result, FUNCTION_NAME,
                               FIELD_NAME, expectedToFail);
   expectedCastlingKey = NO_CASTLING;
-  expectedToFail = FALSE;
+  expectedToFail = false;
   stringLen = 35;
   string = "p6P/p7/p7/p8/8/8/8/R6r w ---- 1 5 8";
   initFenString(string, stringLen, &fenString);
   result = getCastlingCodeFromFenString(&fenString);
-  BOOL c2 = compareIntNumbers(expectedCastlingKey, result, FUNCTION_NAME,
+  bool c2 = compareIntNumbers(expectedCastlingKey, result, FUNCTION_NAME,
                               FIELD_NAME, expectedToFail);
   expectedCastlingKey = WHITE_KINGSIDE;
-  expectedToFail = FALSE;
+  expectedToFail = false;
   stringLen = 35;
   string = "p6P/p7/p7/p8/8/8/8/R6r w K--- 1 5 8";
   initFenString(string, stringLen, &fenString);
   result = getCastlingCodeFromFenString(&fenString);
-  BOOL c3 = compareIntNumbers(expectedCastlingKey, result, FUNCTION_NAME,
+  bool c3 = compareIntNumbers(expectedCastlingKey, result, FUNCTION_NAME,
                               FIELD_NAME, expectedToFail);
   expectedCastlingKey = WHITE_BOTH_BLACK_QUEENSIDE;
-  expectedToFail = FALSE;
+  expectedToFail = false;
   stringLen = 35;
   string = "p6P/p7/p7/p8/8/8/8/R6r w KQ-q 1 5 8";
   initFenString(string, stringLen, &fenString);
   result = getCastlingCodeFromFenString(&fenString);
-  BOOL c4 = compareIntNumbers(expectedCastlingKey, result, FUNCTION_NAME,
+  bool c4 = compareIntNumbers(expectedCastlingKey, result, FUNCTION_NAME,
                               FIELD_NAME, expectedToFail);
   expectedCastlingKey = BLACK_BOTH;
-  expectedToFail = FALSE;
+  expectedToFail = false;
   stringLen = 35;
   string = "p6P/p7/p7/p8/8/8/8/R6r w --kq 1 5 8";
   initFenString(string, stringLen, &fenString);
   result = getCastlingCodeFromFenString(&fenString);
-  BOOL c5 = compareIntNumbers(expectedCastlingKey, result, FUNCTION_NAME,
+  bool c5 = compareIntNumbers(expectedCastlingKey, result, FUNCTION_NAME,
                               FIELD_NAME, expectedToFail);
   expectedCastlingKey = BLACK_BOTH;
-  expectedToFail = TRUE;
+  expectedToFail = true;
   stringLen = 35;
   string = "p6P/p7/p7/p8/8/8/8/R6r w KQ-- 1 5 8";
   initFenString(string, stringLen, &fenString);
   result = getCastlingCodeFromFenString(&fenString);
-  BOOL c6 = compareIntNumbers(expectedCastlingKey, result, FUNCTION_NAME,
+  bool c6 = compareIntNumbers(expectedCastlingKey, result, FUNCTION_NAME,
                               FIELD_NAME, expectedToFail);
   expectedCastlingKey = BLACK_BOTH;
-  expectedToFail = TRUE;
+  expectedToFail = true;
   stringLen = 35;
   string = "p6P/p7/p7/p8/8/8/8/R6r b KQkq 1 5 8";
   initFenString(string, stringLen, &fenString);
   result = getCastlingCodeFromFenString(&fenString);
-  BOOL c7 = compareIntNumbers(expectedCastlingKey, result, FUNCTION_NAME,
+  bool c7 = compareIntNumbers(expectedCastlingKey, result, FUNCTION_NAME,
                               FIELD_NAME, expectedToFail);
   return c0 && c1 && c2 && c4 && c3 && c5 && c6 && c7;
 }
 
-static BOOL testGetHalfMovesFromFenString() {
+static bool testGetHalfMovesFromFenString() {
   const char *FIELD_NAME = "half moves";
   const char *FUNCTION_NAME = "getHalfMovesFromFenString";
   int expected = 5;
-  BOOL expectedToFail = FALSE;
+  bool expectedToFail = false;
   int stringLen = 32;
   char *string = "p6P/8/8/8/8/8/8/R6r w KQkq 1 5 8";
   fenString fenString;
   initFenString(string, stringLen, &fenString);
   int result = getHalfMovesFromFenString(&fenString);
-  BOOL c0 = compareIntNumbers(expected, result, FUNCTION_NAME, FIELD_NAME,
+  bool c0 = compareIntNumbers(expected, result, FUNCTION_NAME, FIELD_NAME,
                               expectedToFail);
   expected = 5;
-  expectedToFail = FALSE;
+  expectedToFail = false;
   stringLen = 33;
   string = "p6P/8/8/8/8/8/8/R6r w KQkq 1 5 10";
   initFenString(string, stringLen, &fenString);
   result = getHalfMovesFromFenString(&fenString);
-  BOOL c1 = compareIntNumbers(expected, result, FUNCTION_NAME, FIELD_NAME,
+  bool c1 = compareIntNumbers(expected, result, FUNCTION_NAME, FIELD_NAME,
                               expectedToFail);
   expected = 8;
-  expectedToFail = FALSE;
+  expectedToFail = false;
   stringLen = 35;
   string = "ppp6P/8/8/8/8/8/8/R6r w --kq 1 8 10";
   initFenString(string, stringLen, &fenString);
   result = getHalfMovesFromFenString(&fenString);
-  BOOL c2 = compareIntNumbers(expected, result, FUNCTION_NAME, FIELD_NAME,
+  bool c2 = compareIntNumbers(expected, result, FUNCTION_NAME, FIELD_NAME,
                               expectedToFail);
   expected = 12;
-  expectedToFail = FALSE;
+  expectedToFail = false;
   stringLen = 33;
   string = "p6P/8/8/8/8/8/8/R6r w KQkq 1 12 8";
   initFenString(string, stringLen, &fenString);
   result = getHalfMovesFromFenString(&fenString);
-  BOOL c3 = compareIntNumbers(expected, result, FUNCTION_NAME, FIELD_NAME,
+  bool c3 = compareIntNumbers(expected, result, FUNCTION_NAME, FIELD_NAME,
                               expectedToFail);
   expected = 44;
-  expectedToFail = FALSE;
+  expectedToFail = false;
   stringLen = 32;
   string = "p7/8/8/8/8/8/8/R6r w KQkq 1 44 8";
   initFenString(string, stringLen, &fenString);
   result = getHalfMovesFromFenString(&fenString);
-  BOOL c4 = compareIntNumbers(expected, result, FUNCTION_NAME, FIELD_NAME,
+  bool c4 = compareIntNumbers(expected, result, FUNCTION_NAME, FIELD_NAME,
                               expectedToFail);
   expected = 5;
-  expectedToFail = TRUE;
+  expectedToFail = true;
   stringLen = 32;
   string = "p6P/8/8/8/8/8/8/R6r w KQkq 1 6 8";
   initFenString(string, stringLen, &fenString);
   result = getHalfMovesFromFenString(&fenString);
-  BOOL c5 = compareIntNumbers(expected, result, FUNCTION_NAME, FIELD_NAME,
+  bool c5 = compareIntNumbers(expected, result, FUNCTION_NAME, FIELD_NAME,
                               expectedToFail);
   expected = 5;
-  expectedToFail = TRUE;
+  expectedToFail = true;
   stringLen = 33;
   string = "p6P/8/8/8/8/8/8/R6r b KQkq 1 10 8";
   initFenString(string, stringLen, &fenString);
   result = getHalfMovesFromFenString(&fenString);
-  BOOL c6 = compareIntNumbers(expected, result, FUNCTION_NAME, FIELD_NAME,
+  bool c6 = compareIntNumbers(expected, result, FUNCTION_NAME, FIELD_NAME,
                               expectedToFail);
   return c0 && c1 && c2 && c3 && c4 && c5 && c6;
 }
 
-static BOOL testGetFullMovesFromFenString() {
+static bool testGetFullMovesFromFenString() {
   const char *FIELD_NAME = "full moves";
   const char *FUNCTION_NAME = "getFullMovesFromFenString";
   int expected = 8;
-  BOOL expectedToFail = FALSE;
+  bool expectedToFail = false;
   int stringLen = 32;
   char *string = "p6P/8/8/8/8/8/8/R6r w KQkq 1 5 8";
   fenString fenString;
   initFenString(string, stringLen, &fenString);
   int result = getFullMovesFromFenString(&fenString);
-  BOOL c0 = compareIntNumbers(expected, result, FUNCTION_NAME, FIELD_NAME,
+  bool c0 = compareIntNumbers(expected, result, FUNCTION_NAME, FIELD_NAME,
                               expectedToFail);
   expected = 10;
-  expectedToFail = FALSE;
+  expectedToFail = false;
   stringLen = 33;
   string = "p6P/8/8/8/8/8/8/R6r w KQkq 1 5 10";
   initFenString(string, stringLen, &fenString);
   result = getFullMovesFromFenString(&fenString);
-  BOOL c1 = compareIntNumbers(expected, result, FUNCTION_NAME, FIELD_NAME,
+  bool c1 = compareIntNumbers(expected, result, FUNCTION_NAME, FIELD_NAME,
                               expectedToFail);
   expected = 12;
-  expectedToFail = FALSE;
+  expectedToFail = false;
   stringLen = 36;
   string = "pppp5P/8/8/8/8/8/8/R6r w --kq 1 8 12";
   initFenString(string, stringLen, &fenString);
   result = getFullMovesFromFenString(&fenString);
-  BOOL c2 = compareIntNumbers(expected, result, FUNCTION_NAME, FIELD_NAME,
+  bool c2 = compareIntNumbers(expected, result, FUNCTION_NAME, FIELD_NAME,
                               expectedToFail);
   expected = 1;
-  expectedToFail = FALSE;
+  expectedToFail = false;
   stringLen = 33;
   string = "p6P/8/8/8/8/8/8/R6r w KQkq 1 12 1";
   initFenString(string, stringLen, &fenString);
   result = getFullMovesFromFenString(&fenString);
-  BOOL c3 = compareIntNumbers(expected, result, FUNCTION_NAME, FIELD_NAME,
+  bool c3 = compareIntNumbers(expected, result, FUNCTION_NAME, FIELD_NAME,
                               expectedToFail);
   expected = 44;
-  expectedToFail = FALSE;
+  expectedToFail = false;
   stringLen = 32;
   string = "p7/8/8/8/8/8/8/R6r w KQkq 1 4 44";
   initFenString(string, stringLen, &fenString);
   result = getFullMovesFromFenString(&fenString);
-  BOOL c4 = compareIntNumbers(expected, result, FUNCTION_NAME, FIELD_NAME,
+  bool c4 = compareIntNumbers(expected, result, FUNCTION_NAME, FIELD_NAME,
                               expectedToFail);
   expected = 5;
-  expectedToFail = TRUE;
+  expectedToFail = true;
   stringLen = 32;
   string = "p6P/8/8/8/8/8/8/R6r w KQkq 1 6 8";
   initFenString(string, stringLen, &fenString);
   result = getFullMovesFromFenString(&fenString);
-  BOOL c5 = compareIntNumbers(expected, result, FUNCTION_NAME, FIELD_NAME,
+  bool c5 = compareIntNumbers(expected, result, FUNCTION_NAME, FIELD_NAME,
                               expectedToFail);
   expected = 5;
-  expectedToFail = TRUE;
+  expectedToFail = true;
   stringLen = 33;
   string = "p6P/8/8/8/8/8/8/R6r b KQkq 1 10 1";
   initFenString(string, stringLen, &fenString);
   result = getFullMovesFromFenString(&fenString);
-  BOOL c6 = compareIntNumbers(expected, result, FUNCTION_NAME, FIELD_NAME,
+  bool c6 = compareIntNumbers(expected, result, FUNCTION_NAME, FIELD_NAME,
                               expectedToFail);
   return c0 && c1 && c2 && c3 && c4 && c5 && c6;
 }
 
-static BOOL testInitBitBoardWithFenString() {
+static bool testInitBitBoardWithFenString() {
   int c0 = testInitBitBoardWithFenStringC0();
   int c1 = testInitBitBoardWithFenStringC1();
   int c2 = testInitBitBoardWithFenStringC2();
@@ -470,13 +470,13 @@ static BOOL testInitBitBoardWithFenString() {
 }
 
 void testFenString() {
-  BOOL resultTestInitFenString = testInitFenString();
-  BOOL resultCheckValidFenString = testCheckValidFenString();
-  BOOL resultTestIniBitBoardWithFenString = testInitBitBoardWithFenString();
-  BOOL resultTestGetSideFromFenString = testGetSideFromFenString();
-  BOOL resultTestGetCastlingCode = testGetCastlingCodeFromFenString();
-  BOOL resultTestHalfMovesFenString = testGetHalfMovesFromFenString();
-  BOOL resultTestGetFullMovesFromFenString = testGetFullMovesFromFenString();
+  bool resultTestInitFenString = testInitFenString();
+  bool resultCheckValidFenString = testCheckValidFenString();
+  bool resultTestIniBitBoardWithFenString = testInitBitBoardWithFenString();
+  bool resultTestGetSideFromFenString = testGetSideFromFenString();
+  bool resultTestGetCastlingCode = testGetCastlingCodeFromFenString();
+  bool resultTestHalfMovesFenString = testGetHalfMovesFromFenString();
+  bool resultTestGetFullMovesFromFenString = testGetFullMovesFromFenString();
   if (resultTestInitFenString && resultCheckValidFenString &&
       resultTestIniBitBoardWithFenString && resultTestGetSideFromFenString &&
       resultTestGetCastlingCode && resultTestHalfMovesFenString &&

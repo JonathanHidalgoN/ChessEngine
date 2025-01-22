@@ -41,9 +41,9 @@ typedef struct fenString {
 } fenString;
 
 void initFenString(char *string, int stringLen, fenString *fenString);
-int checkValidFenStringNumberVals(const char *string, int lowIndex,
-                                  int highIndex, int limit);
-int checkValidFenString(const fenString *fenString);
+bool checkValidFenStringNumberVals(const char *string, int lowIndex,
+                                   int highIndex, int limit);
+bool checkValidFenString(const fenString *fenString);
 void initBitBoardListWithFenString(bitBoardsList *bbl, fenString *fenString);
 void initBoardWithFenString(board *board, char *string, int stringLen);
 COLOR getSideFromFenString(fenString *fenString);

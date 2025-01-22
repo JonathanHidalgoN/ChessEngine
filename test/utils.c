@@ -15,40 +15,40 @@ void showDiff(bitboard expected, bitboard result) {
   }
 }
 
-BOOL compareBitBoard(bitboard expectedResult, bitboard result, char testNumber,
-                     const char *functionName, BOOL expectedToFail) {
+bool compareBitBoard(bitboard expectedResult, bitboard result, char testNumber,
+                     const char *functionName, bool expectedToFail) {
 
   if (result != expectedResult && !expectedToFail) {
     printf(RED "Error in function %s, test case %c \n" RESET, functionName,
            testNumber);
     showDiff(expectedResult, result);
-    return FALSE;
+    return false;
   } else if (result == expectedResult && expectedToFail) {
     printf(RED "Error in function %s expected to fail, test case %c \n" RESET,
            functionName, testNumber);
     showDiff(expectedResult, result);
-    return FALSE;
+    return false;
   }
-  return TRUE;
+  return true;
 }
 
-BOOL areBitBoardListEqual(const bitBoardsList *expectedBBL,
+bool areBitBoardListEqual(const bitBoardsList *expectedBBL,
                           const bitBoardsList *functionBBL, int *f1, int *f2) {
   for (int i = 0; i < NUMBEROFCOLORS; i++) {
     for (int j = 0; j < NUMBEROFDIFFERENTPIECES; j++) {
       if (expectedBBL->pieces[i][j] != functionBBL->pieces[i][j]) {
         *f1 = i;
         *f2 = j;
-        return FALSE;
+        return false;
       }
     }
   }
-  return TRUE;
+  return true;
 }
 
-BOOL compareBitBoardLists(const bitBoardsList *bbl1, const bitBoardsList *bbl2,
+bool compareBitBoardLists(const bitBoardsList *bbl1, const bitBoardsList *bbl2,
                           char testNumber, const char *functionName,
-                          BOOL expectedToFail) {
+                          bool expectedToFail) {
   int colorWhereFailed = -1;
   int pieceWhereFailed = -1;
   int areEqual =
@@ -59,7 +59,7 @@ BOOL compareBitBoardLists(const bitBoardsList *bbl1, const bitBoardsList *bbl2,
            functionName, colorWhereFailed, pieceWhereFailed, testNumber);
     showDiff(bbl1->pieces[colorWhereFailed][pieceWhereFailed],
              bbl2->pieces[colorWhereFailed][pieceWhereFailed]);
-    return FALSE;
+    return false;
   } else if (areEqual && expectedToFail) {
     printf(RED
            "Error in %s, color:%d, piece:%d expected different bitBoardsList "
@@ -67,12 +67,12 @@ BOOL compareBitBoardLists(const bitBoardsList *bbl1, const bitBoardsList *bbl2,
            functionName, colorWhereFailed, pieceWhereFailed, testNumber);
     showDiff(bbl1->pieces[colorWhereFailed][pieceWhereFailed],
              bbl2->pieces[colorWhereFailed][pieceWhereFailed]);
-    return FALSE;
+    return false;
   }
-  return TRUE;
+  return true;
 }
 
-BOOL arePiecesEqual(const piece *expectedResult, const piece *functionResult) {
+bool arePiecesEqual(const piece *expectedResult, const piece *functionResult) {
   return expectedResult->bitIndex == functionResult->bitIndex &&
          expectedResult->side == functionResult->side &&
          expectedResult->type == functionResult->type;
@@ -83,9 +83,9 @@ void printPieceStruct(const piece *piece) {
          piece->bitIndex);
 }
 
-BOOL comparePieces(const piece *expectedPiece, const piece *resultPiece,
+bool comparePieces(const piece *expectedPiece, const piece *resultPiece,
                    char testNumber, const char *functionName,
-                   BOOL expectedToFail) {
+                   bool expectedToFail) {
   int areEqual = arePiecesEqual(expectedPiece, resultPiece);
   if (!areEqual && !expectedToFail) {
     printf(RED "Error in %s function case %c\n" RESET, functionName,
@@ -107,9 +107,9 @@ BOOL comparePieces(const piece *expectedPiece, const piece *resultPiece,
   return 1;
 }
 
-BOOL compareFenStrings(const fenString *expected, const fenString *result,
+bool compareFenStrings(const fenString *expected, const fenString *result,
                        char testNumber, const char *functionName,
-                       BOOL expectedToFail) {
+                       bool expectedToFail) {
   int areEqual = areFenStringsEqual(expected, result);
   if (!areEqual && !expectedToFail) {
     printf(RED "Error testing FEN string function %s, case: %c\n" RESET,
@@ -118,7 +118,7 @@ BOOL compareFenStrings(const fenString *expected, const fenString *result,
     printFenString(expected);
     printf("------------------- Function result ------------------------\n");
     printFenString(result);
-    return FALSE;
+    return false;
   } else if (!areEqual && !expectedToFail) {
     printf(RED "Error testing FEN string, expected inequality, function %s, "
                "case: %c\n" RESET,
@@ -127,13 +127,13 @@ BOOL compareFenStrings(const fenString *expected, const fenString *result,
     printFenString(expected);
     printf("------------------- Function result ------------------------\n");
     printFenString(result);
-    return FALSE;
+    return false;
   }
-  return TRUE;
+  return true;
 }
 
-BOOL compareIntNumbers(int expected, int result, const char *functionName,
-                       const char *fieldName, BOOL expectedToFail) {
+bool compareIntNumbers(int expected, int result, const char *functionName,
+                       const char *fieldName, bool expectedToFail) {
   if (expected != result && !expectedToFail) {
     printf(
         RED
@@ -154,15 +154,15 @@ piece createPiece(int bitIndex, int side, int type) {
   return result;
 }
 
-BOOL arePieceListEqual(const pieceList *pl1, const pieceList *pl2) {
+bool arePieceListEqual(const pieceList *pl1, const pieceList *pl2) {
   for (int i = 0; i < NUMBEROFSQUARES; i++) {
     if (!(pl1->pieces[i] == pl2->pieces[i]))
-      return FALSE;
+      return false;
   }
-  return TRUE;
+  return true;
 }
 
-BOOL areGameStatesEqual(const gameState *expected, const gameState *result) {
+bool areGameStatesEqual(const gameState *expected, const gameState *result) {
   return expected->playingSide == result->playingSide &&
          expected->castlingCode == result->castlingCode &&
          expected->halfMoveCounter == result->halfMoveCounter &&
@@ -261,11 +261,11 @@ void printFenString(const fenString *fen) {
   printf("}\n");
 }
 
-BOOL areIntPairEqual(const intPair *a, const intPair *b) {
+bool areIntPairEqual(const intPair *a, const intPair *b) {
   return (a->first == b->first && a->second == b->second);
 }
 
-BOOL areFenStringsEqual(const fenString *a, const fenString *b) {
+bool areFenStringsEqual(const fenString *a, const fenString *b) {
   if ((a->string == NULL || b->string == NULL)) {
     if (a->string != b->string) {
       return 0;
@@ -305,11 +305,11 @@ BOOL areFenStringsEqual(const fenString *a, const fenString *b) {
   return 1;
 }
 
-BOOL comparePieceList(const pieceList *expected, const pieceList *result,
+bool comparePieceList(const pieceList *expected, const pieceList *result,
                       char testNumber, const char *functionName,
-                      BOOL expectedToFail) {
+                      bool expectedToFail) {
 
-  BOOL areEqual = arePieceListEqual(expected, result);
+  bool areEqual = arePieceListEqual(expected, result);
   if (!areEqual && !expectedToFail) {
     printf(RED "Error in function %s, expected equal piece list, test case %c. "
                "Expected result:" RESET,
@@ -317,7 +317,7 @@ BOOL comparePieceList(const pieceList *expected, const pieceList *result,
     printPieceList(expected);
     printf(RED "-----------------Result----------------------" RESET);
     printPieceList(result);
-    return FALSE;
+    return false;
   } else if (areEqual && expectedToFail) {
     printf(RED
            "Error in function %s, expected different piece list, test case %c. "
@@ -326,9 +326,9 @@ BOOL comparePieceList(const pieceList *expected, const pieceList *result,
     printPieceList(expected);
     printf(RED "-----------------Result----------------------" RESET);
     printPieceList(result);
-    return FALSE;
+    return false;
   }
-  return TRUE;
+  return true;
 }
 
 void printPieceList(const pieceList *pieceList) {
@@ -339,28 +339,28 @@ void printPieceList(const pieceList *pieceList) {
   printf("\n");
 }
 
-BOOL areHistoryEqual(const history *expected, const history *result, int *idx) {
+bool areHistoryEqual(const history *expected, const history *result, int *idx) {
   // TODO: THIS TEST USES THE ARRAY OF THE HISTORY NO THE POP FUNCTION
   // BECAUSE THE CONST, CHANGE THIS
   if (expected->len != result->len) {
     *idx = -1;
-    return FALSE;
+    return false;
   }
   for (int i = 0; i < expected->len; i++) {
-    BOOL areEqual =
+    bool areEqual =
         areGameStatesEqual(&expected->states[i], &result->states[i]);
     if (!areEqual)
       *idx = i;
-    return FALSE;
+    return false;
   }
-  return TRUE;
+  return true;
 }
 
-BOOL compareHistory(const history *expected, const history *result,
+bool compareHistory(const history *expected, const history *result,
                     char testNumber, const char *functionName,
-                    BOOL expectedToFail) {
+                    bool expectedToFail) {
   int idx = -2;
-  BOOL areEqual = areHistoryEqual(expected, result, &idx);
+  bool areEqual = areHistoryEqual(expected, result, &idx);
   if (!areEqual && !expectedToFail) {
     if (idx == -2) {
       printf(RED "Error in function %s, test case %d, expected equal lenghts, "
@@ -373,7 +373,7 @@ BOOL compareHistory(const history *expected, const history *result,
     printGameState(&expected->states[idx]);
     printf(RED "Result: \n" RESET);
     printGameState(&result->states[idx]);
-    return FALSE;
+    return false;
   } else if (!areEqual && !expectedToFail) {
     if (idx == -2) {
       printf(RED
@@ -387,84 +387,84 @@ BOOL compareHistory(const history *expected, const history *result,
     printGameState(&expected->states[idx]);
     printf(RED "Result: \n" RESET);
     printGameState(&result->states[idx]);
-    return FALSE;
+    return false;
   }
-  return TRUE;
+  return true;
 }
 
-BOOL areInt64ListEqual(const uint64_t *l1, const uint64_t *l2, int len,
+bool areInt64ListEqual(const uint64_t *l1, const uint64_t *l2, int len,
                        int *idx) {
   for (int i = 0; i < len; i++) {
     if (l1[i] != l2[i]) {
       *idx = i;
-      return FALSE;
+      return false;
     }
   }
-  return TRUE;
+  return true;
 }
 
-BOOL areZobristRandomsEqual(const zobristRandoms *expected,
+bool areZobristRandomsEqual(const zobristRandoms *expected,
                             const zobristRandoms *result, int *idx) {
-  BOOL eq1, eq2, eq3, eq4;
+  bool eq1, eq2, eq3, eq4;
   eq1 = areInt64ListEqual(expected->castlingRandoms, result->castlingRandoms,
                           NKEYSFORCASTLING, idx);
   eq2 = areInt64ListEqual(expected->sidesRandoms, result->sidesRandoms,
                           NUMBEROFCOLORS, idx);
   eq3 = areInt64ListEqual(expected->passantRandoms, result->passantRandoms,
                           NKEYSFORPASSANT, idx);
-  eq4 = TRUE;
+  eq4 = true;
   for (int i = 0; i < NUMBEROFSQUARES; i++) {
     for (int j = 0; j < NUMBEROFCOLORS; j++) {
       eq4 = eq4 && areInt64ListEqual(expected->pieceRandoms[i][j],
                                      result->pieceRandoms[i][j],
                                      NUMBEROFDIFFERENTPIECES, idx);
       if (!eq4)
-        return FALSE;
+        return false;
     }
   }
 
   return eq1 && eq2 && eq3 && eq4;
 }
 
-BOOL compareZobristRandoms(const zobristRandoms *expected,
+bool compareZobristRandoms(const zobristRandoms *expected,
                            const zobristRandoms *result, char testNumber,
-                           const char *functionName, BOOL expectedToFail) {
+                           const char *functionName, bool expectedToFail) {
   int idxWhereFailed = -1;
-  BOOL areEqual = areZobristRandomsEqual(expected, result, &idxWhereFailed);
+  bool areEqual = areZobristRandomsEqual(expected, result, &idxWhereFailed);
   if (!areEqual && !expectedToFail) {
     printf(RED "Error in function %s, test case %c, expected equal zobrist "
                "randoms\n" RESET,
            functionName, testNumber);
-    return FALSE;
+    return false;
   } else if (areEqual && expectedToFail) {
     printf(RED "Error in function %s, test case %c, expected different zobrist "
                "randoms\n" RESET,
            functionName, testNumber);
-    return FALSE;
+    return false;
   }
-  return TRUE;
+  return true;
 }
 
-BOOL compareBoards(const board *expected, const board *result,
+bool compareBoards(const board *expected, const board *result,
                    const char *functionName, char testNumber,
-                   BOOL expectedToFail) {
+                   bool expectedToFail) {
   printf(YELLOW
          "--------------------COMPARING BOARDS-------------------------\n");
-  BOOL areBBLEqual =
+  bool areBBLEqual =
       compareBitBoardLists(&expected->bitBoardsList, &result->bitBoardsList,
                            testNumber, functionName, expectedToFail);
-  BOOL areGSEqual = compareGameStates(&expected->gameState, &result->gameState,
+  bool areGSEqual = compareGameStates(&expected->gameState, &result->gameState,
                                       functionName, testNumber, expectedToFail);
-  BOOL areHistoryEqual =
+  bool areHistoryEqual =
       compareHistory(&expected->history, &result->history, testNumber,
                      functionName, expectedToFail);
-  BOOL areZobristRandomsEqual =
+  bool areZobristRandomsEqual =
       compareZobristRandoms(&expected->zobristRandoms, &result->zobristRandoms,
                             testNumber, functionName, expectedToFail);
-  BOOL arePieceListEqual =
+  bool arePieceListEqual =
       comparePieceList(&expected->pieceList, &result->pieceList, testNumber,
                        functionName, expectedToFail);
-  BOOL valid = areGSEqual && areBBLEqual && areHistoryEqual &&
+  bool valid = areGSEqual && areBBLEqual && areHistoryEqual &&
                areZobristRandomsEqual && arePieceListEqual;
   printf(
       YELLOW
@@ -472,10 +472,10 @@ BOOL compareBoards(const board *expected, const board *result,
   return valid;
 }
 
-BOOL compareGameStates(const gameState *expected, const gameState *result,
+bool compareGameStates(const gameState *expected, const gameState *result,
                        const char *functionName, char testNumber,
-                       BOOL expectedToFail) {
-  BOOL areEqual = areGameStatesEqual(expected, result);
+                       bool expectedToFail) {
+  bool areEqual = areGameStatesEqual(expected, result);
   if (!areEqual && !expectedToFail) {
     printf(RED "Error in function %s test case %c, expected equal game states, "
                "expected:\n" RESET,
@@ -483,7 +483,7 @@ BOOL compareGameStates(const gameState *expected, const gameState *result,
     printGameState(expected);
     printf(RED "Result\n" RESET);
     printGameState(result);
-    return FALSE;
+    return false;
   } else if (areEqual && expectedToFail) {
     printf(RED
            "Error in function %s test case %c, expected different game states, "
@@ -492,7 +492,7 @@ BOOL compareGameStates(const gameState *expected, const gameState *result,
     printGameState(expected);
     printf(RED "Result" RESET);
     printGameState(result);
-    return FALSE;
+    return false;
   }
-  return TRUE;
+  return true;
 }

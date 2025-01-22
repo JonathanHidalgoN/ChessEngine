@@ -104,7 +104,7 @@ static int checkCharInList(char val, const char *list, int listLen) {
   return found;
 }
 
-BOOL checkValidFenStringPart2(const char *string, int start) {
+bool checkValidFenStringPart2(const char *string, int start) {
 
   char sideToMoveChar = string[start];
   int valid = checkCharInList(sideToMoveChar, FEN_STRING_VALID_SIDE_CHARACTERS,
@@ -113,12 +113,12 @@ BOOL checkValidFenStringPart2(const char *string, int start) {
     printf("Error parsing character: %c at index: %d is not valid, should be "
            "w or b\n ",
            sideToMoveChar, start);
-    return FALSE;
+    return false;
   }
-  return TRUE;
+  return true;
 }
 
-BOOL checkValidFenStringPart3(const char *string, int start, int end) {
+bool checkValidFenStringPart3(const char *string, int start, int end) {
   for (int i = start; i <= end; i++) {
     char val = string[i];
     int valid = checkCharInList(val, FEN_STRING_VALID_CASTLING_CHARACTERS,
@@ -130,14 +130,14 @@ BOOL checkValidFenStringPart3(const char *string, int start, int end) {
         printf("%c ", FEN_STRING_VALID_CASTLING_CHARACTERS[j]);
       }
       printf("\n");
-      return FALSE;
+      return false;
     }
   }
-  return TRUE;
+  return true;
 }
 
 // TODO: extract the logic of taking a string a parse number to a util function
-BOOL checkValidFenStringNumberVals(const char *string, int start, int end,
+bool checkValidFenStringNumberVals(const char *string, int start, int end,
                                    int limit) {
   char numberStr[5];
   int c = 0;
@@ -152,7 +152,7 @@ BOOL checkValidFenStringNumberVals(const char *string, int start, int end,
       printf(
           "Error parsing FEN string at index %d, %c should be a number [0-9]\n",
           i, val);
-      return FALSE;
+      return false;
     }
   }
   numberStr[c] = '\0';
@@ -161,12 +161,12 @@ BOOL checkValidFenStringNumberVals(const char *string, int start, int end,
     printf("Error parsing FEN string limit number is %d, provided "
            "number is %d\n",
            limit, number);
-    return FALSE;
+    return false;
   }
-  return TRUE;
+  return true;
 }
 
-BOOL checkValidFenStringPart1(const char *string, int start, int end) {
+bool checkValidFenStringPart1(const char *string, int start, int end) {
   for (int i = start; i <= end; i++) {
     char val = string[i];
     int valid = checkCharInList(val, FEN_STRING_VALID_POSITION_CHARACTERS,
@@ -175,14 +175,14 @@ BOOL checkValidFenStringPart1(const char *string, int start, int end) {
       printf("Error parsing character %c at index %d, valid characters are "
              "[aA-rR] [1-8] or [/]\n",
              val, i);
-      return FALSE;
+      return false;
     }
   }
-  return TRUE;
+  return true;
 }
 
-BOOL checkValidFenString(const fenString *fenString) {
-  BOOL nullValid, valid1, valid2, valid3, valid4, valid5, valid6 = 1;
+bool checkValidFenString(const fenString *fenString) {
+  bool nullValid, valid1, valid2, valid3, valid4, valid5, valid6 = 1;
   if (fenString == NULL || fenString->string == NULL) {
     nullValid = 0;
     printf("NULL pointer to FEN string\n");
@@ -216,7 +216,7 @@ static void assingPiece(int *boardSquare, int color, int pieceType,
 void initBoardWithFenString(board *board, char *string, int stringLen) {
   fenString fenString;
   initFenString(string, stringLen, &fenString);
-  BOOL valid = checkValidFenString(&fenString);
+  bool valid = checkValidFenString(&fenString);
   if (!valid) {
     printf("invalid FEN string \n");
     return;
@@ -262,32 +262,32 @@ int getFullMovesFromFenString(const fenString *fenString) {
 COLOR getSideFromFenString(fenString *fenString) {
   char side = fenString->string[fenString->sideToMove];
   if (side == 'w') {
-    return WHITE;
+    return COLOR_WHITE;
   } else {
-    return BLACK;
+    return COLOR_BLACK;
   }
 }
 
 CASTLING_KEYS getCastlingCodeFromFenString(const fenString *fenString) {
-  BOOL whiteKingside = FALSE;
-  BOOL whiteQueenside = FALSE;
-  BOOL blackKingside = FALSE;
-  BOOL blackQueenside = FALSE;
+  bool whiteKingside = false;
+  bool whiteQueenside = false;
+  bool blackKingside = false;
+  bool blackQueenside = false;
 
   for (int i = fenString->castling.first; i <= fenString->castling.second;
        i++) {
     switch (fenString->string[i]) {
     case 'K':
-      whiteKingside = TRUE;
+      whiteKingside = true;
       break;
     case 'Q':
-      whiteQueenside = TRUE;
+      whiteQueenside = true;
       break;
     case 'k':
-      blackKingside = TRUE;
+      blackKingside = true;
       break;
     case 'q':
-      blackQueenside = TRUE;
+      blackQueenside = true;
       break;
     }
   }
@@ -333,40 +333,40 @@ void initBitBoardListWithFenString(bitBoardsList *bbl, fenString *fenString) {
        i <= fenString->piecesPositions.second; i++) {
     switch (fenString->string[i]) {
     case 'p':
-      assingPiece(&boardSquare, WHITE, PAWN, bbl);
+      assingPiece(&boardSquare, COLOR_WHITE, PIECE_PAWN, bbl);
       break;
     case 'P':
-      assingPiece(&boardSquare, BLACK, PAWN, bbl);
+      assingPiece(&boardSquare, COLOR_BLACK, PIECE_PAWN, bbl);
       break;
     case 'r':
-      assingPiece(&boardSquare, WHITE, ROOK, bbl);
+      assingPiece(&boardSquare, COLOR_WHITE, PIECE_ROOK, bbl);
       break;
     case 'R':
-      assingPiece(&boardSquare, BLACK, ROOK, bbl);
+      assingPiece(&boardSquare, COLOR_BLACK, PIECE_ROOK, bbl);
       break;
     case 'n':
-      assingPiece(&boardSquare, WHITE, KNIGHT, bbl);
+      assingPiece(&boardSquare, COLOR_WHITE, PIECE_KNIGHT, bbl);
       break;
     case 'N':
-      assingPiece(&boardSquare, BLACK, KNIGHT, bbl);
+      assingPiece(&boardSquare, COLOR_BLACK, PIECE_KNIGHT, bbl);
       break;
     case 'b':
-      assingPiece(&boardSquare, WHITE, BISHOP, bbl);
+      assingPiece(&boardSquare, COLOR_WHITE, PIECE_BISHOP, bbl);
       break;
     case 'B':
-      assingPiece(&boardSquare, BLACK, BISHOP, bbl);
+      assingPiece(&boardSquare, COLOR_BLACK, PIECE_BISHOP, bbl);
       break;
     case 'q':
-      assingPiece(&boardSquare, WHITE, QUEEN, bbl);
+      assingPiece(&boardSquare, COLOR_WHITE, PIECE_QUEEN, bbl);
       break;
     case 'Q':
-      assingPiece(&boardSquare, BLACK, QUEEN, bbl);
+      assingPiece(&boardSquare, COLOR_BLACK, PIECE_QUEEN, bbl);
       break;
     case 'k':
-      assingPiece(&boardSquare, WHITE, KING, bbl);
+      assingPiece(&boardSquare, COLOR_WHITE, PIECE_KING, bbl);
       break;
     case 'K':
-      assingPiece(&boardSquare, BLACK, KING, bbl);
+      assingPiece(&boardSquare, COLOR_BLACK, PIECE_KING, bbl);
       break;
     case '-':
       boardSquare++;

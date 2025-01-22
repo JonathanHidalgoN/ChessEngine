@@ -17,6 +17,6 @@ void updatePieceList(pieceList *pieceList, bitBoardsList *bitBoardsList) {
 
 void cleanPieceList(pieceList *pieceList) {
   for (int i = 0; i < NUMBEROFSQUARES; i++) {
-    pieceList->pieces[i] = EMPTY;
+    pieceList->pieces[i] = PIECE_EMPTY;
   }
 }

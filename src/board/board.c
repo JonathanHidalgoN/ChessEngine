@@ -2,7 +2,7 @@
 
 void removePiece(board *board, int square, int side, int piece) {
   placeBitValue(square, 0, &board->bitBoardsList.pieces[side][piece]);
-  board->pieceList.pieces[square] = EMPTY;
+  board->pieceList.pieces[square] = PIECE_EMPTY;
   board->gameState.zobristKey ^=
       board->zobristRandoms.pieceRandoms[square][side][piece];
 }
@@ -56,7 +56,7 @@ void cleanBoard(board *board) {
 }
 
 void cleanGameState(board *board) {
-  board->gameState.playingSide = WHITE;
+  board->gameState.playingSide = COLOR_WHITE;
   board->gameState.castlingCode = NO_CASTLING;
   board->gameState.halfMoveCounter = 0;
   board->gameState.fullMoveCounter = 0;

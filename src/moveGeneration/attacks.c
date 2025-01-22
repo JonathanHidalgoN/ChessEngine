@@ -89,7 +89,7 @@ bitboard bishopMask[NUMBEROFSQUARES];
 // A rook can attack at max 12 squares, 2**12 is 4096, this array holds all
 // possible attack patterns for a rook in all possible boards
 bitboard rookAttacks[NUMBEROFSQUARES][4096];
-// Same for BISHOP but at max can attack 9 squares
+// Same for PIECE_BISHOP but at max can attack 9 squares
 bitboard bishopAttacks[NUMBEROFSQUARES][512];
 
 bitboard computePawnAttack(int bitIndex, int side) {
