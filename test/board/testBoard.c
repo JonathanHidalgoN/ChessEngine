@@ -1,7 +1,7 @@
 #include "../test.h"
 #include <stdio.h>
 
-int testPlaceBitValue() {
+static BOOL testPlaceBitValue() {
   bitboard bb = 0;
   placeBitValue(0, 0, &bb);
   if (bb) {
@@ -29,7 +29,7 @@ int testPlaceBitValue() {
   return 1;
 }
 
-BOOL testCleanGameState() {
+static BOOL testCleanGameState() {
   const char *FUNCTION_NAME = "cleanGameState";
   // Zobrist keys will be tested alone
   const uint64_t ZOBRIST_KEY = 0ULL;
@@ -43,7 +43,7 @@ BOOL testCleanGameState() {
   return c0;
 }
 
-int testInitBoard() {
+static BOOL testInitBoard() {
   const char *FUNCTION_NAME = "initBoard";
   BOOL expectedToFail = FALSE;
   board result, expected;

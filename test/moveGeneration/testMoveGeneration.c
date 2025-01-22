@@ -1,7 +1,7 @@
 #include "../../include/moveGeneration/moveGeneration.h"
 #include "../test.h"
 
-int testComputeSideBitBoard() {
+static BOOL testComputeSideBitBoard() {
   int side = WHITE;
   BOOL expectedToFail = FALSE;
   bitboard expectedResult = 0ULL;
@@ -49,7 +49,7 @@ int testComputeSideBitBoard() {
   return c1 && c0 && c2 && c3 && c4 && c5;
 }
 
-int testFindPieceByIndex() {
+static BOOL testFindPieceByIndex() {
   bitBoardsList board;
   initBitBoardsListStandarChess(&board);
   BOOL expectedToFail = FALSE;
@@ -165,8 +165,8 @@ int testFindPieceByIndex() {
          c11 && c12 && c13;
 }
 
-int testPieceLegalMoves(piece *piece, bitboard expectedResult,
-                        bitBoardsList *board, char testNumber) {
+static BOOL testPieceLegalMoves(piece *piece, bitboard expectedResult,
+                                bitBoardsList *board, char testNumber) {
   bitboard result;
   char *functionName;
   BOOL expectedToFail = FALSE;
@@ -203,7 +203,7 @@ static int testPawnLegalMove(piece *testPawn, bitBoardsList *blockers,
   return result;
 }
 
-int testPawnLegalMoves() {
+static BOOL testPawnLegalMoves() {
   // TODO : test special pawn moves
   bitboard expectedResult;
   bitBoardsList board;
@@ -270,9 +270,9 @@ int testPawnLegalMoves() {
 }
 
 void testMoveGeneration() {
-  int resultTestComputeSideBitBoard = testComputeSideBitBoard();
-  int resultTestFindPieceByIndex = testFindPieceByIndex();
-  int resultTestPawnLegalMoves = testPawnLegalMoves();
+  BOOL resultTestComputeSideBitBoard = testComputeSideBitBoard();
+  BOOL resultTestFindPieceByIndex = testFindPieceByIndex();
+  BOOL resultTestPawnLegalMoves = testPawnLegalMoves();
   if (resultTestComputeSideBitBoard && resultTestFindPieceByIndex &&
       resultTestPawnLegalMoves) {
     printf(GREEN "Tested move generation successfully\n" RESET);

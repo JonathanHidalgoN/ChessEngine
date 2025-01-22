@@ -1,7 +1,7 @@
 #include "../test.h"
 #include <stdio.h>
 
-int testInitFenString() {
+static BOOL testInitFenString() {
   int stringLen = 56;
   const char *FUNCTION_NAME = "initFenString";
   BOOL expectedToFail = FALSE;
@@ -40,8 +40,8 @@ int testInitFenString() {
   return c1 && c2 && c3 && c4;
 }
 
-int testCaseCheckValidFenString(fenString *fenString, int expectingValid,
-                                char testNumber) {
+static BOOL testCaseCheckValidFenString(fenString *fenString,
+                                        int expectingValid, char testNumber) {
   int valid = checkValidFenString(fenString);
   if (expectingValid && !valid) {
     printf(RED "Error, expecting valid FEN string but got invalid %c\n" RESET,
@@ -57,7 +57,7 @@ int testCaseCheckValidFenString(fenString *fenString, int expectingValid,
   return 1;
 }
 
-int testCheckValidFenString() {
+static BOOL testCheckValidFenString() {
   int expectingValid = 1;
   int stringLen = 56;
   char *validString =
@@ -138,7 +138,7 @@ int testCheckValidFenString() {
   return c8 && c0 && c1 && c2 && c3 && c4 && c5 && c6 && c7 && c9;
 }
 
-int testInitBitBoardWithFenStringC0() {
+static BOOL testInitBitBoardWithFenStringC0() {
   int i;
   int expectedToFail = 0;
   char *functionName = "initBitBoardListWithFenString";
@@ -158,7 +158,7 @@ int testInitBitBoardWithFenStringC0() {
   return valid;
 }
 
-int testInitBitBoardWithFenStringC1() {
+static BOOL testInitBitBoardWithFenStringC1() {
   char *functionName = "initBitBoardListWithFenString";
   int expectedToFail = 0;
   int stringLen = 28;
@@ -174,7 +174,7 @@ int testInitBitBoardWithFenStringC1() {
   return valid;
 }
 
-int testInitBitBoardWithFenStringC2() {
+static BOOL testInitBitBoardWithFenStringC2() {
   char *functionName = "initBitBoardListWithFenString";
   int expectedToFail = 0;
   int stringLen = 32;
@@ -193,7 +193,7 @@ int testInitBitBoardWithFenStringC2() {
   return valid;
 }
 
-int testInitBitBoardWithFenStringC3() {
+static BOOL testInitBitBoardWithFenStringC3() {
   char *functionName = "initBitBoardListWithFenString";
   int expectedToFail = 1;
   int stringLen = 32;
@@ -208,7 +208,7 @@ int testInitBitBoardWithFenStringC3() {
   return valid;
 }
 
-BOOL testGetSideFromFenString() {
+static BOOL testGetSideFromFenString() {
   const char *FIELD_NAME = "SIDE";
   const char *FUNCTION_NAME = "getSideFromFenString";
   COLOR expectedSide = WHITE;
@@ -264,7 +264,7 @@ BOOL testGetSideFromFenString() {
   return c0 && c1 && c2 && c3 && c4 && c5;
 }
 
-int testGetCastlingCodeFromFenString() {
+static BOOL testGetCastlingCodeFromFenString() {
   const char *FIELD_NAME = "castling code";
   const char *FUNCTION_NAME = "getCastlingCodeFromFenString";
   CASTLING_KEYS expectedCastlingKey = BOTH_ALL;
@@ -335,7 +335,7 @@ int testGetCastlingCodeFromFenString() {
   return c0 && c1 && c2 && c4 && c3 && c5 && c6 && c7;
 }
 
-int testGetHalfMovesFromFenString() {
+static BOOL testGetHalfMovesFromFenString() {
   const char *FIELD_NAME = "half moves";
   const char *FUNCTION_NAME = "getHalfMovesFromFenString";
   int expected = 5;
@@ -398,7 +398,7 @@ int testGetHalfMovesFromFenString() {
   return c0 && c1 && c2 && c3 && c4 && c5 && c6;
 }
 
-int testGetFullMovesFromFenString() {
+static BOOL testGetFullMovesFromFenString() {
   const char *FIELD_NAME = "full moves";
   const char *FUNCTION_NAME = "getFullMovesFromFenString";
   int expected = 8;
@@ -461,7 +461,7 @@ int testGetFullMovesFromFenString() {
   return c0 && c1 && c2 && c3 && c4 && c5 && c6;
 }
 
-int testInitBitBoardWithFenString() {
+static BOOL testInitBitBoardWithFenString() {
   int c0 = testInitBitBoardWithFenStringC0();
   int c1 = testInitBitBoardWithFenStringC1();
   int c2 = testInitBitBoardWithFenStringC2();
@@ -470,13 +470,13 @@ int testInitBitBoardWithFenString() {
 }
 
 void testFenString() {
-  int resultTestInitFenString = testInitFenString();
-  int resultCheckValidFenString = testCheckValidFenString();
-  int resultTestIniBitBoardWithFenString = testInitBitBoardWithFenString();
-  int resultTestGetSideFromFenString = testGetSideFromFenString();
-  int resultTestGetCastlingCode = testGetCastlingCodeFromFenString();
-  int resultTestHalfMovesFenString = testGetHalfMovesFromFenString();
-  int resultTestGetFullMovesFromFenString = testGetFullMovesFromFenString();
+  BOOL resultTestInitFenString = testInitFenString();
+  BOOL resultCheckValidFenString = testCheckValidFenString();
+  BOOL resultTestIniBitBoardWithFenString = testInitBitBoardWithFenString();
+  BOOL resultTestGetSideFromFenString = testGetSideFromFenString();
+  BOOL resultTestGetCastlingCode = testGetCastlingCodeFromFenString();
+  BOOL resultTestHalfMovesFenString = testGetHalfMovesFromFenString();
+  BOOL resultTestGetFullMovesFromFenString = testGetFullMovesFromFenString();
   if (resultTestInitFenString && resultCheckValidFenString &&
       resultTestIniBitBoardWithFenString && resultTestGetSideFromFenString &&
       resultTestGetCastlingCode && resultTestHalfMovesFenString &&

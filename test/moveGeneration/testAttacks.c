@@ -6,8 +6,8 @@
 // help me a lot to change the calls from the individual test functions to
 // this one
 //----------------------------------------------------------------------------------------
-int testPieceAttack(piece *piece, bitboard expectedResult, char testNumber,
-                    bitboard blockers) {
+static BOOL testPieceAttack(piece *piece, bitboard expectedResult,
+                            char testNumber, bitboard blockers) {
   bitboard result;
   char *functionName;
   BOOL expectedToFail = FALSE;
@@ -39,7 +39,7 @@ int testPieceAttack(piece *piece, bitboard expectedResult, char testNumber,
                          expectedToFail);
 }
 
-int testBishopAttacks() {
+static BOOL testBishopAttacks() {
   // Create a bishop piece struct - color doesn't matter for bishops
   piece bishopPiece = {WHITE, BISHOP, 0};
   // empty board
@@ -91,7 +91,7 @@ int testBishopAttacks() {
   return c0 && c1 && c2 && c3 && c4 && c5 && c6 && c7 && c8;
 }
 
-int testRookAttacks() {
+static BOOL testRookAttacks() {
   // Create a rook piece struct - color doesn't matter for rooks
   piece rookPiece = {WHITE, ROOK, 0};
   // empty board
@@ -153,7 +153,7 @@ int testRookAttacks() {
   return c0 && c1 && c2 && c3 && c4 && c5 && c6 && c7 && c8 && c9 && c10;
 }
 
-int testPawnAttacks() {
+static BOOL testPawnAttacks() {
   // Create a pawn piece struct - we'll update the side and position for each
   // test
   piece pawnPiece = {WHITE, PAWN, 0};
@@ -198,7 +198,7 @@ int testPawnAttacks() {
   return c1 && c0 && c3 && c2 && c4 && c5 && c6;
 }
 
-int testKnightAttacks() {
+static BOOL testKnightAttacks() {
   // Create a knight piece struct - color doesn't matter for knights
   piece knightPiece = {WHITE, KNIGHT, 0};
   // Knights don't use blockers
@@ -223,7 +223,7 @@ int testKnightAttacks() {
   return c0 && c1 && c2 && c3;
 }
 
-int testKingAttacks() {
+static BOOL testKingAttacks() {
   // Create a king piece struct - color doesn't matter for king movement
   piece kingPiece = {WHITE, KING, 0};
   // Kings don't use blockers
@@ -252,11 +252,11 @@ int testKingAttacks() {
 }
 
 void testAttacks() {
-  int resultTestPawnAttack = testPawnAttacks();
-  int resultTestKnightAttack = testKnightAttacks();
-  int resultTestKingAttack = testKingAttacks();
-  int resultTestRookAttack = testRookAttacks();
-  int resultTestBishopAttack = testBishopAttacks();
+  BOOL resultTestPawnAttack = testPawnAttacks();
+  BOOL resultTestKnightAttack = testKnightAttacks();
+  BOOL resultTestKingAttack = testKingAttacks();
+  BOOL resultTestRookAttack = testRookAttacks();
+  BOOL resultTestBishopAttack = testBishopAttacks();
   if (resultTestPawnAttack && resultTestKnightAttack && resultTestKingAttack &&
       resultTestRookAttack && resultTestBishopAttack) {
     printf(GREEN "Tested attacks successfully \n" RESET);

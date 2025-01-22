@@ -1,9 +1,11 @@
 #include "../test.h"
 #include <stdio.h>
 
-int computeAndCompareUpdatePieceList(pieceList *expectedPieceList,
-                                     bitBoardsList *bitBoardsList,
-                                     char testNumber, char *functionName) {
+// TODO : MOVE THIS TO UTILS
+static BOOL computeAndCompareUpdatePieceList(pieceList *expectedPieceList,
+                                             bitBoardsList *bitBoardsList,
+                                             char testNumber,
+                                             char *functionName) {
   pieceList resultPieceList;
   updatePieceList(&resultPieceList, bitBoardsList);
   int areEqual = arePieceListEqual(expectedPieceList, &resultPieceList);
@@ -14,7 +16,7 @@ int computeAndCompareUpdatePieceList(pieceList *expectedPieceList,
   return 1;
 }
 
-int testUpdatePieceList() {
+static BOOL testUpdatePieceList() {
   char *functionName = "updatePieceList";
   int i;
   bitBoardsList bitBoardsList;
@@ -74,7 +76,7 @@ int testUpdatePieceList() {
 }
 
 void testPieceList() {
-  int testUpdatePieceListResult = testUpdatePieceList();
+  BOOL testUpdatePieceListResult = testUpdatePieceList();
   if (testUpdatePieceListResult) {
     printf(GREEN "Tested piece list successfully\n" RESET);
   }

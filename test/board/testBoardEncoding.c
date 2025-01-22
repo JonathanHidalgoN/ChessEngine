@@ -2,7 +2,7 @@
 #include "../test.h"
 #include <stdint.h>
 
-int testComputeZobristC1(zobristRandoms *randoms) {
+static BOOL testComputeZobristC1(zobristRandoms *randoms) {
   uint64_t expectedKey, resultKey;
   bitBoardsList bbl;
   cleanBitBoardList(&bbl);
@@ -25,7 +25,7 @@ int testComputeZobristC1(zobristRandoms *randoms) {
 void testZobristGeneration() {
   zobristRandoms randoms;
   fillZobristRandoms(&randoms);
-  int resultC1 = testComputeZobristC1(&randoms);
+  BOOL resultC1 = testComputeZobristC1(&randoms);
   if (resultC1) {
     printf(GREEN "Tested zobrist keys successfully\n" RESET);
   }

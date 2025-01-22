@@ -5,7 +5,7 @@
 // TODO: : I dont like this test because we know that its not a stack but an
 // array inside, maybe integration test would be better for this
 
-int testPushIntoHistory() {
+static BOOL testPushIntoHistory() {
   history history;
   cleanHistory(&history);
   // Test case 1: Pushing a state for WHITE
@@ -80,7 +80,7 @@ int testPushIntoHistory() {
   return 1;
 }
 
-int testPopFromHistory() {
+static BOOL testPopFromHistory() {
   history history;
   // Test case 1: Normal case
   gameState expectedGameState = {WHITE, 1, 2, 3, 4, 1ULL, 5};
