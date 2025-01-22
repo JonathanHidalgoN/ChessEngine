@@ -86,13 +86,49 @@ static bool testRemovePiece() {
   board result, expected;
   matchBoardsToTest(&result, &expected);
   // Add a two pawns to remove one
+  putPiece(&expected, 0, COLOR_WHITE, PIECE_PAWN);
   putPiece(&result, 0, COLOR_WHITE, PIECE_PAWN);
   putPiece(&result, 1, COLOR_WHITE, PIECE_PAWN);
   removePiece(&result, 1, COLOR_WHITE, PIECE_PAWN);
-  putPiece(&expected, 0, COLOR_WHITE, PIECE_PAWN);
   bool c0 =
       compareBoards(&expected, &result, FUNCTION_NAME, '0', expectedToFail);
-  return c0;
+  // Clean boards, put different pieces
+  matchBoardsToTest(&result, &expected);
+  putPiece(&expected, 0, COLOR_WHITE, PIECE_PAWN);
+  putPiece(&result, 0, COLOR_WHITE, PIECE_PAWN);
+  putPiece(&result, 1, COLOR_BLACK, PIECE_PAWN);
+  putPiece(&result, 3, COLOR_WHITE, PIECE_ROOK);
+  putPiece(&result, 4, COLOR_BLACK, PIECE_ROOK);
+  removePiece(&result, 1, COLOR_BLACK, PIECE_PAWN);
+  removePiece(&result, 3, COLOR_WHITE, PIECE_ROOK);
+  removePiece(&result, 4, COLOR_BLACK, PIECE_ROOK);
+  bool c1 =
+      compareBoards(&expected, &result, FUNCTION_NAME, '1', expectedToFail);
+  // Clean boards, put different pieces multiple comparison
+  matchBoardsToTest(&result, &expected);
+  putPiece(&expected, 0, COLOR_WHITE, PIECE_PAWN);
+  putPiece(&expected, 1, COLOR_BLACK, PIECE_PAWN);
+  putPiece(&result, 0, COLOR_WHITE, PIECE_PAWN);
+  putPiece(&result, 1, COLOR_BLACK, PIECE_PAWN);
+  putPiece(&result, 3, COLOR_WHITE, PIECE_ROOK);
+  putPiece(&result, 4, COLOR_BLACK, PIECE_ROOK);
+  removePiece(&result, 3, COLOR_WHITE, PIECE_ROOK);
+  removePiece(&result, 4, COLOR_BLACK, PIECE_ROOK);
+  bool c2 =
+      compareBoards(&expected, &result, FUNCTION_NAME, '2', expectedToFail);
+  // Clean boards, expected to fail
+  expectedToFail = true;
+  matchBoardsToTest(&result, &expected);
+  putPiece(&expected, 0, COLOR_WHITE, PIECE_PAWN);
+  putPiece(&expected, 1, COLOR_BLACK, PIECE_PAWN);
+  putPiece(&result, 1, COLOR_BLACK, PIECE_PAWN);
+  putPiece(&result, 3, COLOR_WHITE, PIECE_ROOK);
+  putPiece(&result, 4, COLOR_BLACK, PIECE_ROOK);
+  removePiece(&result, 3, COLOR_WHITE, PIECE_ROOK);
+  removePiece(&result, 4, COLOR_BLACK, PIECE_ROOK);
+  bool c3 =
+      compareBoards(&expected, &result, FUNCTION_NAME, '2', expectedToFail);
+  return c0 && c1 && c2 && c3;
 }
 
 void testBoard() {
