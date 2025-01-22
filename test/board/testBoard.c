@@ -35,7 +35,8 @@ static bool testCleanGameState() {
   const uint64_t ZOBRIST_KEY = 0ULL;
   bool expectedToFail = false;
   board result;
-  gameState expectGS = {COLOR_WHITE, NO_CASTLING, 0, NO_PASSANT, 0, ZOBRIST_KEY, 0};
+  gameState expectGS = {COLOR_WHITE, NO_CASTLING, 0, NO_PASSANT,
+                        0,           ZOBRIST_KEY, 0};
   cleanGameState(&result);
   result.gameState.zobristKey = ZOBRIST_KEY;
   bool c0 = compareGameStates(&expectGS, &result.gameState, FUNCTION_NAME, '0',
@@ -71,6 +72,12 @@ static void matchBoardsToTest(board *board1, board *board2) {
   initBoard(board2);
   board1->zobristRandoms = zobrist;
   board2->zobristRandoms = zobrist;
+  board1->gameState.zobristKey = computeZobristFromState(
+      &zobrist, &board1->bitBoardsList, board1->gameState.playingSide,
+      board1->gameState.castlingCode, board1->gameState.enPassantCode);
+  board2->gameState.zobristKey = computeZobristFromState(
+      &zobrist, &board2->bitBoardsList, board2->gameState.playingSide,
+      board2->gameState.castlingCode, board2->gameState.enPassantCode);
 }
 
 static bool testRemovePiece() {
