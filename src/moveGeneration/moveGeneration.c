@@ -46,13 +46,16 @@ piece findPieceByBitIndex(int bitIndex, const bitBoardsList *board) {
 }
 
 bool checkIfPawnFirstMove(COLOR side, int bitIndex) {
+  // NOTE: if someone wants to play a random chess variant this will create
+  // an unexpected behavior because just uses the position of the pawn
+
   // Cheks if pawn is in the row where it starts
   uint64_t mask = 1ULL;
   uint64_t numberPosition = 1ULL << bitIndex;
   const uint64_t ROW_2_UPPER_INDEX = 1ULL << 8;
   const uint64_t ROW_2_LOWER_INDEX = 1ULL << 15;
-  const uint64_t ROW_7_UPPER_INDEX = 1ULL << 63;
-  const uint64_t ROW_7_LOWER_INDEX = 1ULL << 56;
+  const uint64_t ROW_7_UPPER_INDEX = 1ULL << 55;
+  const uint64_t ROW_7_LOWER_INDEX = 1ULL << 48;
   if (side && numberPosition <= ROW_2_UPPER_INDEX &&
       numberPosition >= ROW_2_LOWER_INDEX) {
     return true;
