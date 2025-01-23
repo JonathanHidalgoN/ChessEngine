@@ -1,4 +1,6 @@
 #include "../../include/moveGeneration/moveGeneration.h"
+#include <stdbool.h>
+#include <stdint.h>
 #define DEBBUG 1
 
 bitboard computePawnForwardMove(int bitIndex, COLOR side, bool firstMove) {
@@ -43,17 +45,37 @@ piece findPieceByBitIndex(int bitIndex, const bitBoardsList *board) {
   return newPiece;
 }
 
+bool checkIfPawnFirstMove(COLOR side, int bitIndex) {
+  // Cheks if pawn is in the row where it starts
+  uint64_t mask = 1ULL;
+  uint64_t numberPosition = 1ULL << bitIndex;
+  const uint64_t ROW_2_UPPER_INDEX = 1ULL << 8;
+  const uint64_t ROW_2_LOWER_INDEX = 1ULL << 15;
+  const uint64_t ROW_7_UPPER_INDEX = 1ULL << 63;
+  const uint64_t ROW_7_LOWER_INDEX = 1ULL << 56;
+  if (side && numberPosition <= ROW_2_UPPER_INDEX &&
+      numberPosition >= ROW_2_LOWER_INDEX) {
+    return true;
+  } else if (!side && numberPosition <= ROW_7_UPPER_INDEX &&
+             numberPosition >= ROW_7_LOWER_INDEX) {
+    return true;
+  }
+  return false;
+}
+
 bitboard computeLegalMoves(int bitIndex, const bitBoardsList *board) {
   piece piece = findPieceByBitIndex(bitIndex, board);
-  bitboard legalMoves, alyBitBoard, generalBitBoard;
+  bitboard legalMoves, alyBitBoard, generalBitBoard, enemyBitBoard;
   // Add castling, mate, passang pawn,
   alyBitBoard = computeSideBitBoard(piece.side, board);
+  enemyBitBoard = computeSideBitBoard(~piece.side, board);
+  generalBitBoard = alyBitBoard | enemyBitBoard;
   switch (piece.type) {
   case PIECE_PAWN:
     bool firstMove = false;
     legalMoves =
         (computePawnForwardMove(piece.bitIndex, piece.side, firstMove) |
-         computePawnAttack(bitIndex, piece.side)) &
+         (computePawnAttack(bitIndex, piece.side) & enemyBitBoard)) &
         ~alyBitBoard;
     break;
   case PIECE_KING:

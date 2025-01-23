@@ -10,4 +10,5 @@ bitboard computeSideBitBoard(int side, const bitBoardsList *board);
  * Computes the pawn forward move
  */
 bitboard computePawnForwardMove(int bitIndex, COLOR side, bool firstMove);
+bool checkIfPawnFirstMove(COLOR side, int bitIndex);
 #endif
