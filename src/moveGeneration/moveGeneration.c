@@ -1,12 +1,16 @@
 #include "../../include/moveGeneration/moveGeneration.h"
 #define DEBBUG 1
 
-bitboard computePawnForwardMove(int bitIndex, int side) {
+bitboard computePawnForwardMove(int bitIndex, COLOR side, bool firstMove) {
   // TODO :  add special pawn moves
   bitboard move = 0;
   uint64_t mask = (uint64_t)1 << bitIndex;
   // side == 1 means black
-  if (side) {
+  if (firstMove && side) {
+    move |= (mask >> 8) + (mask >> 16);
+  } else if (firstMove && !side) {
+    move |= (mask << 8) + (mask << 16);
+  } else if (side) {
     move |= (mask >> 8);
   } else {
     move |= (mask << 8);
@@ -46,13 +50,11 @@ bitboard computeLegalMoves(int bitIndex, const bitBoardsList *board) {
   alyBitBoard = computeSideBitBoard(piece.side, board);
   switch (piece.type) {
   case PIECE_PAWN:
-    // Why didn't I add the forward move in the pawn attack function?
-    // I am making this chess engine myself but sometimes I get stuck,
-    // a tutorial I was following did the attack and move in different
-    // functions, and claude says I will help in the future.
-    legalMoves = (computePawnForwardMove(piece.bitIndex, piece.side) |
-                  computePawnAttack(bitIndex, piece.side)) &
-                 ~alyBitBoard;
+    bool firstMove = false;
+    legalMoves =
+        (computePawnForwardMove(piece.bitIndex, piece.side, firstMove) |
+         computePawnAttack(bitIndex, piece.side)) &
+        ~alyBitBoard;
     break;
   case PIECE_KING:
     legalMoves = computePawnAttack(bitIndex, piece.side) & ~alyBitBoard;
